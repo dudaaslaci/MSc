@@ -1,0 +1,66 @@
+\usepackage{graphics,latexsym}
+\usepackage{ifthen}
+\frenchspacing
+
+\def\szamozasMelyseg{section}
+
+%%%%%%Tetelszeru kornyezetek%%%%
+
+\newtheorem{tetel}{tétel}[\szamozasMelyseg]
+\newtheorem{allitas}[tetel]{állítás}
+\newtheorem{defin}[tetel]{definíció}
+\newtheorem{lemma}[tetel]{lemma}
+\newtheorem{megj}[tetel]{megjegyzés}
+\newtheorem{sejtes}[tetel]{sejtés}
+\newtheorem{kovetkezmeny}[tetel]{következmény}
+
+\newcommand\van[1]{\not \equal{#1}{nincs}}
+
+
+        
+
+%%%%A biz környezet%%%%
+%/qed
+\def\sqr#1#2{{\vcenter{\vbox{\hrule height .#2pt \hbox{\vrule width .#2pt height#1pt \kern#1pt \vrule width .#2pt} \hrule height .#2pt}}}}
+\def\square{\sqr56~}
+\def\qed{\hfill $\square$ \bigskip \\}
+
+\newcommand{\bizstilus}[1]{\noindent{\bf #1 \ \ }}
+ 
+% #1 a bizonyitas forrasa, a parameter opcionalis 
+\newenvironment{biz}[1][nincs]{
+        \ifthenelse{\equal{#1}{nincs}}{
+                \bizstilus{Bizonyítás:}
+        }{
+                \bizstilus{Bizonyítás (#1):}
+        }
+}{\qed}
+
+% biz* #2 kotelezo arg. a bizonyitas sorszama, #1 opc parameter a biz. forrasa
+\newenvironment{biz*}[2][nincs]{
+        \ifthenelse{\equal{#1}{nincs}}{
+                \bizstilus{#2.~bizonyítás:}
+        }{
+                \bizstilus{#2.~bizonyítás (#1):}
+        }
+}{\qed}
+
+% \lasd(Stewart,66-82.oldal) #1 oldal (opc), #2 hivatkozas
+\newcommand{\lasd}[2][nincs]{{
+        \ifthenelse{\not \equal{#1}{nincs}}{
+                lásd: #2, #1.~oldal}{
+                lásd: #2}}}
+\newcommand{\Lasd}[2][nincs]{
+        \ifthenelse{\not \equal{#1}{nincs}}{
+                lásd: #2, #1.~oldal}{
+                lásd: #2}}
+
+%betu tipus
+%\emph{} uj fogalomnal
+%\idez{...}, ahol a fogalom pontatlan, csak szemleletet ad, vagy hangsulyos
+\newcommand{\idez}[1]{,,#1''}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

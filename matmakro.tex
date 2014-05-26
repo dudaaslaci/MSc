@@ -1,0 +1,95 @@
+\usepackage{ifthen}
+
+%valos komplex
+\newcommand*{\R}{\ensuremath{\mathsf{R}}}
+\newcommand*{\C}{\ensuremath{\mathsf{C}}}
+
+%C ad m times n%
+\newcommand*{\Cnm}[2]{\ensuremath{\C^{#1 \times #2}}}
+\newcommand*{\Rnm}[2]{\ensuremath{\R^{#1 \times #2}}}
+
+%normak
+% #1 (opc.) a norma tipusa, #2 aminek a normajat nezzuk
+\newcommand{\norma}[2][nincs]{\ensuremath{
+        \ifthenelse{\equal{#1}{nincs}}{
+                {\left\| #2 \right\| {} }
+        }{
+                {\left\| #2 \right\|_{#1} {}}
+        }
+}}
+% ||.|| a norma tipusa opc.
+\newcommand{\normafv}[1][nincs]{\norma[#1]{\cdot}}
+
+%lekepezes f: x->y, ahol #1 f (opc), #2 x és #3 y
+\newcommand{\lekep}[3][nincs]{\ensuremath{
+        \ifthenelse{\equal{#1}{nincs}}{
+                #2 \to #3
+        }{
+                #1 \colon #2 \to #3
+        }
+}}
+
+%halmaz {x| f(x)>0} pelda: \halmaz{x}{f(x)>0}
+\newcommand{\halmaz}[2]{\ensuremath{
+        \{\,#1 \mid #2\,\}
+}}
+%\max ala elso sorba #1, masodik sorba #2 kerul
+\newcommand{\maxcc}[2]{\max_{\substack{{#1} \\ {#2}}} }
+\newcommand{\mincc}[2]{\min_{\substack{{#1} \\ {#2}}} }
+
+
+%logika
+\newcommand{\kov}{\Longrightarrow}
+\newcommand{\ekv}{\Longleftrightarrow}
+
+%relacios jel
+\newcommand{\defegy}{\stackrel{\mathrm{def}}{=}}
+\newcommand{\legy}{:=}
+
+%fuggvenyek
+\newcommand{\traceCikk}{\mathop{\textup{tr}}}
+%\newcommand{\nyomCikk}{\mathop{\textrm{nyom}}}
+\newcommand{\rankCikk}{\mathop{\textup{rk}}}
+\newcommand{\diagCikk}{\mathop{\textup{diag}}}
+\newcommand{\nyom}[1]{\traceCikk(#1)}
+\newcommand{\rang}[1]{\rankCikk(#1)}
+\newcommand{\range}[1]{\mathop{\textup{Im}}(#1)}
+\newcommand{\nullter}[1]{\mathop{\textup{Ker}}(#1)}
+\newcommand{\spanja}[1]{ \mathop{\textup{span}} \{ #1 \} }
+%pszeudoinverz
+\newcommand{\pinv}[1]{{#1}^\dag}
+
+% Az M matrix i-ik oszlopa illetve sora #1=M , #2=i 
+\newcommand{\oszl}[2]{{#1}_{(#2)}}
+\newcommand{\sor}[2]{{#1}^{(#2)}}
+\newcommand{\diag}[1]{\diagCikk \langle #1 \rangle}
+\newcommand{\argmax}{\mathop{\textup{argmax}}\limits}
+\newcommand{\dist}{{\mathop{\textup{dist}}}}
+\renewenvironment{matrix}[1]{ \left( \begin{array}{#1} }{ \end{array} \right) }
+%#1 egy oszlopvektor, #2 az oszlop indexe
+\newcommand{\oelem}[2]{[#1]_{#2}}
+\newcommand{\sorIkn}{I^{n,k}}
+\newcommand{\oszlImk}{I_{m,k}}
+
+%infix operatorok
+\newcommand{\tart}{\longrightarrow}
+
+%szunetek
+\newcommand{\aholszunet}{\qquad}
+
+%betutipus
+%linearis ter jelolesere hasznalt betutipus
+\newcommand{\ter}[1]{\ensuremath{{\cal #1}}}
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "matmakro"
+%%% End: 
+

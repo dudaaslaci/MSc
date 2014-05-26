@@ -1,0 +1,670 @@
+\documentclass[a4paper,12pt]{article}
+
+\pdfpagewidth 8.5in
+\pdfpageheight 11.6in
+
+\setlength{\textwidth}{16.2cm}
+\setlength{\textheight}{20cm}
+\setlength{\topmargin}{-2cm}
+\setlength{\evensidemargin}{-1.5cm}
+\setlength{\oddsidemargin}{-1.5cm}
+
+\setlength{\oddsidemargin}{22pt}
+\setlength{\topmargin}{22pt}
+\setlength{\headheight}{13pt}
+\setlength{\headsep}{19pt}
+\setlength{\textheight}{630pt}
+\setlength{\textwidth}{410pt}
+\setlength{\marginparsep}{7pt}
+\setlength{\marginparwidth}{56pt}
+\setlength{\footskip}{27pt}
+\setlength{\marginparpush}{5pt}
+\setlength{\hoffset}{0pt}
+\setlength{\voffset}{-20pt}
+\setlength{\paperwidth}{597pt}
+\setlength{\paperheight}{845pt}
+
+% ekezetes betuk bevitele, magyar nyelvi beallaitaok
+\usepackage{multirow}
+\usepackage{t1enc}
+\usepackage[latin2]{inputenc}
+\usepackage[magyar]{babel}
+\usepackage{fancyhdr}
+\usepackage{eucal}
+%\usepackage{setspace}
+%\usepackage{ulem}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%\usepackage{colortbl}
+\usepackage{graphicx}%% grafika, abrak
+%% kepletek, matek
+\usepackage{exscale}
+\usepackage{amsmath}
+\usepackage{colortbl}
+\linespread{1.3}
+
+\newtheorem{lem} {Lemma} [section]
+\newtheorem{tet} {Tétel} [section]
+\newtheorem{defi} {Definíció} [section]
+\newtheorem{axi} {Axióma} [section]
+\newtheorem{fel} {Feladat} [section]
+\newtheorem{pel} {Példa} [section]
+\newtheorem{all} {Állítás} [section]
+
+%bekezdés
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\def\unitinv{unitér-invariáns}
+\def\unitinvanci{unitér-invarianci}
+
+\input{magyarcikk}
+\input{matmakro}
+\input{grafmakro}
+
+\begin {document}
+
+%fejléc
+\begin{titlepage}
+
+\begin{center}
+\vspace*{2cm}
+ \textsc{\Huge Gráfok spektruma}\textsc{\Large \\[0.8\baselineskip]}\textsc{\Huge}
+\par\end{center}{\Huge \par}
+
+\begin{center}
+{\Huge \vspace{4cm}
+}
+\par\end{center}{\Huge \par}
+
+\begin{center}
+\textsc{\Large Szakdolgozat\\[0.8\baselineskip] Dudás László}{\Large{} }
+\par\end{center}{\Large \par}
+
+\begin{center}
+{\Large \vspace{3cm}
+ }\textsc{\Large Témavezetõ: Benczúr András}\\
+\textsc{\Large{} Operációkutatás tanszék}\\
+{\Large{} \vspace{2cm}
+ }\textsc{\large Eötvös Loránd Tudományegyetem}\\
+\textsc{\large{} Természettudományi Kar}
+\par\end{center}{\large \par}
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+
+\newpage
+
+\begin{abstract}
+Ide jön majd az absztrakt.
+\end{abstract}
+\newpage
+
+\section{Bevezetés}
+\section{A spektrum}
+\subsection{Laplace-mátrix}
+\subsubsection{Egyszerû gráfok}
+Legyen $G=(V,E)$ egy egyszerû gráf a $|V|=n$ csúcshalmazon, az $|E| \leq \binom{n}{2}$
+élhalmazzal! Jelölje $d_v$ a $d$ csúcs fokszámát. Tekintsük a következõ $L$ mátrixot:
+\begin{defi}[Egyszerû gráf Laplace-mátrixa]
+\[L(u,v)=\left\{
+\begin{array}{cc}
+d_v & \textrm{ha $u = v$ }\\ 
+-1 & \textrm{ha $u$ es $v$ szomszedos} \\ 
+0 & \textrm {egyebkent}
+\end{array} \right.\]
+\end{defi}
+
+\subsubsection{Hasonlóság gráfok}
+\[w(u,v)=w(v,u)\]
+\[w(u,v) \geq 0\]
+\begin{defi}[Laplace-mátrix]
+\[L(u,v)=\left\{
+\begin{array}{cc}
+d_v-w(u,v) & \textrm{ha $u = v$ }\\ 
+-w(u,v) & \textrm{ha $u$ es $v$ szomszedos} \\ 
+0 & \textrm {egyebkent}
+\end{array} \right.\]
+\[L=D-W\]
+\end{defi}
+
+Jelölje $D$ a fokszámmátrixot vagyis azt a mátrixot, amiben a fõátlón kívüli elemek $0$-k. A fõátló $v$-ik eleme pedig $d_v$.
+\[\mathcal{L}=D^{-1/2}LD^{-1/2} = I-D^{-\frac{1}{2}}WD^{-1/2}\]
+\begin{defi}[Spektrum] A $G$ gráfhoz tartozó $\mathcal{L}$ normalizált Laplace-mátrix sajátértékeit:
+\[0=\lambda_0\leq\lambda_1\leq\lambda_2\dots\leq\lambda_{n-1}\]
+a $G$ spektrumának hívjuk.
+\end{defi}
+
+\subsection{A spektrum néhány egyszerû tulajdonsága}
+$\mathcal{L}$ szimmetrikus, ezert az összes sajátérték valós, nemnegatív.
+
+A $0$ akkor és csak akkor egyszeres sajátérték, ha a gráf összefüggõ. A $0$-hoz tartozó sajátvektor a
+$\sqrt{\underline{d}}=\left(\sqrt{d_1},\dots,\sqrt{d_n}\right)^T$ vektor. Ha a gráf nem összefüggõ, akkor a spektrum az egyes összefüggõ részek spektrumának uniója.
+
+\[\sum_{i=0}^n \lambda_i = tr\left(\mathcal{L}\right) = n \]
+\[\lambda_1 = \min_{i \in \{1,\dots, n-1\}} \lambda_i \leq
+\frac{\sum_{i=1}^{n-1}\lambda_i}{n-1} = \frac{n}{n-1} \leq
+\max_{i \in \{1,\dots, n-1\}} \lambda_i =
+\lambda_{n-1}
+\]
+\[\textrm{Tehát } \lambda_1 \leq \frac{n}{n-1}, \lambda_{n-1} \geq \frac{n}{n-1}.\]
+Nem teljes gráfra igaz, hogy: $\lambda_1 \leq 1$
+
+Vegyünk egy tetszõleges $g:V\rightarrow\mathbb{R}$ függvényt. És nézzük a $g$-t, mint oszlopvektort. Ekkor tekinthetjük az ún. \textit{Rayleigh-hányadost}
+\begin{eqnarray}
+\frac{\langle g, \mathcal{L}g\rangle}
+{\langle g,g\rangle}
+=
+\frac{\langle g,D^{-\frac{1}{2}}LD^{-\frac{1}{2}}g \rangle}
+{\langle g,g \rangle}
+=\frac{\langle
+f,Lf \rangle}{
+\langle
+D^{\frac{1}{2}}f,D^{\frac{1}{2}}f 
+\rangle
+}
+=
+\frac{\sum_{u \sim v} \left(f\left(u\right)-f\left(v\right)\right)^2}
+{\sum_v f\left(v\right)^2 d_v}, \label{Rayleigh}
+\end{eqnarray}
+ahol $g=D^\frac{1}{2}f$ és $\sum_{u\sim v}$ jelöli azokat a rendezetlen
+párokat, amikre $u$ és $v$ szomszédosak. Valamint $\langle ,\rangle$ jelöli a
+$\mathbb{R}^n$
+-beli belsõszorzatot. Ha
+$g$ $\mathcal{L}$
+sajátvektora, akkor a \textit{Rayleigh-hányados} lesz a hozzá tartozó sajátérték.  
+\eqref{Rayleigh}-bõl látszik, hogy az összes sajátérték nemnegatív és a $0$ is sajátérték, mégpedig az $D^-\frac{1}{2}\textbf{1}$ vektorhoz tartozó. Továbbá,
+\[
+\lambda_1 = \inf_{f_\perp D\textbf{1}}
+\frac{\sum_{u \sim v} \left(f\left(u\right)-f\left(v\right)\right)^2}
+{\sum_v f\left(v\right)^2 d_v}.
+\]
+
+\subsection{Néhány speciális gráf spektruma}
+\subsubsection{$K_n$}
+Az $n$ csúcsú teljes gráfra, $tr \mathcal{L} = n$, ezért a spektrum szimmetria okokból:
+\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} = \frac{n}{n-1}.\]
+\subsubsection{$K_{m,n}$}
+Az $m$ és $n$ elemû osztályokból álló teljes páros gráf spektruma:
+\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n+m-2} =1, \lambda_{n+m-1} = 2.\]
+\subsubsection{$S_n$}
+Az $n$ ágú, azaz $n+1$ csúcsú csillag spektruma, mivel $S_n = K_{n,1}$:
+\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} =1, \lambda_{n} = 2 .\]
+\subsubsection{$P_n$}
+Az $n$ hosszú út spektruma:
+\[lambda_k= 1-\cos\frac{\pi k}{n-1} k=0,\dots,n-1\]
+\subsubsection{$C_n$}
+Az $n$ hosszú kör spektruma:
+\[\lambda_k=1-\cos\frac{2\pi k}{n}, k=0,\dots,n-1\] 
+\subsubsection{$Q_n$}
+A $2^n$ csúcsú $n$ dimenziós hiperkocka sajátértékei:
+\[\frac{2k}{n}\quad\binom{n}{k} \textrm{ multiplicitással, } k=0,\dots,n\]
+\section{Izoperimetrikus problémák}
+%%%
+%TODO Valami bevezetõ szöveg a prolémáról
+%%%
+Ahhoz, hogy a vágások minõségérõl tudjunk beszélni, szükséges különbözõ mértékeket bevezetni az egyes csúcs- és élhalmazokra.
+\section{Bipartíciók}
+Ahhoz, hogy a vágások minõségérõl tudjunk beszélni, szükséges különbözõ mértékeket bevezetni az egyes csúcs- és élhalmazokra.
+\subsection{Vágások mértékei}
+\begin{defi}[Csúcshalmaz térfogata]
+A $\graf$ gráfhoz $S\subset V$ csúcshalmaz térfogata:
+\[vol S = \sum_{v\in S}d_v.\]
+\end{defi}
+\begin{defi}[Vágás élei]
+A $\graf$ $S\subset V$ csúcshalmazához tartozó vágás élei azok az élek, amelyeknek pontosan egy végpontja van $S$-ben.
+\[ \partial S = \big\{ \{ u,v \} \in E: u \in S , v \notin S \big\} \]
+\end{defi}
+Jelöljük $\overline{S}$-el $S$ komplementerét. Világos, hogy
+$\partial S = \partial \overline{S}$. A vágás éleinek nem $S$-ben levõ végpontjait a vágás határának hívjuk.
+\begin{defi}[Vágás határa]
+\[\delta S = \{v \notin S : \{u, v\} \in E, u \in S\}\]
+\end{defi}
+
+\subsubsection{Mikor jó egy biklaszeterezés?}
+
+\begin{defi}[Min-vágás]
+\end{defi}
+
+\begin{defi}[Kiegyensúlyozott vágás]
+\end{defi}
+
+\begin{defi}[Koduktancia]
+\end{defi}
+
+\begin{defi}[Fiedler-vektor]
+
+\end{defi}
+
+
+\subsection{A Cheeger-konstans}
+%%%
+%TODO Itt kell ez a két feladat is?
+%%
+Tekintsük a következõ két feladatot!
+\textbf{Feladat 1:} Egy fix $m$-re keressük azt az $S$ csúcshalmazt, amire $m\leq volS\leq vol \overline{S}$ és $\partial S$ minimális
+\textbf{Feladat 2:} Egy fix $m$-re keressük azt az $S$ csúcshalmazt, amire $m\leq volS\leq vol \overline{S}$ és $\partial S$ minimális
+Mindkettõre majd az ún. \textit{Cheeger-konstans} adja meg a választ.
+Egy $\graf$ $S \subset V$ csúcshalmazára értelmezzük a következõ mennyiséget:
+\[h_g(S)=\frac{|E(S,\overline{S})|}{min(vol \ S, vol \ \overline{S})}.\]
+\begin{defi}[Cheeger-konstans]
+Egy $\graf$-hoz tartzó Cheeger-konstans
+\[h_G=\min_{S\subset V}h_G\left(S\right).\]
+\end{defi}
+\subsubsection{A Cheeger-konstans és a spektrum}
+A következõkben a Cheeger-konstans és a spektrum kapcsolatát fogjuk vizsgálni. Elõször is a $\lambda_1$-gyel való kapcsolatáról szóló Cheeger-egyenlõtlenséget látjuk be.
+\begin{tetel}[Cheeger-egyenlõtlenség]
+Egy $\wg$ összefüggõ élsúlyozott gráfhoz tartozó $h_G$ Cheeger-konstansra és a, spektrumának legkisebb pozitív sajátértékére igazak az alábbi egyenlõtlenségek:
+\[\frac{\lambda_1}{2} \leq h_G \leq min\left(1,\sqrt{2\lambda_1}\right)\].
+Ha $\lambda_1 \leq 1$ (vagyis $G$ nem a teljes gráf), akkor a felsõ becslés javítható:
+\[h_G\leq\sqrt{\lambda_1\left(2-\lambda_1\right)}\]
+
+\end{tetel}
+\begin{biz}
+\textbf{Alsó becslés:} Legyen $S\subset V$ Cheeger-optimális. vagyis $h_G\left( S\right) = h_G$. Tekintsük a következõ $f:V\rightarrow\mathbb{R}$ függvényt:
+\[ f\left(v \right) =
+\left\{
+\begin{array}{cc}
+\frac{1}{vol S}&\textrm{ha } v \in S\\
+\frac{1}{vol \bar{S}}& \textrm{ha } v \in \bar{S}\\
+\end{array}
+\right.
+\]
+$f$-t behelyettesítve \eqref{Rayleigh}-be kapjuk a következõt:
+\[
+\lambda_1 \leq \partial S\left(\frac{1}{volS}+\frac{1}{vol\bar{S}}\right) \leq
+\frac{2\partial S}{\min\left(vol S, vol \bar{S}\right)} =
+2 h_G
+\]
+
+\end{biz}
+\subsection{Súlyozott gráfok vágásai}
+\begin{defi}[Vágás súlya]
+A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya
+\[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}\]
+\end{defi}
+\begin{tetel}[Max-vágás súlya]
+Legyenek a $0=\lambda_0\leq\lambda_1\dots\leq\lambda_{n-1}$ a $G=(V,W)$ gráfhoz tartozó $L$ Laplace-mátrix sajátértékei. Ekkor
+\[ \max_{U\in V}w(U,\bar{U}) \leq \frac{n}{4}\lambda_{n-1}.\]
+\end{tetel}
+\subsection{Multipartíciók}
+A gráfok szerkezetének vizsgálatának a kérdése, hogy hogyan tudjuk a csúcsokat kisebb csoportokra bontani, partícionálni. A $G=(V,W)$ gráf  egy \textit{k-partíciója} alatt a G csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ diszjunkt felosztást értjük, hogy \[\bigcup_{i=1}^k V_i =V\]
+
+
+\subsubsection{Mikor jó egy multiklaszterezés?}
+\begin{defi}[Min vágás]
+\end{defi}
+\begin{defi}[Scaled cost]
+\end{defi}
+\begin{defi}[Cluster ratio]
+\end{defi}
+\begin{defi}[Átmérõ]
+\end{defi}
+\begin{defi}[Min átmérõ]
+\end{defi}
+
+
+\section{Szinguláris felbontás}
+A következõkben egy kicsit kilépve, általánosabb keretek között fogalmazzuk meg az állításokat. Célunk a szinguláris értékek és vektorok bevezetése. A szinguláris értékeknek és vektoroknak számos alkalmazási területe létezik. Jelen dolgozatban a spektrummal való kapcsolatával, és a vágásokkal való kapcsolatára fókuszálunk majd. Végül megmutatjuk, hogy a közismert HITS-algoritmus SVD-vel való mély kapcsolatát.
+
+Hogy a szinguláris felbontással kapcsolatos tételeket bizonyítani tudjuk, szükségünk lesz a mátrixnormák, fõként a Frobenius-norma megismerésére.
+
+\subsection{Vektorok és mátrixok normája}
+\begin{subequations}
+A \lekep[\nu]{\Rnm{n}{m}}{\R} leképezést \emph{mátrixnormának}
+nevezzük, ha tetszõleges $A,B \in \Rnm{n}{m}$ mátrixszal és $\alpha \in \R$ számmal  kielégíti az alábbi három összefüggést:
+\begin{align*}
+A \neq 0      &\kov \nu(A) > 0 \\
+\nu(\alpha A) &= |\alpha| \nu(A) \\
+\nu(A+B)      &\leq \nu(A) + \nu(B) 
+\end{align*}
+A mátrixnorma $m=1$ speciális eseteként adódik a \emph{vektornorma}, elõször
+néhány szót ejtünk errõl és utána a mátrixokéról. Vektorok \emph{2-normáját} az alábbi egyenlõséggel definiáljuk, ahol $v$ egy $n$-dimenziós vektor:
+\begin{align*}
+\norma[2]{v} &\defegy \sqrt{ \sum_{i=1}^n  |v_i|^2  } = \sqrt{v^{T} v}\,.
+\end{align*}
+Az elsõ két norma-axióma nyilvánvalóan teljesül, a háromszög-egyenlõtlenség pedig a Cauchy-egynlõtlenség felhasználásával igazolható. A Cauchy-egyenlõtlenség vektorok skaláris szorzata és 2-normája közti kapcsolatot ír le:
+\begin{align*}
+|x^{T} y | \le \norma[2]{x} \norma[2]{y}, 
+\end{align*}
+ahol egyenlõség pontosan akkor van, ha $x$ és $y$ lineárisan összefüggõk.
+
+Vektornormákat más módon is definiálhatnánk, például négyzetgyökvonás és négyzetre emelés helyett tekinthetnénk $1/p$-ik illetve $p$-ik hatványt is. Azonban a 2-normát egy fontos tulajdonság tünteti ki a lehetséges vektornormák közül. Egy vektornormát \emph{unitér-invariánsnak} nevezünk, ha tetszõleges $x$ vektor 
+és $U$ ortogonális mátrix esetén 
+\begin{align*}
+\norma{x}&=\norma{Ux}\,.
+\end{align*}
+Elõször megmutatjuk, hogy a 2-norma rendelkezik a fenti tulajdonsággal:
+$$
+ \norma[2]{x}^2=x^{T} x=x^{T} U^{T} U x =(Ux)^{T} (Ux)=\norma[2]{Ux}^2,
+$$
+tetszõleges $x$ vektorral és $U$ ortogonális mátrixszal, ahonnan adódik az állítás. 
+Másrészt a fordított irányhoz legyen {\normafv} egy tetszõleges unitér-invariáns norma, és $x_1$ egy 
+olyan vektor, melyre $\norma{x_1}=1$. Ekkor az \halmaz{x}{\norma{x}=1} halmaz elemei felírhatóak 
+$U x_1$ alakban valamely $U$ ortogonális mátrixszal. Az elõzõ egyenlõséglánc felhasználásával e halmaz 
+elemeinek 2-normája megegyezik $\norma[2]{x_1}$ mennyiséggel. Ezzel igazoltuk a következõ állítást:
+\begin{allitas}\label{UnitInvVekt}
+Egy {\normafv}  vektornorma pontosan akkor {\unitinv}, ha valamely $c \ge 0$ konstanssal 
+$\normafv = c \normafv[2]$, azaz ha megegyezik a 2-norma  konstans szorosával.
+\end{allitas}
+Az unitér-invariancia fogalma a vektorok és normák geometriai jelentésével is jól magyarázható. 
+A vektort egy irányított szakasznak képzeljük, a normája megegyezik annak  ,,hosszával''. 
+Az ortogonális mátrixszal való szorzás pedig a forgatás fogalmát általánosítja magasabb dimenziókban. Így egy norma 
+unitér-invarianciája azt a tulajdonságot írja le, hogy a vektor hossza forgatás közben nem változik.
+
+Most áttérünk mátrixok normájának tárgyalására. Két különbözõ mátrixnormát fogunk bevezetni és használni. Elõször a vektorok 2-normájához hasonló módon definiálunk mátrixnormát:
+\begin{align*}
+\norma[F]{A} &\defegy \sqrt{\sum_{i=1}^{n}  \sum_{j=1}^{m} A_{ij}^2 }\, ,
+\end{align*}
+amelyet \emph{Frobenius-normának} nevezünk. 
+
+A Frobenius-norma a Cauchy-egynlõtlenséghez hasonló összefüggést is kielégít:
+\begin{allitas}\label{FrobKonz}
+Tetszõleges $A \in \Rnm{n}{m}, B \in \Rnm{m}{p}$ mátrixok esetén
+\begin{align*}
+\norma[F]{AB} \leq \norma[F]{A} \norma[F]{B}.
+\end{align*}
+\end{allitas}
+A bizonyítás elemi lépésekkel végezhetõ a Cauchy-egyenlõtlenség felhasználásával. Egy mátrixnormát \emph{konzisztensnek} nevezünk, ha összeszorozható mátrixok és szorzatuk kielégíti a fenti egyenlõtlenséget. Ezzel a tulajdonsággal nem minden mátrixnorma rendelkezik, pedig a konzisztenciára nagy szükség van iterációs algoritmusok hibabecslésénél. Ilyen eljárásokban az $n$-ik lépés hibavektorát az $n-1$-ikbõl egy iterációs mátrix szorzásával kapjuk. Ha például az összes iterációs mátrix normája kisebb $\frac{1}{2}$-nél, akkor a norma konzisztenciájából adódik a hiba $(\frac{1}{2})^n$ sebességû lecsengése. 
+
+A második általunk használt mátrixnormát úgy definiáljuk, hogy az konzisztens legyen a vektorok 2-normájával, azaz szeretnénk ha minden $x$ vektorra és $A$ mátrixra teljesülne a következõ egyenlõtlenség: 
+\begin{align*}
+\norma[2]{Ax} \le \norma{A} \norma[2]{x}.
+\end{align*}
+A egyenlõtlenségbõl adódik egy alsó becslés \norma{A} értékére, ezzel az alsó becsléssel definiáljuk mátrixok \emph{2-normáját}, más néven \emph{spektrálnormáját}:
+\begin{align*}
+\norma[2]{A} &\defegy \max_{\norma[2]{x}=1} \norma[2]{Ax}\,.
+\end{align*}
+A képletet röviden úgy értelmezhetjük, hogy egy $A$ mátrix esetén \norma[2]{A} egy $x$ vektor $A$ mátrixszal történõ szorzásával elérhetõ \idez{legnagyobb nyújtás} mértékét határozza meg. A norma-axiómák teljesülése mindkét esetben egyszerûen ellenõrizhetõ a vektorok 2-normájának tulajdonságaiból.
+
+Most néhány olyan összefüggést mutatunk, melyek szintén meghatározzák az eddig megismert mátrixnormákat. Tetszõleges $A \in \Rnm{n}{m}$ mátrix esetén az $A^{T}A$ mátrix szimmetrikus és pozitív szemidefinit, ezért sajátértékei nem negatív valós számok, melyeket $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_m \ge 0 $ jelöl. 
+\begin{allitas}\label{normaAegyAHegyAllitas} \begin{eqnarray}
+\norma[F]{A}      &=&  \sqrt{ \nyom{A^{T} A} }  \\
+\norma[F]{A}      &=&  \sqrt{ \lambda_1+\lambda_2+\dots +\lambda_m }  \label{FNormaSajatErt}\\
+\norma[2]{A}      &=&  \sqrt{\lambda_1} \label{2NormaSajatErt}\\ 
+\norma[2]{A}      &=&  \max_{\norma[2]{x}=1,\, \norma[2]{y}=1} |y^{T} A x| \label{MaxyAx}  \\
+\norma[2]{A}      &=&  \norma[2]{A^{T}} \label{normaAegyAHegyAT} 
+\end{eqnarray}
+\end{allitas} 
+\begin{biz}
+Az $A^{T}A$ mátrix fõátlójában szereplõ $j$-ik elem megegyezik az $A$ mátrix $j$-ik oszlopában elõforduló elemek négyzetösszegével. Így $\nyom{A^{T} A}$ nem más mint $A$ összes elemének négyzetösszege, ezzel igazoltuk az elsõ egyenlõtlenséget. A második összefüggés pedig az elsõ következménye, hiszen egy mátrix nyoma megegyezik sajátértékeinek összegével. A harmadik összefüggéshez:
+$$
+\norma[2]{A}
+=\max_{\norma[2]{x}=1} \norma[2]{Ax}
+=\max_{\norma[2]{x}=1} \sqrt{|x^{T}A^{T}Ax| }
+=\sqrt{\lambda_1} \,.
+$$
+A negyedik egyenlõség esetén a $\ge$ irány a Cauchy-egyenlõtlenségbõl adódik, mert 
+$$\norma[2]{Ax}=\norma[2]{y} \norma[2]{Ax} \ge |y^{T} A x |\, ,$$
+tetszõleges $y$ és $x$ vektorra, melynél $\norma[2]{x}=\norma[2]{y}=1$.
+ Legyen $x_1$ az $\norma[2]{A x}$ maximumát beállító vektor, ezt behelyettesítve az elõzõ 
+egyenlõtlenségbe kapjuk a $\ge$ irányt. Másrészt $x_1$ és
+$y_1 \legy \frac{1}{\norma[2]{A x_1}}A x_1 $ választással
+ $$|y_1^T A x_1|=\norma[2]{Ax_1}=\norma[2]{A}$$
+adódik, amivel a $\le$ irányt is beláttuk. 
+Végül az utolsó összefüggés a negyedik következménye,
+ hiszen a szimmetrikus kifejezésben szereplõ $A$ lecserélhetõ $A^T$-ra.
+\end{biz}
+ 
+Mátrixok normájához is társítható a vektorokéhoz hasonló geometriai jelentés.
+Tetszõleges $A$ mátrix esetén az 
+$$ 
+E_A \defegy \halmaz{Ax}{\norma[2]{x}=1} 
+$$ 
+egy ellipszoidot határoz meg, melynek dimenziója $\rang{A}$. A mátrix normája szemléletesen ennek az  ellipszoidnak a \idez{nagyságát} jelenti. 
+Az ellipszoidot körbevehetjük egy olyan $\rang{A}$-dimenziós téglatesttel, melynek élei párhuzamosak a fõtengelyekkel, és az élek hossza megegyezik a fõtengelyek hosszával. Ekkor a Frobenius-norma megegyezik a téglatest leghosszabb testátlójával, a 2-norma pedig annak leghosszabb élével vagyis a legnagyobb fõtengely hosszával. Ez \aref{FNormaSajatErt}.~és \aref{2NormaSajatErt}.~ egyenlõségbõl adódik felhasználva, 
+hogy az ellipszoid fõtengelyeinek hossza megegyezik $A^{T} A$ sajátértékeivel (utóbbi bizonyításához \lasd{\cite{Rozsa}}). 
+
+Ha egy $A$ mátrixot az $U^T$  és a $V$ ortogonális mátrixokkal szorzunk,  akkor $E_A$-ból forgatással nyerjük az $E_{U^{T} A V}$ ellipszoidot. A mátrix normájától azt várnánk, hogy ne változzon e mûvelet hatására. E tulajdonság azonban nem igaz tetszõleges normára.
+\begin{defin}
+Egy {\normafv} mátrixnormát \emph{{\unitinv}nak} mondunk, ha tetszõleges $U$ és $V$ ortogonális mátrixokkal
+$$ \norma{U^{T} A V} = \norma{A}. $$
+\end{defin}
+\begin{allitas}
+A Frobeinus és a 2-normák {\unitinv}ak.
+\end{allitas}
+\begin{biz}
+A 2-normára már korábban beláttuk, a Frobenius-normára pedig nyilvánvaló, hogy egy mátrix és 
+transzponáltja esetén megegyezik, ezért elég azt megmutatni, hogy egy ortogonális mátrixszal balról szorozva nem változik a norma. Utóbbi a 2-norma esetén abból adódik, hogy a maximalizálandó $\norma[2]{Ax}= \norma[2]{U^{T} Ax} $ bármely $x$ esetén. A Frobenius-norma {\unitinvanci}ája szintén visszavezethetõ vektorok 2-normájáéra, hiszen az $U$ mátrixszal szorozhatunk oszloponként, és a normát is számíthatjuk az oszlopokéból.   
+\end{biz}
+Az {\unitinv} normák karakterizálása nehezebb probléma mint a vektorokról szóló \ref{UnitInvVekt}.~állítás, az errõl szóló Neumann Jánostól származó tételhez \lasd{\cite{Stewart90}}. 
+
+ A dolgozat hátralevõ részében vektorok 2-normájára egyszerûen a \normafv jelölést, mátrixokéra pedig a \normafv[2] jelölést, Frobenius-normára  a \normafv[F] jelölést használjuk. 
+
+\end{subequations}
+\subsection{Szinguláris 	felbontás(SVD)}
+\begin{defi}[Szinguláris felbontás]
+Egy $A \in \mathbb{R}^{n\times m}$ mátrix szinguláris felbontásán az olyan
+\[A = U \Sigma V^T\]
+szorzattá bontás értjük, ahol $U \in \mathbb{R}^{n\times n}$ és
+$V \in \mathbb{R}^{m\times m}$ ortogonális mátrixok. Továbbá a
+$\Sigma\in\mathbb{R}^{n\times m}$, és a ,,fõátlójában''
+$\sigma_1\geq\cdots\geq\sigma_r>0$- pozitív számokat csupa $0$ követi.
+\end{defi}
+\begin{defi}[Szinguláris értékek]
+A $\sigma_i$ értékeket az $A$ mátrix szinguláris értékeinek hívjuk.
+\end{defi}
+\begin{defi}[Szinguláris vektorok]
+A $U$ és $V$ oszlopait az $A$ mátrix bal- illetve jobb-oldali szinguláris vektorainak hívjuk.
+\end{defi}
+\begin{tet}[SVD létezése]
+Tetszõleges $A \in \mathbb{R}^{n \times m}$ $r$ rangú márixnak létezik szinguláris felbontása.
+\end{tet}
+
+\textbf{Bizonyítás.} Teljes indukció $min\left(m,n\right)$-re.
+Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. $a$-hoz található olyan ortogonális $U$, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
+
+Ha $min\left(m,n\right) > 1$, akkor a problémát visszavezetjük egy $(n-1)\times(m-1)$ méretû mátrix felbontására. Feltehetõ, hogy $A \neq 0$, különben triviális a felbontás.
+\begin{align*}
+\sigma_1 &\legy \norma[2]{A}=  \max_{\norma{v}=1} \norma{Av} &
+v_1      &\legy \argmax_{\norma{v}=1} \norma{Av} &
+u_1      &\legy \frac1\sigma_1 A v_1
+\end{align*}
+Egészítsük ki továbbá az $u_1$ és $v_1$ vektorokat 
+$U_1 \legy (u_1 \, u_2 \, \dots \, u_n)$  és 
+$V_1 \legy (v_1 \, v_2 \, \dots \, v_m)$ ortogonális mátrixokká. Ekkor a 
+$w ,\, z$ és $A_2$ jelöléseket bevezetve
+\begin{align*}
+U_1^{T} A V_1 &= \left( \begin{array}{cc}
+ \sigma_1 & w^{T} \\
+  z       &  A_2
+ \end{array} \right)
+,&
+U_1^{T} A v_1 &= \left( \begin{array}{c}
+ \sigma_1  \\
+  z       
+ \end{array} \right)
+,& 
+V_1^{T} A^{T} u_1 &= \left( \begin{array}{c}
+ \sigma_1 \\
+  w
+ \end{array} \right).
+\end{align*}
+\Aref{normaAegyAHegyAllitas}.~állítás szerint 
+$\sigma_1=\norma[2]A=\norma[2]{A^{T}}$,  ezért az $\norma{u_1}=\norma{v_1}=1$
+ vektorok esetén $\norma{Au_1} \le \sigma_1$ és 
+$\norma{A^{T} v_1} \le \sigma_1$. 
+Innen a  vektornorma {\unitinvanci}áját felhasználva kapjuk, hogy 
+\begin{align*}
+\norma{  \left( \begin{array}{c}
+ \sigma_1  \\
+  z       
+ \end{array} \right)}&\le \sigma_1 & 
+ &\text{és}&
+\norma{  \left( \begin{array}{c}
+ \sigma_1  \\
+  w      
+ \end{array} \right)} &\le  \sigma_1 .       
+\end{align*} 
+Ez viszont csak úgy lehetséges, ha $z=w=0$, vagyis igazoltuk, hogy 
+$$
+U_1^{T} A V_1 = \left( \begin{array}{cc}
+ \sigma_1 & 0 \\
+  0      &  A_2
+ \end{array} \right).
+$$
+Indukciós feltevésünk alapján az $(n-1) \times (m-1)$ méretû $A_2$ mátrixhoz 
+találhatók $U_2$ és $V_2$ ortogonális mátrixok, melyekkel $U_2^{T} A_2 V_2 = \Sigma_2$. Az 
+\begin{align*}
+U^{T} &\legy
+\left( \begin{array}{cc}
+  1      &  0 \\
+  0      &  U_2^{T}
+ \end{array} \right) U_1^{T} &
+ &\text{és}&
+V^{T} &\legy
+V_1 \left( \begin{array}{cc}
+  1      &  0 \\
+  0      &  V_2
+ \end{array} \right) 
+\end{align*}
+választással kapjuk a kívánt felbontását $A$-nak:
+$$ 
+U^{T} A V= 
+\left( \begin{array}{cc}
+  \sigma_1      &  0 \\
+  0      &  \Sigma_2
+ \end{array} \right) 
+=\Sigma \,.
+$$
+
+\subsection{HITS-algoritmus}
+Jon Kleinberg 1998-ban született HITS(Hyperlink-Induced Topic Search)-algoritmusa az internetes oldalak fontosságát próbálja meghatározni a köztük levõ hiperlinkek alapján.
+Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi(hub) és mértékadó(authority) oldalakra.
+Az algoritmus iteratív módon minden oldalnak frissíti a központiság és mértékadóság mértékét,
+azon heurisztika mentén, hogy egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
+
+A feladat megfogalmazható a gráfok nyelvén is. A weboldalak lesznek a csúcsok, az élek köztük irányított élek, a $auth,hub:V\rightarrow\mathbb{R}$ függvények pedig a , mértékadóságot és központiságot jelzik majd. A HITS-algoritmusban az éleket nem súlyozzuk.
+\subsubsection{Az algoritmus}
+\textbf{Bemenet.} $G=(V,E)$ gráf az $A$ adjacencia mátrixával, $i$ iterációszám,
+$auth^{\left(1\right)}$, $hub^{\left(1\right)}$ kezdeti  értékek.
+
+\textbf{Iterációs lépés.}
+A $k$-ik iterációban:
+\[auth^{\left(k+1\right)}\left(v\right)=\sum_{\left(w,v\right)\in E}hub^{\left(k\right)}\left(w\right)\]
+\[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
+\subsubsection{Az algoritmus elemzése}
+Számos kérdés merül fel az algoritmussal kapcsolatban.
+\begin{enumerate}
+\item Konvergál-e az algoritmus?
+\item Mit érdemes $auth^{\left(1\right)}$-nak és $hub^{\left(1\right)}$-nak választani?
+\item Hogyan lehet az $auth$ és $hub$ értékeket hatékonyan számolni?
+\end{enumerate}
+Ezen kérdések megválaszolását és az algoritmus jobb mûködését segíti, ha észrevesszük az algoritmus SVD-vel való viszonyát.
+Jelöljük $a^{\left(k\right)}$-val azt az $n$ dimenziós vektort,
+ami rendre a $auth^{\left(k\right)}\left(v\right)$ értékeket tartalmazza.
+Hasonlóképp definiáljuk $h^{\left(k\right)}$-t $hub^{\left(k\right)}$-val. Ekkor a következõket írhatjuk fel:
+\[a^{\left(k+1\right)}= h^{\left(k\right)}A\]
+\[h^{\left(k+1\right)}= a^{\left(k+1\right)}A^T\]
+\[a^{\left(k+1\right)}=a^{\left(k\right)}A^TA=a^{\left(1\right)}\left(A^TA\right )^k\]
+\[h^{\left(k+1\right)}=h^{\left(k\right)}AA^T=h^{\left(1\right)}\left(AA^T\right )^k\]
+Alkalmazzuk $A=U\Sigma V^T$ SVD felbontását.
+\[a^{\left(k+1\right)}=a^{\left(1\right)}\left(A^TA\right )^k=
+a^{\left(1\right)}V\Sigma U^TU\Sigma V^TV\Sigma\dots U\Sigma V^T=
+a^{\left(1\right)}V\Sigma^kV^T\]
+\[h^{\left(k+1\right)}=h^{\left(1\right)}\left(AA^T\right )^k=
+h^{\left(1\right)}U\Sigma V^TV\Sigma U^TU\Sigma\dots V\Sigma U^T=
+h^{\left(1\right)}U\Sigma^kU^T\]
+
+
+
+
+
+\section{Spektrálklaszterezés}
+Bevezetõ szöveg a klaszerezéshez.
+
+\begin{defi}[Klaszterezés]
+\end{defi}
+
+\subsection{Klaszterezés QP programként felírva}
+
+Elõször mutatunk egy kvadratikus programozási feladatot,
+aminek látszatra nincs köze a spektrumhoz. De kiderül,
+hogy az optimális megoldás szoros kapcsolatban van vele.
+
+Legyen a $G=(V,W)$ egy élsúlyozott, egyszerû gráf $n$ csúcson, ahol
+$V = \{1,\dots,n\}$. $W$ egy $n$ x $n$ mátrix, melynek elemei nemnegatív valósak és a fõátlóban mindenhol $0$ szerepel. Tehát $w_{ij}$ jelöli az $i$ és $j$ csúcs hasonlóságát.
+Jelöljük $W$ sorösszegeit
+\[d_i=\sum_{j=1}^n w_{ij}, \quad i=1,\dots n.\]
+A $d_i$ értékeket \textit{általánosított fokszámnak} fokszámnak hívjuk.
+
+Nézzük a következõ kvadratikus programozási feladatot:
+
+Egy adott $1\leq k \leq n$ egészhez olyan $k$-dimenziós $r_1, \dots r_n$ reprezentáns vektorokat keresünk, hogy a 
+\begin{equation}
+Q_k = \sum_{i < j} w_{ij} \norma{r_i - r_j} \geq 0 \label{celfuggveny}
+\end{equation}
+célfüggvény érték minimális legyen a
+\begin{equation}
+\sum_{i=1}^n r_ir_i^T = I_k \label{feltetelek}
+\end{equation}
+feltétel mellett ($I_k$ jelöli a $k$ dimenziós egységmátrixot).
+Látható, hogy a célfüggvény értéke csökken, ha a nagy hasonlóságú csúcsok közelebb kerülnek egymáshoz.
+
+Átalakítjuk a célfüggvényt, és a feltéteket egy többet mondó formába.
+Legyen $X$ az a mátrix, aminek a sorai $r_1^T,\dots ,r_n^T$. Legyenek $x_1, \dots, x_k \in \mathbb{R}^n$ $X$ oszlopai.
+A \eqref{feltetelek} feltételek miatt $X$ oszlopai ortonormált rendszert alkotnak, tehát $X$ egy szubortogonális mátrix.
+Így a feltételeket felírhatjuk $X^TX=I_k$ formában is. Ezek után a célfüggvényt tovább alakíthatjuk.
+\[
+Q_k = \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 =
+\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_j
+\]
+\begin{equation}
+ = \sum_{l=1}^k x_l^T \left( D-W \right) x_l = tr\left[X^T\left(D-V\right)X\right]\label{atalakitas}
+\end{equation}
+
+
+Látható, hogy az $L$ Laplace-mátrix megjelenik a célfüggvény értékében.
+
+\begin{tetel}[Reprezentációs tétel szimmetrikus gráfokra]
+Tekintsük a $G=(V,W)$ összefüggõ gráfot és a hozzá tartozó $L$ Laplace-mátrixot!
+Jelölje $0=\lambda_0\leq\lambda_1\leq\cdots\leq\lambda_{n-1}$ az $L$ sajátértékeit,
+valamint $u_0,u_1,\dots,u_{n-1}$ a hozzájuk tartozó
+egységhosszú sajátvektorokat! Legyen $k<n$ olyan,
+hogy $\lambda_{k-1}<lambda{k}$!
+Ekkor a \eqref{celfuggveny} célfüggvény értéke a \eqref{feltetelek} feltételek mellett:
+\[\sum_{i=0}^{k-1}\lambda_i=\sum_{i=1}^{k-1}\lambda_i.\]
+És az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
+\end{tetel}
+\begin{biz}
+A \eqref{atalakitas} alak szerint:
+\[ Q_k = tr \left[ X^T L X \right]\]
+Így a tétel következik az alábbi általánosabb állításból.
+\begin{allitas}
+Legyen $A$ egy valós $n\times n$ méretû szimmetrikus mátrix. $A$ sajátértékei $\lambda_1\geq\dots\geq\lambda_n$.
+$k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
+\[
+\max_{X\in\mathbb{R}^{n\times k}\atop{ X^TX=I_k}} tr \left[X^TAX\right]=
+\max_{x_i \in \mathbb{R}^n \left( i=1,\dots ,k \right)\atop{ x_i^Tx_j=\delta_{ij}}}
+\sum_{i=1}^k x_i^T A x_i = \sum_{i=1}^k\lambda_i
+\]
+És az optimum az $X=\left(u_1,\dots,u_k\right)$ szubortogonális mátrix, ahol $u_i$ az $\lambda_i$-hez tartozó egységhosszú sajátvektor. 
+\end{allitas}
+
+\end{biz}
+
+\section{Spektrálklaszeterezés a gyakorlatban}
+A következõ fejezetben a spektrálklaszterezés egy gyakorlatbani alkalmazását szeretnénk megvizsgálni.
+A szociális hálózatok vizsgálatának egyik fontos része a különbözõ felhasználói csoportok feltérképezése.
+A klaszterek meghatározása által ajánlhatunk különbözõ tartalmakat, pl. híreket, filmeket, hirdetéseket.
+\subsection{Az adat}
+A példánkban a LiveJournal blog oldal orosz nyelvû felhasználóit szeretnénk kisebb kategóriákba osztani.
+
+A LiveJournal.com oldalon a felhasználóknak lehetõségük van egymás barátainak lenni(szimmetrikus reláció). Az felületetet orosz nyelven használók jelentõs része nem orosz, hanem sokan a környezõ országok lakosai(Ukrajna, Fehéroroszország, Észtország,\dots). 
+\subsection{A TKC-jelenség}
+Általánosan tapasztalt jelenség, hogy a nagy hatványeloszlású gráfokon a direktben alkalmazott spektrálklasterezési metódusok elbuknak.%TODO hivatkozások
+Nem tudják meghatározni a fontos komponenseket, mivel sok a kicsi összetartó közösség(\textbf{T}ightly \textbf{K}it \textbf{C}ommunities), amik a sajátétékeket 1-hez közel húzzák. Így a sajátértékek nem differenciálódnak és az 1-hez közeli sajátértékekhez tartozó sajátvektorok nem hordoznak érdekes információt.
+
+Ha megfigyeljük 
+\subsection{Lehetséges módszerek a TKC-jelenség feloldására}
+Ebben a részben néhány heurisztikát szeretnénk ismertetni, melyek segítségével kiküszöbölhetõ a 
+TKC-jelenség.
+\subsubsection{Csápok összehúzása}
+\subsubsection{Klaszeterek újraosztása}
+\bibliographystyle{huplain}
+
+\bibliography{hivatkozasok}
+
+\end{document} 
