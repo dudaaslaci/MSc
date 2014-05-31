@@ -1,0 +1,274 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[latin2]{inputenc}
+\usepackage[magyar]{babel}
+\usepackage{graphicx}
+
+\newtheorem{defi} {Definíció} [section]
+\newtheorem{tetel} {Tétel} [section]
+\title{Gráfok spektruma}
+\author{Dudás-Marx László}
+
+\usetheme{Warsaw} 
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\begin{center}
+ Témavezetõ: Benczúr András
+ \end{center} 
+\end{frame}
+
+\begin{frame}
+\frametitle{A szakdolgozat felépítése}
+\tableofcontents
+\end{frame}
+%\section{Bevezetés}
+%\begin{frame}
+%\begin{itemize}
+%\item Gráfok és mátrixreprezentációik
+%\item A spektrum bevezetése
+%\item Vágások és multivágások
+%\item Gyakorlati alkalmazás nagy gráfokra
+%\end{itemize}
+%\end{frame}
+\section{Szinguláris felbontás}
+\subsection{SVD}
+
+\begin{frame}
+\frametitle{Singular Value Decomposition}
+SVD létezése: Beltrami(1873) és Jordan(1874)
+\begin{defi}[Szinguláris felbontás]
+Egy $A \in \mathbb{R}^{n\times m}$ mátrix szinguláris felbontásán az olyan
+\[A = U \Sigma V^T\]
+szorzattá bontás értjük, ahol $U \in \mathbb{R}^{n\times n}$ és
+$V \in \mathbb{R}^{m\times m}$ ortogonális mátrixok. Továbbá a
+$\Sigma\in\mathbb{R}^{n\times m}$, és a ,,fõátlójában'' levõ
+$\sigma_1\geq\cdots\geq\sigma_r>0$- pozitív számokat kivéve csupa $0$ van.
+\end{defi}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Alkalmazások}
+\begin{itemize}
+\item{Homogén lineáris egyenletek megoldása}
+\item{Pszeudoinverz}
+\item{Kis rangú mátrixszal való közelítés}
+\item{PCA}
+\item{\dots}
+\end{itemize}
+\end{frame}
+
+\subsection{HITS-algoritmus}
+
+\begin{frame}
+\frametitle{HITS-algoritmus Kleinberg['98]}
+Az internet oldalait szeretnénk rangsorolni. \\
+Alapötlet: oldalak két csoportja:
+\begin{itemize}
+\item Mértékadó(authority) oldalak
+\item Központi(hub) oldalak \pause
+\end{itemize}
+Mértékadóság a belinkekbõl jön, a központiság a kilinkekbõl
+\includegraphics[scale=1]{hits.jpg} 
+\end{frame}
+
+\begin{frame}
+\frametitle{HITS és SVD}
+\[a^{\left(k+1\right)}= h^{\left(k\right)}A\]
+\[h^{\left(k+1\right)}= a^{\left(k+1\right)}A^T\]
+\[a^{\left(k+1\right)}=a^{\left(k\right)}A^TA=a^{\left(1\right)}\left(A^TA\right )^k\]
+\[h^{\left(k+1\right)}=h^{\left(k\right)}AA^T=h^{\left(1\right)}\left(AA^T\right )^k\]
+\[a^{\left(k+1\right)}=a^{\left(1\right)}\left(A^TA\right )^k=
+a^{\left(1\right)}V\Sigma U^TU\Sigma V^TV\Sigma\dots U\Sigma V^T=
+a^{\left(1\right)}V\Sigma^{2k}V^T\]
+\[h^{\left(k+1\right)}=h^{\left(1\right)}\left(AA^T\right )^k=
+h^{\left(1\right)}U\Sigma V^TV\Sigma U^TU\Sigma\dots V\Sigma U^T=
+h^{\left(1\right)}U\Sigma^{2k}U^T\]
+$i$. a legnagyobb nem $0$ irány és $\sigma_i$-vel normálunk: $a\rightarrow v_i$, $h\rightarrow u_i$
+\end{frame}
+
+\section{A spektrum}
+\subsection{A Laplace-mátrix és a normalizált Laplace-mátrix}
+\begin{frame}
+\frametitle{A Laplace-mátrix}
+$G=(V,w)$ élsúlyozott gráf.
+\[w(u,v)=w(v,u)\]
+\[w(u,v) \geq 0\]
+\[d_v=\sum_{uv \in E\left (G\right )}w\left (u,v\right )\]
+\begin{defi}[Laplace-mátrix]
+\[L(u,v)=\left\{
+\begin{array}{cc}
+d_v-w(u,v) & \textrm{ha $u = v$ }\\ 
+-w(u,v) & \textrm{ha $u$ és $v$ szomszédos} \\ 
+0 & \textrm {egyébként}
+\end{array} \right.\]
+\[L=D-W\]
+\end{defi}
+\end{frame}
+
+\begin{frame}
+\frametitle{A normalizált Laplace-mátrix és spektrum}
+Normálunk a fokszámokkal
+\[\mathcal{L}=D^{-1/2}LD^{-1/2} = I-D^{-\frac{1}{2}}WD^{-1/2}\]
+\begin{defi}[Spektrum] A $G$ gráfhoz tartozó $\mathcal{L}$ normalizált Laplace-mátrix sajátértékeit:
+\[0=\lambda_0\leq\lambda_1\leq\lambda_2\dots\leq\lambda_{n-1}\]
+a $G$ spektrumának nevezzük.
+\end{defi}
+Gyakran használatos az $I-\mathcal{L}$ mátrix is.
+\end{frame}
+
+\begin{frame}
+\frametitle{A spektrum tulajdonságai}
+\begin{itemize}
+
+\item $\mathcal{L}$ szimmetrikus, pozitív szemidefinit, ezért az összes sajátérték valós, nemnegatív
+\item A $0$ akkor és csak akkor egyszeres sajátérték, ha a gráf összefüggõ
+\item A $0$-hoz tartozó sajátvektor a
+$\sqrt{\underline{d}}=\left(\sqrt{d_1},\dots,\sqrt{d_n}\right)^T$ vektor
+\item Ha a gráf nem összefüggõ, akkor a spektrum az egyes összefüggõ részek spektrumának uniója
+\item $\sum_{i=0}^n \lambda_i = tr\left(\mathcal{L}\right) = n $
+\item $\lambda_1 \leq \frac{n}{n-1}$
+\item $\lambda_{n-1} \geq \frac{n}{n-1}$
+\end{itemize}
+
+\end{frame}
+
+\section{Bipartíciók}
+\begin{frame}
+\frametitle{Bipartícionálás}
+Szeretnénk a csúcsokat két csoportba osztani: $S, \bar{S}$ \\ 
+Legkézenfekvõbb: min vágás \\ \pause
+\alert{Baj! A minimum gyakran degenerált eset.}
+
+\begin{center}
+\includegraphics[scale=0.5]{mincut.jpg} 
+\end{center}
+
+\end{frame}
+\subsection{A Cheeger-konstans}
+
+\begin{frame}
+Megoldás: normalizálunk!
+\[vol S = \sum_{v\in S}d_v.\]
+\end{frame}
+
+\begin{frame}
+\frametitle{A Cheeger-konstans}
+Egy $G=(V,w)$ $S \subset V$ csúcshalmazára értelmezzük a következõ mennyiséget:
+\[h_g(S)=\frac{|w(S,\overline{S})|}{min(vol \ S, vol \bar{S})}.\]
+\begin{defi}[Cheeger-konstans]
+Egy $G=(V,w)$-hoz tartozó Cheeger-konstans
+\[h_G=\min_{S\subset V}h_G\left(S\right).\]
+\end{defi}
+\end{frame}
+
+\subsection{Cheeger-egyenlõtlenség}
+
+\begin{frame}
+\frametitle{Cheeger-egyenlõtlenség}
+\begin{tetel}[Cheeger-egyenlõtlenség]
+Egy $G=(V,w)$ összefüggõ élsúlyozott gráfhoz tartozó $h_G$ Cheeger-konstansra és a spektrumának legkisebb pozitív sajátértékére igazak az alábbi egyenlõtlenségek:
+\[\frac{\lambda_1}{2} \leq h_G \leq min\left(1,\sqrt{2\lambda_1}\right).\]
+Ha $\lambda_1 \leq 1$ (vagyis $G$ nem a teljes gráf), akkor a felsõ becslés javítható:
+\[h_G\leq\sqrt{\lambda_1\left(2-\lambda_1\right)}\]
+\end{tetel}
+\end{frame}
+
+\subsection{Fiedler-vektor}
+\begin{frame}
+\frametitle{A Fiedler-vektor}
+\begin{itemize}
+\item Hogyan találunk jó vágást?
+\item Nézzük a $\lambda_{1}$-hez tartozó sajátvektort
+(ezt az ún. Fiedler-vektor)
+\item A sajátvektor értékei szerint sorba rakjuk a csúcsokat
+\item Megkeressük az optimális vágást
+\end{itemize}
+
+\begin{itemize}
+\item Miért nem a $\lambda_0$-hoz?
+\item Mert $u_0$ minden koordinátája ugyanaz $\Rightarrow$ triviális vágás
+\end{itemize}
+\end{frame}
+
+\section{Multipartíciók}
+\subsection{QP-feladat}
+\begin{frame}
+\frametitle{Kvadratikus feladatként}
+\begin{center}
+Keressük $r_i$ $k$-dimenziós reprezentáns vektorokat!
+\end{center}
+\[
+\min Q_k = \sum_{i < j} w_{ij} ||{r_i - r_j}|| \geq 0
+\]
+\[
+\sum_{i=1}^n r_ir_i^T = I_k 
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{A reprezentációs tétel}
+\begin{tetel}[Reprezentációs tétel hasonlóság gráfokra]
+Tekintsük a $G=(V,W)$ összefüggõ gráfot és a hozzá tartozó $L$ Laplace-mátrixot!
+Jelölje $0=\lambda_0\leq\lambda_1\leq\cdots\leq\lambda_{n-1}$ az $L$ sajátértékeit,
+valamint $u_0,u_1,\dots,u_{n-1}$ a hozzájuk tartozó
+egységhosszú sajátvektorokat! Legyen $k<n$ olyan,
+hogy $\lambda_{k-1}<\lambda_k$!
+Ekkor a célfüggvény értéke a feltételek mellett:
+\[\sum_{i=0}^{k-1}\lambda_i=\sum_{i=1}^{k-1}\lambda_i.\]
+És az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
+\end{tetel}
+\end{frame}
+\subsection{Spektrálklaszterezés}
+\begin{frame}
+\frametitle{Spektrálklaszterezés}
+\begin{enumerate}
+\item Meghatározzuk $\mathcal{L}-t$
+\item Megkeressük az elsõ pár sajátétréket és sajátvektort (érdemes ott vágni, ahol nagy a különbség)
+\item Az oszlopokból mátrixot készítünk
+\item A mártix sorait, mint térbeli vektorokat klaszterezzük (lényegében a HITS pontszám alapján)
+\item $v_i$ az $i$-ik sornak mefelelõ klaszterbe kerül \\
+A HITS pontszám az utak számával arányos, így sûrû részgráfokon magas
+\end{enumerate}
+\end{frame}
+\section{Gyakorlati példa a spektrálklaszterezésre}
+\begin{frame}
+\frametitle{A livejournal.com ismeretségi hálója}
+Példa:
+\begin{itemize}
+\item livejournal.com ismeretségek részgráfja
+\item 2,379,267 felhasználó
+\item 14,286,827 ismeretség
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{A TKC probléma}
+Nagy gráfokon nem mûködik direktben a spektrálklaszterezés.\\ 
+Mi a probléma? \pause
+\begin{center}
+\includegraphics[scale=0.3]{livejournal.jpg} \\
+A kis közösségek "behúzzák" a sajátértéket: $\lambda_{15}\approx 1$ $(I-\mathcal{L})$
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{Lehetséges megoldások}
+\pause
+\begin{itemize}
+\item Csápok összehúzása
+\item Csomópontok összevonása
+\item Klaszterek újraosztása
+\item ...
+\end{itemize}
+\end{frame}
+\begin{frame}
+\begin{center}
+\begin{Huge}
+Köszönöm a figyelmet!
+\end{Huge}
+\end{center}
+\end{frame}
+\end{document}
+
