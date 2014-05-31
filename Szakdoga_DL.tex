@@ -270,8 +270,8 @@ A $U$ és $V$ oszlopait az $A$ mátrix bal, illetve jobboldali szinguláris vektora
 \begin{tet}[SVD létezése]
 Tetszõleges $A \in \mathbb{R}^{n \times m}$ $r$ rangú mátrixnak létezik szinguláris felbontása.
 \end{tet}
-
-\textbf{Bizonyítás.} Teljes indukció $min\left(m,n\right)$-re.
+\begin{biz}
+Teljes indukció $min\left(m,n\right)$-re.
 Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. $a$-hoz található olyan ortogonális $U$ mátrix, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
 
 Ha $min\left(m,n\right) > 1$, akkor a problémát visszavezetjük egy $(n-1)\times(m-1)$ méretû mátrix felbontására. Feltehetõ, hogy $A \neq 0$, különben triviális a felbontás.
@@ -347,62 +347,58 @@ U^{T} A V=
  \end{array} \right) 
 =\Sigma \,.
 $$
-
+\end{biz}
 \subsection{HITS-algoritmus}
 Jon Kleinberg 1998-ban született HITS(Hyperlink-Induced Topic Search)-algoritmusa az internetes oldalak fontosságát próbálja meghatározni a köztük levõ hiperlinkek alapján.
 
-Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi(hub) és mértékadó(authority) oldalakra.
+Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi (hub) és mértékadó (authority) oldalakra.
 Az algoritmus iteratív módon minden oldalnak frissíti a központiság és mértékadóság mértékét,
 azon heurisztika mentén, hogy egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
 
-A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok; az éleket pedig a hiperlinkek határozzák meg, az. $auth,hub:V\rightarrow\mathbb{R}$ függvények használjuk majd az egyes oldalak, mértékadóságának és központiságának jelzésére.
+A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok; az éleket pedig a hiperlinkek határozzák meg, az. $auth,hub:V\rightarrow\mathbb{R}$ függvényeket használjuk majd az egyes oldalak mértékadóságának és központiságának jelzésére.
 
 \subsubsection{Az algoritmus}
 Tehát a heurisztika szerint egy oldal központiságát az határozza meg, hogy mennyire mértékadó oldalakra mutat rá.
 Tehát a központiság a kiélekbõl jön.
 
-Feltevésünk szerint akkor lesz egy oldal mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a beélekbõl fog származni.
+Feltevésünk szerint egy oldal akkor lesz mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a beélekbõl fog származni.
 
 Az algoritmus tehát a következõképpen mûködik.
 \begin{enumerate}
-\item Megválasztjuk az $auth$, és $hub$ kezdõértékeket
-\item Frissítjük minden csúcs $auth$ értékekét a beélek mentén a szomszédok aktuális $hub$ értéke szerint \label{iterLepes}
+\item Megválasztjuk az $auth$, és $hub$ kezdõértékeket.
+\item Frissítjük minden csúcs $auth$ értékekét a beélek mentén a szomszédok aktuális $hub$ értéke szerint.\label{iterLepes}
+\[auth^{\left(k+1\right)}\left(v\right)=\sum_{\left(w,v\right)\in E}hub^{\left(k\right)}\left(w\right)\]
 \item Frissítjük minden csúcs $hub$ értékét a kiélek mentén a 
-szomszédok aktuális $auth$ értéke szerint
+szomszédok aktuális $auth$ értéke szerint.
+\[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
 \item Esetlegesen normálhatjuk az $auth$ és $hub$ értékeket
 \item Ellenõrizzük, hogy egy leállási feltétel teljesül-e, ha igen megállunk
 \item Visszatérünk a \ref{iterLepes}. pontra
 \end{enumerate}
-%TODO Melyik jobb??
-\textbf{Bemenet.} $G=(V,E)$ gráf, $G$ adjacencia mátrixa $S$, valamint az $i$ iterációszám,
-$auth^{\left(1\right)}$, $hub^{\left(1\right)}$ kezdeti  értékek.
 
-\textbf{Iterációs lépés.}
-A $k$-ik iterációban:
-\[auth^{\left(k+1\right)}\left(v\right)=\sum_{\left(w,v\right)\in E}hub^{\left(k\right)}\left(w\right)\]
-\[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
-\textbf{Kimenet.} az $auth^{\left(i+1\right)}, hub^{\left(i+1\right)}$ függények.
+A normalizációs lépés, csak numerikus okok miatt szerepel, mivel a sorrenden nem változtat.
 \subsubsection{Az algoritmus elemzése}
-Számos kérdés merül fel az algoritmussal kapcsolatban.
-\begin{enumerate}
-\item Konvergál-e az algoritmus?
-\item Mit érdemes $auth^{\left(1\right)}$-nak és $hub^{\left(1\right)}$-nak választani?
-\item Hogyan lehet az $auth$ és $hub$ értékeket hatékonyan számolni?
-\end{enumerate}
+%Az algoritmussal kapcsolatban számos kérdés merül fel.
+%\begin{itemize}
+%\item Konvergál-e az algoritmus?
+%\item Milyen értékeket érdemes $auth^{\left(1\right)}$-nak és $hub^{\left(1\right)}$-nak választani?
+%\item Hogyan lehet az $auth$ és $hub$ értékeket hatékonyan számolni?
+%\end{itemize}
 
-A kérdések megválaszolását segíti, ha az $A$ mátrix segítségével írjuk fel az algoritmus egy lépését, majd használjuk a szinguláris felbontást.
+%A kérdések megválaszolását segíti, ha
+Az algoritmus egy lépését az adjacencia mátrix segítségével írjuk fel, majd használjuk a szinguláris felbontást.
 
-Készítünk az $auth$ és $hub$ értékekbõl egy $a$ és $h$ sorvektort.
+Készítsünk az $auth$ és $hub$ értékekbõl egy $a$ és $h$ sorvektort!
 \[a^{(k)} = (auth^{(k)}(v_1),\dots , auth^{(k)}(v_n));\]
 \[h^{(k)} = (hub^{(k)}(v_1),\dots , hub^{(k)}(v_n));\]
 
-Az elõbb definiált vektorokkal és $A$-val a következõképp írhatjuk fel az iterációs lépést:
+Az elõbb definiált vektorokkal és az $A$ adjacenciamátrixszal a következõképp írhatjuk fel az iterációs lépést:
 \[a^{\left(k+1\right)}= h^{\left(k\right)}A\]
 \[h^{\left(k+1\right)}= a^{\left(k+1\right)}A^T\]
-Egymásba helyettesítve a két egyenletet kapjuk:
+Egymásba helyettesítve a két egyenletet a következõket kapjuk:
 \[a^{\left(k+1\right)}=a^{\left(k\right)}A^TA=a^{\left(1\right)}\left(A^TA\right )^k\]
 \[h^{\left(k+1\right)}=h^{\left(k\right)}AA^T=h^{\left(1\right)}\left(AA^T\right )^k\]
-Alkalmazzuk $A=U\Sigma V^T$ SVD felbontását. Mivel $A$ négyzetes mátrix, ezért $\Sigma$ is emiatt $\Sigma=\Sigma^T$.
+Alkalmazzuk $A=U\Sigma V^T$ szinguláris felbontását. Mivel $A$ négyzetes mátrix, ezért $\Sigma$ is az, így $\Sigma=\Sigma^T$.
 \[a^{\left(k+1\right)}=a^{\left(1\right)}\left(A^TA\right )^k=
 a^{\left(1\right)}V\Sigma U^TU\Sigma V^TV\Sigma\dots U\Sigma V^T=
 a^{\left(1\right)}V\Sigma^{2k}V^T\]
@@ -429,9 +425,9 @@ Normalizáljuk a $\Sigma$ mátrixot $\sigma_1$-gyel.
 \end{array}
 \right)
 \]
-Tehát az elsõ elemet kivéve a mátrix összes többi eleme az iterációszámban exponenciális sebességel tart $0$-hoz.
+Tehát az elsõ elemet kivéve a mátrix összes többi eleme az iterációszámban exponenciális sebességgel tart $0$-hoz.
 
-Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor ezzel eniminálhatjuk az elsõ szinguláris érték hatását. Ilyenkor tehát érdemes $\sigma_2$-vel mormalizálni.
+Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor ezzel eliminálhatjuk az elsõ szinguláris érték hatását. Ilyenkor tehát érdemes $\sigma_2$-vel normalizálni.
 De ugyanígy választhatunk az elsõ $k$ szinguláris vektorra merõleges vektort. Ekkor a $\sigma_{k+1}$-gyel normálva a HITS értékeket $u_{(k+1)}$ fogja meghatározni.
 
 Szemléletes jelentését is társíthatunk az $A^k$, valamint az $(A^TA)^k$ mátrixokhoz.
