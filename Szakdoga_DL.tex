@@ -99,105 +99,122 @@
 \newpage
 
 \begin{abstract}
-
+Jelen dolgozat célja, hogy a spektrálgráfelméletbe betekintést nyújtson.
+Szeretnénk bemutatni a téma elõzményeit, fõbb fogalmait, mint a Laplace-mátrix, a Fiedler-vektor, vagy a Cheeger-konstans. Végül egy valós példán mutatjuk be egy lehetséges alkalmazását a módszernek.
 \end{abstract}
 \newpage
 
 \section{Bevezetés}
+%TODO Bevezetõt írni
+
+
 \section{Szinguláris felbontás}
-Legelõször egy általános keretek közt alkalmazható módszert , a szinguláris felbontást szeretnénk bemutatni.
+Legelõször egy általános keretek közt alkalmazható módszert, a szinguláris felbontást szeretnénk bemutatni.
 
-A mátriok szinguláris felbontásának(\textbf{S}ingular \textbf{V}alue \textbf{D}ecomposition, röviden SVD) létezését már a XIX. század végén bizonyította egymástól függetlenül Beltrami\cite{beltrami} és Jordan\cite{jordan}. A szinguláris felbontást azóta számos fontos területen alkalmazzák. Ilyenek például a homogén lineáris egyenletek megoldása, pszeudoinverz számolása, kis rangú mátrixszal való közelítés, a legkisebb négyzetekd módszere, vagy a fõkoponens analízis.
+A mátrixok szinguláris felbontásának(\textbf{S}ingular \textbf{V}alue \textbf{D}ecomposition, röviden SVD) létezését már a XIX. század végén bizonyította egymástól függetlenül Beltrami\cite{beltrami} és Jordan\cite{jordan}. A szinguláris felbontást azóta számos fontos területen alkalmazzák. Ilyenek például a homogén lineáris egyenletek megoldása, pszeudoinverz számolása, kis rangú mátrixszal való közelítés, a legkisebb négyzetek módszere, vagy a fõkomponens analízis.
 
+Bár az SVD mátrixok felbontását adja meg, könnyen és gyorsan tudjuk gráfokra is alkalmazni. Ezt úgy tehetjük meg, hogy vesszük a gráf valamelyik mátrix alakú reprezentációját. Egy ilyen alkalmazásra
+mutat jó példát majd a HITS-algoritmus.
 
 \subsection{Vektorok és mátrixok normája}
 Hogy a szinguláris felbontással kapcsolatos tételeket bizonyítani tudjuk, szükségünk lesz a mátrixnormák, fõként a \emph{Frobenius-norma} ismeretére.
 
 \begin{subequations}
-A \lekep[\nu]{\Rnm{n}{m}}{\R} leképezést \emph{mátrixnormának}
-nevezzük, ha tetszõleges $A,B \in \Rnm{n}{m}$ mátrixszal és $\alpha \in \R$ számmal  kielégíti az alábbi három összefüggést:
+A \lekep[\nu]{\Rnm{n}{m}}{\mathbb{R}} leképezést \emph{mátrixnormának}
+nevezzük, ha tetszõleges $A,B \in \Rnm{n}{m}$ mátrixszal és $\alpha \in \mathbb{R}$ számmal  kielégíti az alábbi három összefüggést:
 \begin{align*}
 A \neq 0      &\kov \nu(A) > 0 \\
 \nu(\alpha A) &= |\alpha| \nu(A) \\
 \nu(A+B)      &\leq \nu(A) + \nu(B) 
 \end{align*}
-A mátrixnorma $m=1$ speciális eseteként adódik a \emph{vektornorma}, elõször
-néhány szót ejtünk errõl és utána a mátrixokéról. Vektorok \emph{2-normáját} az alábbi egyenlõséggel definiáljuk, ahol $v$ egy $n$-dimenziós vektor:
-\begin{align*}
-\norma[2]{v} &\defegy \sqrt{ \sum_{i=1}^n  |v_i|^2  } = \sqrt{v^{T} v}\,.
-\end{align*}
-Az elsõ két norma-axióma nyilvánvalóan teljesül, a háromszög-egyenlõtlenség pedig a Cauchy-egynlõtlenség felhasználásával igazolható. A Cauchy-egyenlõtlenség vektorok skaláris szorzata és 2-normája közti kapcsolatot ír le:
-\begin{align*}
-|x^{T} y | \le \norma[2]{x} \norma[2]{y}, 
-\end{align*}
-ahol egyenlõség pontosan akkor van, ha $x$ és $y$ lineárisan összefüggõk.
+A mátrixnorma $m=1$ speciális eseteként adódik a \emph{vektornorma}. A következõkben néhány szót ejtünk errõl, azt követõen pedig a mátrixnormákról.
 
-Vektornormákat más módon is definiálhatnánk, például négyzetgyökvonás és négyzetre emelés helyett tekinthetnénk $1/p$-ik illetve $p$-ik hatványt is. Azonban a 2-normát egy fontos tulajdonság tünteti ki a lehetséges vektornormák közül. Egy vektornormát \emph{unitér-invariánsnak} nevezünk, ha tetszõleges $x$ vektor 
+\subsubsection{Vektornormák}
+
+Vektorok \emph{2-normáját} az alábbi egyenlõséggel definiáljuk.
+\begin{defin}[2-norma]
+ $v\in \mathbb{R}^n$ 2-normája
+\[\norma[2]{v} \defegy \sqrt{ \sum_{i=1}^n  |v_i|^2  } = \sqrt{v^{T} v}\,.\]
+\end{defin}
+Az elsõ két normaaxióma nyilvánvalóan teljesül, a háromszög-egyenlõtlenség pedig a Cauchy-egyenlõtlenség felhasználásával igazolható. A Cauchy-egyenlõtlenség vektorok skaláris szorzata és 2-normája közti kapcsolatot ír le:
+\begin{tetel}[Cauchy-egyenlõtlenség] Ha $x,y \in \mathbb{R}^n$, akkor
+\[|x^{T} y | \le \norma[2]{x} \norma[2]{y}, \]
+
+ahol egyenlõség pontosan akkor van, ha $x$ és $y$ lineárisan összefüggõk.
+\end{tetel}
+
+Vektornormákat más módon is definiálhatnánk, például négyzetgyökvonás és négyzetre emelés helyett tekinthetnénk $1/p$-edik illetve $p$-edik hatványt is. Azonban a 2-normát egy fontos tulajdonság emeli ki a lehetséges vektornormák közül. 
+\begin{defin}[Unitér-invariancia vektornormákra]
+Egy vektornormát \emph{unitér-invariánsnak} nevezünk, ha tetszõleges $x$ vektor 
 és $U$ ortogonális mátrix esetén 
 \begin{align*}
 \norma{x}&=\norma{Ux}\,.
 \end{align*}
+\end{defin}
 Elõször megmutatjuk, hogy a 2-norma rendelkezik a fenti tulajdonsággal:
 $$
  \norma[2]{x}^2=x^{T} x=x^{T} U^{T} U x =(Ux)^{T} (Ux)=\norma[2]{Ux}^2,
 $$
-tetszõleges $x$ vektorral és $U$ ortogonális mátrixszal, ahonnan adódik az állítás. 
+tetszõleges $x$ vektorral és $U$ ortogonális mátrixszal, ahonnan adódik az állításunk helyessége. 
 Másrészt a fordított irányhoz legyen {\normafv} egy tetszõleges unitér-invariáns norma, és $x_1$ egy 
 olyan vektor, melyre $\norma{x_1}=1$. Ekkor az \halmaz{x}{\norma{x}=1} halmaz elemei felírhatóak 
 $U x_1$ alakban valamely $U$ ortogonális mátrixszal. Az elõzõ egyenlõséglánc felhasználásával e halmaz 
-elemeinek 2-normája megegyezik $\norma[2]{x_1}$ mennyiséggel. Ezzel igazoltuk a következõ állítást:
+elemeinek 2-normája megegyezik a $\norma[2]{x_1}$ mennyiséggel. Ezzel igazoltuk a következõ állítást:
 \begin{allitas}\label{UnitInvVekt}
-Egy {\normafv}  vektornorma pontosan akkor {\unitinv}, ha valamely $c \ge 0$ konstanssal 
-$\normafv = c \normafv[2]$, azaz ha megegyezik a 2-norma  konstans szorosával.
+Egy {\normafv}  vektornorma pontosan akkor {\unitinv}, ha valamely $c \ge 0$ konstansra 
+$\normafv = c \normafv[2]$, azaz ha a 2-norma konstans többszöröse.
 \end{allitas}
-Az unitér-invariancia fogalma a vektorok és normák geometriai jelentésével is jól magyarázható. 
-A vektort egy irányított szakasznak képzeljük, a normája megegyezik annak  ,,hosszával''. 
-Az ortogonális mátrixszal való szorzás pedig a forgatás fogalmát általánosítja magasabb dimenziókban. Így egy norma 
-unitér-invarianciája azt a tulajdonságot írja le, hogy a vektor hossza forgatás közben nem változik.
-
-Most áttérünk mátrixok normájának tárgyalására. Két különbözõ mátrixnormát fogunk bevezetni és használni. Elõször a vektorok 2-normájához hasonló módon definiálunk mátrixnormát:
+\subsubsection{Mátrixok normái}
+Most áttérünk mátrixok normáinak tárgyalására. Két különbözõ mátrixnormát fogunk bevezetni és használni. Elõször a vektorok 2-normájához hasonló módon definiálunk mátrixnormát, amit \emph{Frobenius-normának} nevezünk:
+\begin{defin}[Frobenius-norma]
 \begin{align*}
 \norma[F]{A} &\defegy \sqrt{\sum_{i=1}^{n}  \sum_{j=1}^{m} A_{ij}^2 }\, ,
 \end{align*}
-amelyet \emph{Frobenius-normának} nevezünk. 
+\end{defin}
 
-A Frobenius-norma a Cauchy-egynlõtlenséghez hasonló összefüggést is kielégít:
+A Frobenius-norma a Cauchy-egynlõtlenséghez hasonló összefüggést is kielégít.
 \begin{allitas}\label{FrobKonz}
 Tetszõleges $A \in \Rnm{n}{m}, B \in \Rnm{m}{p}$ mátrixok esetén
 \begin{align*}
 \norma[F]{AB} \leq \norma[F]{A} \norma[F]{B}.
 \end{align*}
 \end{allitas}
-A bizonyítás elemi lépésekkel végezhetõ a Cauchy-egyenlõtlenség felhasználásával. Egy mátrixnormát \emph{konzisztensnek} nevezünk, ha összeszorozható mátrixok és szorzatuk kielégíti a fenti egyenlõtlenséget. Ezzel a tulajdonsággal nem minden mátrixnorma rendelkezik, pedig a konzisztenciára nagy szükség van iterációs algoritmusok hibabecslésénél. Ilyen eljárásokban az $n$-ik lépés hibavektorát az $n-1$-ikbõl egy iterációs mátrix szorzásával kapjuk. Ha például az összes iterációs mátrix normája kisebb $\frac{1}{2}$-nél, akkor a norma konzisztenciájából adódik a hiba $(\frac{1}{2})^n$ sebességû lecsengése. 
+A bizonyítás elemi lépésekkel végezhetõ a Cauchy-egyenlõtlenség felhasználásával. Egy mátrixnormát \emph{konzisztensnek} nevezünk, ha összeszorozható mátrixok és szorzatuk kielégíti a fenti egyenlõtlenséget. Ezzel a tulajdonsággal nem minden mátrixnorma rendelkezik, pedig a konzisztenciára nagy szükség van iterációs algoritmusok hibabecslésénél.
+%Ilyen eljárásokban az $n$-edik lépés hibavektorát az $n-1$-edikbõl egy iterációs mátrix szorzásával kapjuk. Ha például az összes iterációs mátrix normája kisebb $\frac{1}{2}$-nél, akkor a norma konzisztenciájából adódik a hiba $(\frac{1}{2})^n$ sebességû lecsengése. 
 
 A második általunk használt mátrixnormát úgy definiáljuk, hogy az konzisztens legyen a vektorok 2-normájával, azaz szeretnénk ha minden $x$ vektorra és $A$ mátrixra teljesülne a következõ egyenlõtlenség: 
 \begin{align*}
 \norma[2]{Ax} \le \norma{A} \norma[2]{x}.
 \end{align*}
-A egyenlõtlenségbõl adódik egy alsó becslés \norma{A} értékére, ezzel az alsó becsléssel definiáljuk mátrixok \emph{2-normáját}, más néven \emph{spektrálnormáját}:
-\begin{align*}
-\norma[2]{A} &\defegy \max_{\norma[2]{x}=1} \norma[2]{Ax}\,.
-\end{align*}
-A képletet röviden úgy értelmezhetjük, hogy egy $A$ mátrix esetén \norma[2]{A} egy $x$ vektor $A$ mátrixszal történõ szorzásával elérhetõ \idez{legnagyobb nyújtás} mértékét határozza meg. A norma-axiómák teljesülése mindkét esetben egyszerûen ellenõrizhetõ a vektorok 2-normájának tulajdonságaiból.
+A egyenlõtlenségbõl adódik egy alsó becslés \norma{A} értékére. Ezzel az alsó becsléssel definiáljuk mátrixok \emph{2-normáját}, más néven \emph{spektrálnormáját}.
+\begin{defin}[Spektrálnorma]
+\[\norma[2]{A} \defegy \max_{\norma[2]{x}=1} \norma[2]{Ax}\,.\]
+\end{defin}
+A képletet röviden úgy értelmezhetjük, hogy egy $A$ mátrix esetén \norma[2]{A} egy $x$ vektor $A$ mátrixszal történõ szorzásával elérhetõ \idez{legnagyobb nyújtás} mértékét határozza meg. A normaaxiómák teljesülése mindkét esetben egyszerûen ellenõrizhetõ a vektorok 2-normájának tulajdonságaiból.
 
-Most néhány olyan összefüggést mutatunk, melyek szintén meghatározzák az eddig megismert mátrixnormákat. Tetszõleges $A \in \Rnm{n}{m}$ mátrix esetén az $A^{T}A$ mátrix szimmetrikus és pozitív szemidefinit, ezért sajátértékei nem negatív valós számok, melyeket $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_m \ge 0 $ jelöl. 
+Most néhány olyan összefüggést mutatunk be, melyek szintén meghatározzák az eddig megismert mátrixnormákat. Tetszõleges $A \in \Rnm{n}{m}$ mátrix esetén az $A^{T}A$ mátrix szimmetrikus és pozitív szemidefinit, ezért sajátértékei nem negatív valós számok, melyeket $\lambda_m \ge \dots \ge \lambda_1 \ge 0 $ jelöl. 
 \begin{allitas}\label{normaAegyAHegyAllitas} \begin{eqnarray}
 \norma[F]{A}      &=&  \sqrt{ \nyom{A^{T} A} }  \\
 \norma[F]{A}      &=&  \sqrt{ \lambda_1+\lambda_2+\dots +\lambda_m }  \label{FNormaSajatErt}\\
-\norma[2]{A}      &=&  \sqrt{\lambda_1} \label{2NormaSajatErt}\\ 
+\norma[2]{A}      &=&  \sqrt{\lambda_m} \label{2NormaSajatErt}\\ 
 \norma[2]{A}      &=&  \max_{\norma[2]{x}=1,\, \norma[2]{y}=1} |y^{T} A x| \label{MaxyAx}  \\
 \norma[2]{A}      &=&  \norma[2]{A^{T}} \label{normaAegyAHegyAT} 
 \end{eqnarray}
 \end{allitas} 
 \begin{biz}
-Az $A^{T}A$ mátrix fõátlójában szereplõ $j$-ik elem megegyezik az $A$ mátrix $j$-ik oszlopában elõforduló elemek négyzetösszegével. Így $\nyom{A^{T} A}$ nem más mint $A$ összes elemének négyzetösszege, ezzel igazoltuk az elsõ egyenlõtlenséget. A második összefüggés pedig az elsõ következménye, hiszen egy mátrix nyoma megegyezik sajátértékeinek összegével. A harmadik összefüggéshez:
+Az $A^{T}A$ mátrix fõátlójában szereplõ $j$-edik elem megegyezik az $A$ mátrix $j$-edik oszlopában elõforduló elemek négyzetösszegével. Így $\nyom{A^{T} A}$ nem más mint $A$ összes elemének négyzetösszege. Ezzel igazoltuk az elsõ egyenlõs
+éget. 
+
+Az \ref{FNormaSajatErt} összefüggés pedig az elsõ következménye, hiszen egy mátrix nyoma megegyezik sajátértékeinek összegével.
+
+Az \ref{2NormaSajatErt} összefüggést a következõ módon kapjuk meg:
 $$
 \norma[2]{A}
 =\max_{\norma[2]{x}=1} \norma[2]{Ax}
 =\max_{\norma[2]{x}=1} \sqrt{|x^{T}A^{T}Ax| }
 =\sqrt{\lambda_1} \,.
 $$
-A negyedik egyenlõség esetén a $\ge$ irány a Cauchy-egyenlõtlenségbõl adódik, mert 
+A \ref{MaxyAx} egyenlõség esetén a $\ge$ irány a Cauchy-egyenlõtlenségbõl adódik, mert 
 $$\norma[2]{Ax}=\norma[2]{y} \norma[2]{Ax} \ge |y^{T} A x |\, ,$$
 tetszõleges $y$ és $x$ vektorra, melynél $\norma[2]{x}=\norma[2]{y}=1$.
  Legyen $x_1$ az $\norma[2]{A x}$ maximumát beállító vektor, ezt behelyettesítve az elõzõ 
@@ -205,21 +222,21 @@ egyenlõtlenségbe kapjuk a $\ge$ irányt. Másrészt $x_1$ és
 $y_1 \legy \frac{1}{\norma[2]{A x_1}}A x_1 $ választással
  $$|y_1^T A x_1|=\norma[2]{Ax_1}=\norma[2]{A}$$
 adódik, amivel a $\le$ irányt is beláttuk. 
-Végül az utolsó összefüggés a negyedik következménye,
+Végül az \ref{normaAegyAHegyAT} összefüggés a \ref{maxLambdaLemma} következménye,
  hiszen a szimmetrikus kifejezésben szereplõ $A$ lecserélhetõ $A^T$-ra.
 \end{biz}
- 
+%
 Mátrixok normájához is társítható a vektorokéhoz hasonló geometriai jelentés.
 Tetszõleges $A$ mátrix esetén az 
 $$ 
 E_A \defegy \halmaz{Ax}{\norma[2]{x}=1} 
 $$ 
-egy ellipszoidot határoz meg, melynek dimenziója $\rang{A}$. A mátrix normája szemléletesen ennek az  ellipszoidnak a \idez{nagyságát} jelenti. 
-Az ellipszoidot körbevehetjük egy olyan $\rang{A}$-dimenziós téglatesttel, melynek élei párhuzamosak a fõtengelyekkel, és az élek hossza megegyezik a fõtengelyek hosszával. Ekkor a Frobenius-norma megegyezik a téglatest leghosszabb testátlójával, a 2-norma pedig annak leghosszabb élével vagyis a legnagyobb fõtengely hosszával. Ez \aref{FNormaSajatErt}.~és \aref{2NormaSajatErt}.~ egyenlõségbõl adódik felhasználva, 
-hogy az ellipszoid fõtengelyeinek hossza megegyezik $A^{T} A$ sajátértékeivel (utóbbi bizonyításához \lasd{\cite{Rozsa}}). 
+egy ellipszoidot határoz meg, melynek dimenziója $\rang{A}$. A mátrix normája szemléletesen ennek az  ellipszoidnak a \idez{nagyságát} jelenti.
+Az ellipszoidot körbevehetjük egy olyan $\rang{A}$-dimenziós téglatesttel, melynek élei párhuzamosak a fõtengelyekkel, és az élek hossza megegyezik a fõtengelyek hosszával. Ekkor a Frobenius-norma megegyezik a téglatest leghosszabb testátlójával, a 2-norma pedig annak leghosszabb élével vagyis a legnagyobb fõtengely hosszával. Ez (\ref{FNormaSajatErt}) és az (\ref{2NormaSajatErt}) egyenlõségbõl adódik felhasználva, 
+hogy az ellipszoid fõtengelyeinek hossza megegyezik $A^{T} A$ sajátértékeivel\cite{Rozsa}. 
 
-Ha egy $A$ mátrixot az $U^T$  és a $V$ ortogonális mátrixokkal szorzunk,  akkor $E_A$-ból forgatással nyerjük az $E_{U^{T} A V}$ ellipszoidot. A mátrix normájától azt várnánk, hogy ne változzon e mûvelet hatására. E tulajdonság azonban nem igaz tetszõleges normára.
-\begin{defin}
+Ha egy $A$ mátrixot az $U^T$ és a $V$ ortogonális mátrixokkal szorzunk,  akkor $E_A$-ból forgatással nyerjük az $E_{U^{T} A V}$ ellipszoidot. A mátrix normájától azt várnánk, hogy ne változzon e mûvelet hatására. E tulajdonság azonban nem igaz tetszõleges normára.
+\begin{defin}[Unitér-invariania mátrixnormákra]
 Egy {\normafv} mátrixnormát \emph{{\unitinv}nak} mondunk, ha tetszõleges $U$ és $V$ ortogonális mátrixokkal
 $$ \norma{U^{T} A V} = \norma{A}. $$
 \end{defin}
@@ -230,32 +247,32 @@ A Frobeinus és a 2-normák {\unitinv}ak.
 A 2-normára már korábban beláttuk, a Frobenius-normára pedig nyilvánvaló, hogy egy mátrix és 
 transzponáltja esetén megegyezik, ezért elég azt megmutatni, hogy egy ortogonális mátrixszal balról szorozva nem változik a norma. Utóbbi a 2-norma esetén abból adódik, hogy a maximalizálandó $\norma[2]{Ax}= \norma[2]{U^{T} Ax} $ bármely $x$ esetén. A Frobenius-norma {\unitinvanci}ája szintén visszavezethetõ vektorok 2-normájáéra, hiszen az $U$ mátrixszal szorozhatunk oszloponként, és a normát is számíthatjuk az oszlopokéból.   
 \end{biz}
-Az {\unitinv} normák karakterizálása nehezebb probléma mint a vektorokról szóló \ref{UnitInvVekt}.~állítás, az errõl szóló Neumann Jánostól származó tételhez \lasd{\cite{Stewart90}}. 
 
- A dolgozat hátralevõ részében vektorok 2-normájára egyszerûen a \normafv jelölést, mátrixokéra pedig a \normafv[2] jelölést, Frobenius-normára  a \normafv[F] jelölést használjuk. 
+A dolgozat hátralevõ részében vektorok 2-normájára egyszerûen a \normafv jelölést, mátrixokéra pedig a \normafv[2] jelölést, Frobenius-normára  a \normafv[F] jelölést használjuk. 
 
 \end{subequations}
-\subsection{Szinguláris 	felbontás(SVD)}
+\subsection{Szinguláris felbontás létezése}
+Most már minden eszközünk megvan, hogy a szinguláris felbontást definiáljuk és létezését bizonyítsuk.
 \begin{defin}[Szinguláris felbontás]
 Egy $A \in \mathbb{R}^{n\times m}$ mátrix szinguláris felbontásán az olyan
 \[A = U \Sigma V^T\]
-szorzattá bontás értjük, ahol $U \in \mathbb{R}^{n\times n}$ és
+szorzattá bontást értjük, ahol $U \in \mathbb{R}^{n\times n}$ és
 $V \in \mathbb{R}^{m\times m}$ ortogonális mátrixok. Továbbá a
-$\Sigma\in\mathbb{R}^{n\times m}$, és a ,,fõátlójában''
+$\Sigma\in\mathbb{R}^{n\times m}$, és a ,,fõátlójában'' a
 $\sigma_1\geq\cdots\geq\sigma_r>0$- pozitív számokat csupa $0$ követi.
 \end{defin}
 \begin{defin}[Szinguláris értékek]
 A $\sigma_i$ értékeket az $A$ mátrix szinguláris értékeinek hívjuk.
 \end{defin}
 \begin{defin}[Szinguláris vektorok]
-A $U$ és $V$ oszlopait az $A$ mátrix bal- illetve jobb-oldali szinguláris vektorainak hívjuk.
+A $U$ és $V$ oszlopait az $A$ mátrix bal, illetve jobboldali szinguláris vektorainak hívjuk.
 \end{defin}
 \begin{tet}[SVD létezése]
-Tetszõleges $A \in \mathbb{R}^{n \times m}$ $r$ rangú márixnak létezik szinguláris felbontása.
+Tetszõleges $A \in \mathbb{R}^{n \times m}$ $r$ rangú mátrixnak létezik szinguláris felbontása.
 \end{tet}
 
 \textbf{Bizonyítás.} Teljes indukció $min\left(m,n\right)$-re.
-Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. $a$-hoz található olyan ortogonális $U$, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
+Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. $a$-hoz található olyan ortogonális $U$ mátrix, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
 
 Ha $min\left(m,n\right) > 1$, akkor a problémát visszavezetjük egy $(n-1)\times(m-1)$ méretû mátrix felbontására. Feltehetõ, hogy $A \neq 0$, különben triviális a felbontás.
 \begin{align*}
@@ -936,16 +953,15 @@ $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 
 \subsubsection{Spektrálklaszterezés}
 %TODO spektrálkklaszterezés leírása
-Már láttuk, hogy a Fielder vektor segítségével hogyan határozhatunk meg vágásokat.
-Klaszerezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
+Már láttuk, hogy a Fiedler-vektor segítségével hogyan határozhatunk meg vágásokat.
+Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 \
 \begin{enumerate} 	\label{spektralHeurisztika}
 \item Vegyük a $\lambda_1$-hez tartozó sajátvektort
 \item A Fiedler-vektor szerint sorba rendezzük a csúcsokat
-\item Megekeressük a minimális konduktanciájú vágást a sorrendben
+\item Megkeressük a minimális konduktanciájú vágást a sorrendben
 \item A két részre külön-külön alkalmazzuk az algoritmust
 \end{enumerate}
-
 
 \begin{defin}[$(\alpha , \epsilon )$-partíció]
 Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
@@ -967,11 +983,11 @@ akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
 A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgálnánk meg.
 A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algortimusok gyengébb eredményeket érnek el, mint más megközelítést használó módszerek.
 Ennek okait szeretnénk bemutatni, valamint lehetséges megoldásokat bemutatni egy konkrét példa.
-
-\subsection{A TKC-hatás}
-Lempel és Moran az internetgráf vizsgálatakor találták meg a HITS alogritmus egy hibáját. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
+\subsection{A spektrálklaszterzés hátrányai}
+\subsubsection{A TKC-hatás}
+Lempel és Moran az internetgráf vizsgálatakor találták meg a HITS algoritmus egy hibáját. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
 A hiba okának a kis sûrû részgráfokat azonosították. Ezért a
-jelenséget \emph{tightly kit communities effect}-nek nevezték el.
+jelenséget \emph{tightly kit communities effect}-nek nevezték el. %TODO ezt hogyan lehet szépen megfogalmazni
 \begin{lemma}
 \label{lemma:eigenvector}
 Legyen $S = U \Lambda U^T$ szimmetrikus pozitív szemidefinit mátrix, ahol
@@ -1003,21 +1019,52 @@ Legyen $S$ egy súlyozott gráf  élmátrixa. Ekkor $S^k x$ az $x$-el súlyozott kezd
 A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokra, a Laplace, illetve a súlyozott Laplace mátrixokra is. A \ref{lemma:path-count}.~Lemma szerint azokra a $j$ csúcsokra lesz magas az $[S^k x]_j$  értéke, amelyekbõl nagyon sok súlyozott út indul. A \ref{lemma:eigenvector}.~Lemma szerint ezeknek a $j$ csúcsoknak lesz kiemelkedõ  értéke az elsõ olyan sajátvektorban, amely $x$-re nem merõleges.
 
 \subsection{Lehetséges módszerek a TKC-hatás megoldására}
-Lempel és Moran 
-Ebben a részben néhány heurisztikát szeretnénk ismertetni, melyek segítségével kiküszöbölhetõ a 
-TKC-hatás.
+Ebben a részben néhány heurisztikát szeretnénk ismertetni,
+melyek segítségével javítható a spektrálklaszterezés eredménye.
+\subsubsection{Csomópontok eltávolítása}
+A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}.
 \subsubsection{A SCAN-algoritmus}
-\subsubsection{Csápok összevonása}
-\subsubsection{Klaszeterek újraosztása}
-\subsubsection{Csomópontok összehúzása}
+\subsubsection{Csápok összehúzása}
+Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
+\begin{enumerate}
+\item{Keresünk egy $v$ csúcsot, amire $d_v < d_t$, ha nincs ilyen, akkor megállunk.}
+\item{$v$-t összehúzzuk a legnagyobb fokszámú szomszédjával.}
+\item{Felírjuk, hogy melyik két csúcsot húztuk össze.}
+\item{Újra kezdjük az 1. lépéstõl}
+\end{enumerate}
+Az eljárás véges, mert minden lépésben csökken a csúcsszám.
 
-\subsection{Az adat}
-Példánkban a LiveJournal blog oldal orosz nyelvû felhasználóit szeretnénk kisebb kategóriákba osztani.
+\subsection{Spektrálklaszterezés egy konkrét példán bemutatva}
+\subsubsection{Az adat: livejournal.com}
+Példánkban\cite{kurucz} a LiveJournal(www.livejournal.com) oldal felhasználóit szerették volna klaszterezni.
+A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátság) is bejelölni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
 
-A LiveJournal.com oldalon a felhasználóknak lehetõségük van egymás barátainak lenni(szimmetrikus reláció).
-Az felületetet orosz nyelven használók jelentõs része nem orosz,
-hanem sokan a környezõ országok lakosai(Ukrajna, Fehéroroszország, Észtország,\dots). 
+Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük szerint szeparálják. Az orosz nyelvû felhasználók jelentõs része valójában valamelyik környezõ ország lakosa(Ukrajna, Fehéroroszország, Észtország,\dots).
 
+A gráfban 2.379.267 csúcs és 14.286.827 él szerepelt. A felhasználók több mint 80\% amerikai és körülbelül 5\% orosz.
+
+\subsubsection{A kísérlet menete}
+
+
+\subsubsection{Eredmények}
+Az eredményeket az alábbi ábrák mutatják be.
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{pictures/klaszter_before.jpg} 
+\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozás nélkül}
+\end{figure}
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{pictures/klaszter_after.jpg}
+\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozással}
+\end{figure}
+Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{pictures/sdp_result.jpg}
+\caption{A szemidefinit program kimenete}
+\end{figure}
+A szemidefinit program lett a legeredményesebb.
 \bibliographystyle{huplain}
 
 \bibliography{hivatkozasok}
