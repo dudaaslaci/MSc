@@ -408,7 +408,7 @@ h^{\left(1\right)}U\Sigma V^TV\Sigma U^TU\Sigma\dots V\Sigma U^T=
 h^{\left(1\right)}U\Sigma^{2k}U^T \label{hitsEgyenlet}
 \end{equation}
 
-Most már jól látható, hogy a mértékadóság és a központiság hogyan függ a szinguláris értékektõl és vektoroktól.
+Most már jól látható, hogy a mértékadóság és a központiságot meghatározzák a szinguláris értékek és vektorok
 Normalizáljuk a $\Sigma$ mátrixot $\sigma_1$-gyel.
 \[\Sigma_1 = \left( \begin{array}{cccc}
 \frac{\sigma_1}{\sigma_1} & 0 & \dots & 0 \\ 
@@ -427,8 +427,10 @@ Normalizáljuk a $\Sigma$ mátrixot $\sigma_1$-gyel.
 \]
 Tehát az elsõ elemet kivéve a mátrix összes többi eleme az iterációszámban exponenciális sebességgel tart $0$-hoz.
 
-Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor ezzel eliminálhatjuk az elsõ szinguláris érték hatását. Ilyenkor tehát érdemes $\sigma_2$-vel normalizálni.
-De ugyanígy választhatunk az elsõ $k$ szinguláris vektorra merõleges vektort. Ekkor a $\sigma_{k+1}$-gyel normálva a HITS értékeket $u_{(k+1)}$ fogja meghatározni.
+Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor ezzel eliminálhatjuk az elsõ szinguláris érték hatását. Ilyenkor a második lesz a hangsúlyos szinguláris vektor.
+
+Tehát a HITS-algoritmus alkalmas a szinguláris felbontás meghatározására.
+Ha már ismert az elsõ $k$ szinguláris, akkor választhatunk rájuk merõleges kiinduló vektort. Ekkor a HITS a $k+1$ szinguláris vektorhoz fog konvergálni.
 
 Szemléletes jelentését is társíthatunk az $A^k$, valamint az $(A^TA)^k$ mátrixokhoz.
 $a_{ij}$-re felfoghatjuk úgy is, mint az $i$ és $j$ csúcsok közötti $1$ hosszú séták számára. Most nézzük $A^2$-t.
@@ -456,20 +458,16 @@ V\left(\begin{array}{c}
 \end{array}
 \right) = \sigma_i v_i
 \]
-Tehát láható, hogy a szinguláris értékek az $A^TA$ sajátértékei és a jobb-szinguláris vektorok a sajátvektorok.
-
-\subsubsection{Összefoglalás}
-Tehát láttuk, hogy a HITS értékek csak az adjacencia mátrix szinguláris értékeitõl és vektoraitól függ.
-A kezdõ értékeket jól választva és megfelelõen normálva bármelyik szinguláris vektorhoz tarthatunk.s
-Valamint azt is láttuk, hogy a HITS értékek arányosak az oda-vissza utak számával. %TODO ide valami értelmesebb állítás
+Látható, hogy a szinguláris értékek az $A^TA$ sajátértékei és a jobb-szinguláris vektorok a sajátvektorok.
 
 \section{A spektrum}
+%TODO valami jobb szöveg ide
 Az elõzõ fejezet végén láttuk, hogy egy gráf adjacencia mátrixának sajátértékei, spektruma, és sajátvektorai különleges jelentéssel bírnak, és információt hordoznak a gráf struktúrájáról.
-A legtöbbször mégsem az adjacencia mátrixot alkalmazzuk, mivel
-a spektruma 
+A legtöbbször mégis más reprezentánsokat alkalmazzuk, a spektrumuk kedvezõbb tulajdonságai miatt.
+
 \subsection{Laplace-mátrix és a normalizált Laplace-mátrix}
-%TODO lehet rögtön súlyozottakra mondani
-Elõször egyszerû gráfokra mutatunk ilyen kedvezõbb reprezentánst, az ún. Laplace-mátrix.
+%TODO lehetne rögtön súlyozottakra mondani?
+Elõször egyszerû gráfokra mutatunk ilyen kedvezõbb mátrixot, az ún. Laplace-mátrixot.
 Legyen $G=(V,E)$ egy egyszerû gráf a $|V|=n$ csúcshalmazon, az $|E| \leq \binom{n}{2}$
 élhalmazzal! Jelölje $d_v$ a $v$ csúcs fokszámát. Tekintsük a következõ $L$ mátrixot:
 \begin{defin}[Laplace-mátrix egyszerû gráfokra]\cite{chung1997spectral}
@@ -480,19 +478,19 @@ d_v & \textrm{ha $u = v$ }\\
 0 & \textrm {egyebkent}
 \end{array} \right.\]
 \end{defin}
-Legtöbbször hasonlóság gráfokról mondunnk ki állítások. Ezek olyan egyszerû gráfok, melyekhez adva van egy $w:V\times V \rightarrow \mathbb{R}$ súlyfüggvény, amelyre igazak a következõek.
+Legtöbbször hasonlóság gráfokról mondunk ki állítások. Ezek olyan egyszerû gráfok, melyekhez adva van egy $w:V\times V \rightarrow \mathbb{R}$ súlyfüggvény, amelyre igazak a következõek.
 \[w(u,v)=w(v,u)\]
 \[w(u,v) \geq 0\]
 \[uv \textrm{ nem él} \Leftrightarrow w(u,v)=0\]
 A $w(u,v)$ értékeket mátrixba rendezve kapjuk a $W$ mátrixot.
 Vegyük észre, hogy a $W$ önmagában meghatározza a gráfot, így a hasonlóság gráfokat a $V$ csúcshalmazzal és a $W\geq 0$ súlymátrixszal fogjuk megadni.
 
-A hasonlóság gráfok esetén szükségünk definiáálhatunk egy általánosabb fokszám fogalmat.
+A hasonlóság gráfok esetén szükségünk definiálhatunk egy általánosabb fokszám fogalmat.
 \begin{defin}[Általánosított fokszám]
 $G=(V,W)$ hasonlóság gráf egy $v$ csúcsának általánosított fokszáma
 \[d_v=\sum_{w(u,v) > 0} w(u,v).\]
 \end{defin}
-Most már definiálhatjuk egy hasnlóság gráf Laplace-mátrixát.
+Most már definiálhatjuk egy hasonlóság gráf Laplace-mátrixát.
 \begin{defin}[Laplace-mátrix]
 Egy $G=(V,W)$ hasonlóság gráf Laplace-mátrixa
 \[L(u,v)=\left\{
@@ -503,7 +501,7 @@ d_v-w(u,v) & \textrm{ha $u = v$ }\\
 \end{array} \right.\]
 \end{defin}
 Jelölje $D\in\mathbb{R}^{n\times n}$ a fokszámmátrixot, vagyis azt a mátrixot, amiben minden fõátlón kívüli elem $0$, a fõátlóban pedig rendre $d_v$ áll.
-Ezt a jelölést használva a Laplace-mátrix a következõ formában is felírhatjuuk:
+Ezt a jelölést használva a Laplace-mátrix a következõ formában is felírhatjuk:
 \[L=D-W.\]
 A Laplace-mátrix már sok elõnyös tulajdonsággal rendelkezik. Szimmetrikus, pozitív-szemidefinit, így a sajátértékei nemnegatív, valósak.
 \[\mathcal{L}=D^{-\frac{1}{2}}LD^{-\frac{1}{2}} = I-D^{-\frac{1}{2}}WD^{-\frac{1}{2}}\]
@@ -543,7 +541,7 @@ $\mathbb{R}^n$
 $\sqrt{\underline{d}}=\left(\sqrt{d_1},\dots,\sqrt{d_n}\right)^T$ vektor.
 A $0$ akkor és csak akkor egyszeres sajátérték, ha a gráf összefüggõ.
 Ha a gráf nem összefüggõ, akkor a spektrum az egyes összefüggõ részek spektrumának uniója.
-Ezt abból is láthtjuk, hogy ilyenkor az adajacencia mátrix blokkosított alakra hozható. Ha
+Ezt abból is láthatjuk, hogy ilyenkor az adjacencia mátrix blokkosított alakra hozható. Ha
 $g$ $\mathcal{L}$
 sajátvektora, akkor a \textit{Rayleigh-hányados} lesz a hozzá tartozó sajátérték.
 
@@ -575,7 +573,7 @@ Vegyük észre, hogy a $k=1$ esetben az eredeti kifejezést kapjuk vissza.
 Tudjuk, hogy egy mátrix nyoma megegyezik a sajátértékeinek összegével. Emiatt
 \[\sum_{i=0}^n \lambda_i = tr\left(\mathcal{L}\right) = n .\]
 Így ki tudjuk számolni a spektrum átlagát,
-amivel becsülni tudjuk a legnagyobb és legkisebb pozitív sajátétéket.
+amivel becsülni tudjuk a legnagyobb és legkisebb pozitív sajátértéket.
 \[\lambda_1 \leq
 \frac{\sum_{i=1}^{n-1}\lambda_i}{n-1} = \frac{n}{n-1} \leq
 \lambda_{n-1}
@@ -587,7 +585,7 @@ Nem teljes gráfra azonban már igaz, hogy $\lambda_1 \leq 1$.
 
 \subsection{Néhány speciális gráf spektruma}
 $\mathbf{K_n}.$
-Az $n$ csúcsú teljes gráf spektruma szimetria okokból és mert  $tr \mathcal{L} = n$:
+Az $n$ csúcsú teljes gráf spektruma szimmetria okokból és mert  $tr \mathcal{L} = n$:
 \[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} = \frac{n}{n-1}.\]
 Ebbõl látható, hogy az elõbbi ? becslésünk éles.
 $\mathbf{K_{m,n}}.$
@@ -611,7 +609,7 @@ Gráfok vizsgálatának egyik fontos kérdése, hogy hogyan tudjuk egy gráf csúcsait 
 A csoportosítás által egyszerûsödik a gráf szerkezete, jobban átlátható lesz. Csoportosítással rejtett kapcsolatok elõkerülhetnek, amik segíthetik az adott gráf jobb megértését.
 
 \subsection{Vágások}
-Gondolhatjuk, hogy két csúcscsoport különbözik, hogyha könyen el tudjuk választani õket. Tehát érdemes vizsgálni, hogy hány élet kell elhagyni, hogy  kettéválasszuk õket. Az ilyen élhalmazokat vágásoknak hívjuk.
+Gondolhatjuk, hogy két csúcscsoport különbözik, hogyha könnyen el tudjuk választani õket. Tehát érdemes vizsgálni, hogy hány élet kell elhagyni, hogy  kettéválasszuk õket. Az ilyen élhalmazokat vágásoknak hívjuk.
 
 \begin{defin}[Vágás]
 Egy gráf vágása az élek egy olyan részhalmaza, amelyek elhagyás után a gráf már nem lesz összefüggõ.
@@ -624,7 +622,7 @@ Egy $G=(V,W)$ gráf $C\subset E(G)$ vágásának értéke:
 ahol $(u,v)$ rendezetlen párokat jelöl.
 \end{defin}
 
-Láttuk, hogy a spektrum erõs összeffügésben van a gráfok szerkezetével, így nem meglepõ, hogy a minimális vágás sem független a spekrumtól. Felhívnánk a figyelmet, hogy a következõ állításban a sima Laplacei és nem a normált spektrumot használjuk fel. 
+Láttuk, hogy a spektrum erõs összefüggésben van a gráfok szerkezetével, így nem meglepõ, hogy a minimális vágás sem független a spektrumtól. Felhívnánk a figyelmet, hogy a következõ állításban a sima Laplace és nem a normált spektrumot használjuk fel. 
 \begin{allitas} Az $n$ csúcsú $\wg$ összefüggõ gráf $L$ Laplace-mátrixának sajátértékeit jelölje 
 Legyenek a $0=\lambda_0<\lambda_1\leq \dots \leq \lambda_{n-1}$.
 \[\min_{C\in\mathcal{C}(G)}w(C) \geq \frac{n-1}{n	}\lambda_1\]
@@ -634,14 +632,14 @@ Legyenek a $0=\lambda_0<\lambda_1\leq \dots \leq \lambda_{n-1}$.
 \begin{lemma}\label{minLambdaLemma}
 \[\lambda_{1}=\min_{\norma{x} = 1}x^TLx.\]
 \end{lemma}
-Legyen $U^*$ egy min-vágás. Az $U$ segítségével definiáljuk a következõ egydimenziós reprezentásokat.
+Legyen $U^*$ egy min-vágás. Az $U$ segítségével definiáljuk a következõ egydimenziós reprezentánsokat.
 \[r_i= \left\{ \begin{array}{cc}
 n-|U^*| & \textrm{ha } i \in U^* \\
 -|U^*| & \textrm{ha } i \in \overline{U^*}
 \end{array}
 \right.
 \]
-Legyen $\textbf{r}$ az $r_i$ értékeket összefogó vektor. Normalzáljuk $\textbf{r}$-t.
+Legyen $\textbf{r}$ az $r_i$ értékeket összefogó vektor. Normáljuk $\textbf{r}$-t.
 \[\norma{\textbf{r}} = \sum_{i=1}^n r_i^2 =|U^*|(n-|U^*|)^2 +
 (n-|U^*|)|U^*|^2 = |U^*|(n-|U^*|)n
 \]
@@ -669,16 +667,15 @@ Az elõzõ állítás bizonyítását, csak annyiban módosítjuk, hogy az alábbi lemmát h
 \end{biz}
 
 \begin{defin}[Fiedler-vektor]
-A $\wg$ grág normalizált Laplace-mátrixának legkisebb pozitív sajátértékhez tartozó
+A $\wg$ gráf normalizált Laplace-mátrixának legkisebb pozitív sajátértékhez tartozó
 sajátvektort Fiedler-vektornak hívjuk.
 \end{defin}
 
 Fiedler a $\lambda_1$ sajátértékét algebrai összefüggõségnek nevezte.
 
-
 \subsection{Izoperimetrikus feladatok}
 
-Tetszõleges két csúcshalmazhoz meghatározhatjuk az általuk feszített részgráfban az elválsztásukhoz szükséges vágás értékét.
+Tetszõleges két csúcshalmazhoz meghatározhatjuk az általuk feszített részgráfban az elválasztásukhoz szükséges vágás értékét.
 \begin{defin}[Vágás értéke]\cite{bolla}
 A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya
 \[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}\]
@@ -703,7 +700,7 @@ izoperimetrikus problémáknak is nevezik.\cite{chung1997spectral}
 Továbbra is szeretnénk megtartani a minimum vágás azon tulajdonságát, hogy a komponensek közötti élek összsúlya kicsi.
 Így mértékek meghatározásához érdemes tehát a minimum vágásból kiindulni, és normálni a csúcshalmazok valamilyen mértékével.
 
-Legegy a csúcshalmazok méretével normálunk, akkor kapjuk a kiegyensúlyozottságot.
+Legegyszerûbb a csúcshalmazok méretével normálni, ekkor kapjuk a kiegyensúlyozottság mértékét.
 \begin{defin}[Kiegyensúlyozottság]
 \[f(P_k, G) = \sum_{a=1}^{k-1} \sum_{b=a+1}^{k} \left (\frac{1}{|V_a|} + 
 \frac{1}{|V_b|}\right )w(V_a,V_b)=\]
@@ -746,9 +743,10 @@ A kiterjesztés már közelebb áll az általunk elvárt mértékhez.
 \begin{defin}[Kiterjesztés]
 \[\Psi(S)=\frac{w(S,\overline{S})}{\min(|S|, |\overline{S}|)}\]
 \end{defin}
+
 A kiterjesztés hiányossága, hogy minden csúcsot egyformán súlyoz, ezt kijavíthatjuk, ha nem elemszámot, hanem térfogatot veszünk. Így a konduktancia fogalmát kapjuk.
 
-\begin{defin}[Koduktancia]
+\begin{defin}[Konduktancia]
 \[\Phi(S)=\frac{w(S,\overline{S})}{\min(Vol(S), Vol(\overline{S}))}\]
 \end{defin}
 
@@ -768,13 +766,10 @@ Tekintsük a következõ két feladatot!
 \textbf{1. feladat:} Egy fix $m$-re keressük azt az $S$ csúcshalmazt,
 amire $m\leq volS\leq Vol(\overline{S})$ és $w(\partial S)$ minimális
 
-\textbf{2. feladat:} Egy fix $m$-re keressük azt az $S$ csúcshalmazt,
-amire $m\leq volS\leq Vol(\overline{S})$ és $|\delta S|$ minimális
-
 Mindkettõre majd az ún. \textit{Cheeger-konstans} adja meg a választ.
 
 \begin{defin}[Cheeger-konstans]
-Egy $\graf$-hoz tartozó minimiális Cheeger-konstans
+Egy $\graf$-hoz tartozó Cheeger-konstans
 \[h_G=\min_{S\subset V}\Phi\left(S\right).\]
 \end{defin}
 $h_G > 0$ csak akkor igaz, ha $G$ összefüggõ, ezért feltesszük, hogy $G$ összefüggõ.
@@ -809,7 +804,7 @@ $f$-t behelyettesítve \eqref{Rayleigh}-ba kapjuk a következõt:
 A másik irányt most csak abban az eseteben látjuk be, amikor nem súlyozottak az élek.
 
 \begin{biz}[Felsõ becslés]
-Nézzük a $\lambda_1$-hez tartozó egységhosszú sajátvektort, $f$-t és $g=D^{-1/2}f$  vektoreokat,
+Nézzük a $\lambda_1$-hez tartozó egységhosszú sajátvektort, $f$-t és $g=D^{-1/2}f$  vektorokat,
 mint $V\rightarrow \mathbb{R}$ függvényeket. Mivel $f$ merõleges a $\sqrt{\underline{d}}$-re, ezért igaz, hogy
 \begin{equation}
 \label{eq:gd0}
@@ -843,7 +838,7 @@ jelölést kapjuk továbbá, hogy
 \[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_i g_+(v_i)^2\big(|\tilde{Vol}(S_i)-\tilde{Vol}(S_{i+1})|\big)\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}\]
 \[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_ig_+(v_i)^2d_{v_i}\big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2} = \frac{\alpha_G^2}{2}\]
 
-Beláttuk tehát, hogy $\lambda_1 \geq h_G^2/2$. Ahhoz, hogy belássuk, hogy egyenlõség nem állhat fent szükségünk lesz arra, hogy $1-\sqrt{1-x^2}>x^2/2$, ha $x > 0$, valmint az alábbi lemmára.
+Beláttuk tehát, hogy $\lambda_1 \geq h_G^2/2$. Ahhoz, hogy belássuk, hogy egyenlõség nem állhat fent szükségünk lesz arra, hogy $1-\sqrt{1-x^2}>x^2/2$, ha $x > 0$, valamint az alábbi lemmára.
 \begin{lemma}
 Ha $G$ összefüggõ gráf és $\lambda_1$ a spektrumának legkisebb eleme, akkor
 \[\lambda_1\geq 1-\sqrt{1-h_G^2} \Rightarrow 
@@ -886,7 +881,7 @@ Ilyenek lehetnek a szociális hálókban az egy nyelvet beszélõk, fehérjehálózatokb
 A klaszterektõl elvárjuk, hogy az egy csoportban levõ elemek hasonlítsanak egymásra, míg a különbözõ klaszterekben levõk különbözzenek.
 Valamint elvárt az is, hogy a klaszterek hasonló méretûek legyenek.
 Klaszterezés során minden csúcsot be kell osztanunk egy klaszterbe.
-Tehát a klaszeterezés egy $k$-részre vágás, vagyis a $G=(V,W)$ gráf csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ felosztása, ahol $V_i$-k diszjunktak és \[\bigcup_{i=1}^k V_i =V\].
+Tehát a klaszterezés egy $k$-részre vágás, vagyis a $G=(V,W)$ gráf csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ felosztása, ahol $V_i$-k diszjunktak és \[\bigcup_{i=1}^k V_i =V\].
 Tehát megengedjük üres klaszterek létezését, de legalább két nem üres klaszter kell legyen.
 
 \subsubsection{Klaszterezés QP programként felírva}
@@ -963,7 +958,7 @@ Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
 \begin{itemize}
 \item $C_i$ konduktanciája legalább $\alpha$
-\item $i\neq j,$ $C_i$ és $C_j$ között menõ élek súlya az össz élsúly legfeljebb $\epsilon$ része.
+\item $i\neq j,$ $C_i$ és $C_j$ között menõ élek súlya az összes él súlyának legfeljebb $\epsilon$ része.
 \end{itemize}
 \end{defin}
 
@@ -974,16 +969,19 @@ akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
 20\sqrt{\epsilon}\log\frac{n}{\epsilon}\right )-\textrm{partíciót}.\]
 \end{allitas}
 
+%TODO masik fele spektralklaszterezes leirasa
 
 \section{Spektrálklaszeterezés a gyakorlatban}
 A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgálnánk meg.
-A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algortimusok gyengébb eredményeket érnek el, mint más megközelítést használó módszerek.
+A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algoritmusok gyengébb eredményeket érnek el, mint más megközelítést használó módszerek.
 Ennek okait szeretnénk bemutatni, valamint lehetséges megoldásokat bemutatni egy konkrét példa.
 \subsection{A spektrálklaszterzés hátrányai}
 \subsubsection{A TKC-hatás}
 Lempel és Moran az internetgráf vizsgálatakor találták meg a HITS algoritmus egy hibáját. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
 A hiba okának a kis sûrû részgráfokat azonosították. Ezért a
-jelenséget \emph{tightly kit communities effect}-nek nevezték el. %TODO ezt hogyan lehet szépen megfogalmazni
+jelenséget TKC-hatásnak{tightly kit communities effect} nevezték el.
+
+
 \begin{lemma}
 \label{lemma:eigenvector}
 Legyen $S = U \Lambda U^T$ szimmetrikus pozitív szemidefinit mátrix, ahol
