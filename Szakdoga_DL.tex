@@ -86,7 +86,7 @@
 
 \begin{center}
 {\Large \vspace{3cm}
- }\textsc{\Large Témavezetõ: Benczúr A. András Ph.D.}\\
+ }\textsc{\Large Témavezetõ: Benczúr András}\\
 \textsc{\Large{} Operációkutatás tanszék}\\
 {\Large{} \vspace{2cm}
  }\textsc{\large Eötvös Loránd Tudományegyetem}\\
@@ -102,8 +102,8 @@
 
 \begin{abstract}
 Jelen dolgozat célja, hogy a spektrálgráfelméletbe betekintést nyújtson.
-Bemutatjuk a téma elõzményeit, olyan fõbb fogalmait, mint a Laplace-mátrix, a Fiedler-vektor, vagy a Cheeger-konstans. Ezt követõen pedig az ezekhez kapcsolódó fõbb eredményeket.
-% Végül egy valós példán mutatjuk be a spektrálklaszterezés módszer egy lehetséges alkalmazását .
+Szeretnénk bemutatni a téma elõzményeit, fõbb fogalmait, mint a Laplace-mátrix, a Fiedler-vektor, vagy a Cheeger-konstans. 
+%Végül egy valós példán mutatjuk be egy lehetséges alkalmazását a módszernek.
 
 A szakirodalomban bemutatott módszerekhez képest újdonság, hogy a HITS algoritmus segítségével bemutatjuk a sajátvektorok nagy abszolút értékkel reprezentált csúcsai és az utakat koncentráló sûrû részgráfok összefüggéseit.  Valós hálózatokon kísérletekkel igazoljuk, hogy ha egy gráf nem rendelkezik ``nagyléptékû struktúrákkal'', hanem a csúcsok kis-közepes csoportokba rendezõdnek.  Ezeknek a csoportoknak mindegyike egy-egy különbözõ, 1-hez közeli sajátértékû sajátvektorban adja a nagy abszolút értékû helyeket.  Így a spektrum nagyon lassan csökken és nagyon nehéz jó kiegyensúlyozott vágást találni ezekben a gráfokban.
 \end{abstract}
@@ -111,17 +111,17 @@ A szakirodalomban bemutatott módszerekhez képest újdonság, hogy a HITS algoritmu
 
 \section{Bevezetés}
 A gráfok különbözõ mátrixainak karakterisztikus függvényeivel, sajátvektoraival és sajátértékeivel a spektálgráfelmélet foglalkozik.
-Ez a téma az 1950-es közepétõl vált kutatott területté.
+A spektrálgráfelmélet az 1950-es közepétõl vált kutatott területté.
 A spektrálgráfelmélet egyik fõ kérdésköre, hogy mit tudunk mondani egy gráf spektrumáról. A másik témakör pedig, hogy hogyan függ össze a spektrum a gráf egyéb tulajdonságaival.
 
-A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával,a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
-A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók.
+A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával, a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
+A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók struktúrájának felderítése.
 
 
 \section{Szinguláris felbontás}
-Legelõször egy általános keretek közt alkalmazható módszert, a szinguláris felbontást mutatjuk be.
+Legelõször egy általános keretek közt alkalmazható módszert, a szinguláris felbontást szeretnénk bemutatni.
 
-A mátrixok szinguláris felbontásának (\emph{Singular value decomposition}, SVD) létezését már a XIX. század végén bizonyította egymástól függetlenül Beltrami\cite{beltrami} és Jordan\cite{jordan}. A szinguláris felbontást azóta számos fontos területen alkalmazzák. Ilyenek például a homogén lineáris egyenletek megoldása, pszeudoinverz számolása, kis rangú mátrixszal való közelítés, a legkisebb négyzetek módszere, vagy a fõkomponens analízis.
+A mátrixok szinguláris felbontásának (\textbf{S}ingular \textbf{V}alue \textbf{D}ecomposition, röviden SVD) létezését már a XIX. század végén bizonyította egymástól függetlenül Beltrami \cite{beltrami} és Jordan \cite{jordan}. A szinguláris felbontást azóta számos fontos területen alkalmazzák. Ilyenek például a homogén lineáris egyenletek megoldása, pszeudoinverz számolása, kis rangú mátrixszal való közelítés, a legkisebb négyzetek módszere, vagy a fõkomponens analízis.
 
 Bár az SVD mátrixok felbontását adja meg, könnyen és gyorsan tudjuk gráfokra is alkalmazni. Ezt úgy tehetjük meg, hogy vesszük a gráf valamelyik mátrix alakú reprezentációját. Egy ilyen alkalmazásra
 mutat jó példát majd a HITS-algoritmus.
@@ -146,7 +146,7 @@ Vektorok \emph{2-normáját} az alábbi egyenlõséggel definiáljuk.
  $v\in \mathbb{R}^n$ 2-normája
 \[\norma[2]{v} \defegy \sqrt{ \sum_{i=1}^n  |v_i|^2  } = \sqrt{v^{T} v}\,.\]
 \end{defin}
-Az elsõ két normaaxióma nyilvánvalóan teljesül, a háromszög-egyenlõtlenség pedig a Cauchy-egyenlõtlenség felhasználásával igazolható. A Cauchy-egyenlõtlenség vektorok skaláris szorzata és 2-normája közti kapcsolatot írja le:
+Az elsõ két normaaxióma nyilvánvalóan teljesül, a háromszög-egyenlõtlenség pedig a Cauchy-egyenlõtlenség felhasználásával igazolható. A Cauchy-egyenlõtlenség vektorok skaláris szorzata és 2-normája közti kapcsolatot ír le:
 \begin{tetel}[Cauchy-egyenlõtlenség] Ha $x,y \in \mathbb{R}^n$, akkor
 \[|x^{T} y | \le \norma[2]{x} \norma[2]{y}, \]
 
@@ -161,7 +161,20 @@ Egy vektornormát \emph{unitér-invariánsnak} nevezünk, ha tetszõleges $x$ vektor
 \norma{x}&=\norma{Ux}\,.
 \end{align*}
 \end{defin}
-Elõször megmutatjuk, hogy a 2-norma rendelkezik a fenti tulajdonsággal:
+Mielõtt megmutatjuk, hogy a 2-norma rendelkezik a fenti tulajdonsággal, megadjuk az ortogonális, vagy unitér mátrixok definícióját és egy fontos tulajdonságát.
+\begin{defin}
+Egy mátrixot ortogonálisnak, vagy unitérnek nevezzük, ha $U^TU=I$, azaz oszlopai egységhoszzúak és egymásra páronként merõlegesek.
+\end{defin}
+
+\begin{lemma}
+Egy ortogonális mátrixra $UU^T=I$.
+\end{lemma}
+
+\begin{biz}
+Mivel $U^TU=I$, $U^{-1}=U^T$. Az állítás adódik felhasználva, hogy a mátrix-szorzás esetében a bal és jobb inverz azonos.
+\end{biz}
+
+Most megmutatjuk, hogy a 2-norma unitér invariáns:
 $$
  \norma[2]{x}^2=x^{T} x=x^{T} U^{T} U x =(Ux)^{T} (Ux)=\norma[2]{Ux}^2,
 $$
@@ -174,15 +187,16 @@ elemeinek 2-normája megegyezik a $\norma[2]{x_1}$ mennyiséggel. Ezzel igazoltuk 
 Egy {\normafv}  vektornorma pontosan akkor {\unitinv}, ha valamely $c \ge 0$ konstansra 
 $\normafv = c \normafv[2]$, azaz ha a 2-norma konstans többszöröse.
 \end{allitas}
+
 \subsubsection{Mátrixok normái}
-Most áttérünk mátrixok normáinak tárgyalására. Két különbözõ mátrixnormát fogunk bevezetni és használni. Elõször a vektorok 2-normájához hasonló módon definiáljuk az ún. \emph{Frobenius-normát}.
+Most áttérünk mátrixok normáinak tárgyalására. Két különbözõ mátrixnormát fogunk bevezetni és használni. Elõször a vektorok 2-normájához hasonló módon definiálunk mátrixnormát, amelyet \emph{Frobenius-normának} nevezünk:
 \begin{defin}[Frobenius-norma]
 \begin{align*}
 \norma[F]{A} &\defegy \sqrt{\sum_{i=1}^{n}  \sum_{j=1}^{m} A_{ij}^2 }\, ,
 \end{align*}
 \end{defin}
 
-A Frobenius-norma egy a Cauchy-egyenlõtlenséghez hasonló összefüggést is kielégít.
+A Frobenius-norma a Cauchy-egynlõtlenséghez hasonló összefüggést is kielégít.
 \begin{allitas}\label{FrobKonz}
 Tetszõleges $A \in \Rnm{n}{m}, B \in \Rnm{m}{p}$ mátrixok esetén
 \begin{align*}
@@ -192,19 +206,19 @@ Tetszõleges $A \in \Rnm{n}{m}, B \in \Rnm{m}{p}$ mátrixok esetén
 A bizonyítás elemi lépésekkel végezhetõ a Cauchy-egyenlõtlenség felhasználásával. Egy mátrixnormát \emph{konzisztensnek} nevezünk, ha összeszorozható mátrixok és szorzatuk kielégíti a fenti egyenlõtlenséget. Ezzel a tulajdonsággal nem minden mátrixnorma rendelkezik, pedig a konzisztenciára nagy szükség van iterációs algoritmusok hibabecslésénél.
 %Ilyen eljárásokban az $n$-edik lépés hibavektorát az $n-1$-edikbõl egy iterációs mátrix szorzásával kapjuk. Ha például az összes iterációs mátrix normája kisebb $\frac{1}{2}$-nél, akkor a norma konzisztenciájából adódik a hiba $(\frac{1}{2})^n$ sebességû lecsengése. 
 
-A második általunk használt mátrixnormát úgy definiáljuk, hogy az konzisztens legyen a vektorok 2-normájával, azaz szeretnénk ha minden $x$ vektorra és $A$ mátrixra teljesülne a következõ egyenlõtlenség: 
+A második általunk használt mátrixnormát úgy definiáljuk, hogy az konzisztens legyen a vektorok 2-normájával, azaz szeretnénk, ha minden $x$ vektorra és $A$ mátrixra teljesülne a következõ egyenlõtlenség: 
 \begin{align*}
 \norma[2]{Ax} \le \norma{A} \norma[2]{x}.
 \end{align*}
-A egyenlõtlenségbõl adódik egy alsó becslés \norma{A} értékére. Ezzel az alsó becsléssel definiáljuk mátrixok \emph{2-normáját}, más néven \emph{spektrálnormáját}.
+Az egyenlõtlenségbõl alsó becslés adódik \norma{A} értékére. Ezzel az alsó becsléssel definiáljuk mátrixok \emph{2-normáját}, más néven \emph{spektrálnormáját}.
 \begin{defin}[Spektrálnorma]
 \[\norma[2]{A} \defegy \max_{\norma[2]{x}=1} \norma[2]{Ax}\,.\]
 \end{defin}
 A képletet röviden úgy értelmezhetjük, hogy egy $A$ mátrix esetén \norma[2]{A} egy $x$ vektor $A$ mátrixszal történõ szorzásával elérhetõ \idez{legnagyobb nyújtás} mértékét határozza meg. A normaaxiómák teljesülése mindkét esetben egyszerûen ellenõrizhetõ a vektorok 2-normájának tulajdonságaiból.
 
-Most néhány olyan összefüggést mutatunk be, melyek szintén meghatározzák az eddig megismert mátrixnormákat. Tetszõleges $A \in \Rnm{n}{m}$ mátrix esetén az $A^{T}A$ mátrix szimmetrikus és pozitív szemidefinit, ezért sajátértékei nem negatív valós számok, melyeket $\lambda_m \ge \dots \ge \lambda_1 \ge 0 $ jelöl. 
-\begin{allitas} \begin{eqnarray}
-\norma[F]{A}      &=&  \sqrt{ \nyom{A^{T} A} } \label{normaAegyAHegyAllitas} \\
+Most néhány olyan összefüggést mutatunk be, melyek szintén meghatározzák az eddig megismert mátrixnormákat. Tetszõleges $A \in \Rnm{n}{m}$ mátrix esetén az $A^{T}A$ mátrix szimmetrikus és pozitív szemidefinit, ezért sajátértékei nemnegatív valós számok, melyeket $\lambda_m \ge \dots \ge \lambda_1 \ge 0 $ jelöl. 
+\begin{allitas}\label{normaAegyAHegyAllitas} \begin{eqnarray}
+\norma[F]{A}      &=&  \sqrt{ \nyom{A^{T} A} }  \\
 \norma[F]{A}      &=&  \sqrt{ \lambda_1+\lambda_2+\dots +\lambda_m }  \label{FNormaSajatErt}\\
 \norma[2]{A}      &=&  \sqrt{\lambda_m} \label{2NormaSajatErt}\\ 
 \norma[2]{A}      &=&  \max_{\norma[2]{x}=1,\, \norma[2]{y}=1} |y^{T} A x| \label{MaxyAx}  \\
@@ -212,18 +226,18 @@ Most néhány olyan összefüggést mutatunk be, melyek szintén meghatározzák az eddi
 \end{eqnarray}
 \end{allitas} 
 \begin{biz}
-Az $A^{T}A$ mátrix fõátlójában szereplõ $j$-edik elem megegyezik az $A$ mátrix $j$-edik oszlopában elõforduló elemek négyzetösszegével. Így $\nyom{A^{T} A}$ nem más mint $A$ összes elemének négyzetösszege. Ezzel igazoltuk az (\ref{normaAegyAHegyAllitas}) egyenlõséget. 
+Az $A^{T}A$ mátrix fõátlójában szereplõ $j$-edik elem megegyezik az $A$ mátrix $j$-edik oszlopában elõforduló elemek négyzetösszegével. Így $\nyom{A^{T} A}$ nem más mint $A$ összes elemének négyzetösszege. Ezzel igazoltuk az elsõ egyenlõséget. 
 
-Az (\ref{FNormaSajatErt}) összefüggés pedig (\ref{normaAegyAHegyAllitas}) következménye, hiszen egy mátrix nyoma megegyezik sajátértékeinek összegével.
+Az \ref{FNormaSajatErt} összefüggés pedig az elsõ következménye, hiszen egy mátrix nyoma megegyezik sajátértékeinek összegével.
 
-Az (\ref{2NormaSajatErt}) összefüggést a következõ módon kapjuk meg:
+Az \ref{2NormaSajatErt} összefüggést a következõ módon kapjuk meg:
 $$
 \norma[2]{A}
 =\max_{\norma[2]{x}=1} \norma[2]{Ax}
 =\max_{\norma[2]{x}=1} \sqrt{|x^{T}A^{T}Ax| }
 =\sqrt{\lambda_1} \,.
 $$
-A (\ref{MaxyAx}) egyenlõség esetén a $\ge$ irány a Cauchy-egyenlõtlenségbõl adódik, mert 
+A \ref{MaxyAx} egyenlõség esetén a $\ge$ irány a Cauchy-egyenlõtlenségbõl adódik, mert 
 $$\norma[2]{Ax}=\norma[2]{y} \norma[2]{Ax} \ge |y^{T} A x |\, ,$$
 tetszõleges $y$ és $x$ vektorra, melynél $\norma[2]{x}=\norma[2]{y}=1$.
  Legyen $x_1$ az $\norma[2]{A x}$ maximumát beállító vektor, ezt behelyettesítve az elõzõ 
@@ -231,8 +245,8 @@ egyenlõtlenségbe kapjuk a $\ge$ irányt. Másrészt $x_1$ és
 $y_1 \legy \frac{1}{\norma[2]{A x_1}}A x_1 $ választással
  $$|y_1^T A x_1|=\norma[2]{Ax_1}=\norma[2]{A}$$
 adódik, amivel a $\le$ irányt is beláttuk. 
-Végül az (\ref{normaAegyAHegyAT}) összefüggés (\ref{MaxyAx}) következménye,
- hiszen a szimmetrikus kifejezésben szereplõ $A$ lecserélhetõ $A^T$-ra.
+Végül az \ref{normaAegyAHegyAT} összefüggés (\ref{MaxyAx}) következménye,
+ hiszen a kifejezésben egy skalár szerepel, amelynek transzponáltja önmaga, $|x^TA^Ty|$, azaz az egyenlõségben $A$ lecserélhetõ $A^T$-ra.
 \end{biz}
 %
 Mátrixok normájához is társítható a vektorokéhoz hasonló geometriai jelentés.
@@ -241,8 +255,8 @@ $$
 E_A \defegy \halmaz{Ax}{\norma[2]{x}=1} 
 $$ 
 egy ellipszoidot határoz meg, melynek dimenziója $\rang{A}$. A mátrix normája szemléletesen ennek az  ellipszoidnak a \idez{nagyságát} jelenti.
-Az ellipszoidot körbevehetjük egy olyan $\rang{A}$-dimenziós téglatesttel, melynek élei párhuzamosak a fõtengelyekkel, és az élek hossza megegyezik a fõtengelyek hosszával. Ekkor a Frobenius-norma megegyezik a téglatest leghosszabb testátlójával, a 2-norma pedig annak leghosszabb élével vagyis a legnagyobb fõtengely hosszával. Ez (\ref{FNormaSajatErt}) és az (\ref{2NormaSajatErt}) egyenlõségbõl adódik felhasználva, 
-hogy az ellipszoid fõtengelyeinek hossza megegyezik $A^{T} A$ sajátértékeivel\cite{Rozsa}. 
+Az ellipszoidot körbevehetjük egy olyan $\rang{A}$-dimenziós téglatesttel, melynek élei párhuzamosak a fõtengelyekkel, és az élek hossza megegyezik a fõtengelyek hosszával. Ekkor a Frobenius-norma megegyezik a téglatest leghosszabb testátlójával, a 2-norma pedig annak leghosszabb élével, vagyis a legnagyobb fõtengely hosszával. Ez (\ref{FNormaSajatErt}) és az (\ref{2NormaSajatErt}) egyenlõségbõl adódik, felhasználva, 
+hogy az ellipszoid fõtengelyeinek hossza megegyezik $A^{T} A$ sajátértékeivel \cite{Rozsa}. 
 
 Ha egy $A$ mátrixot az $U^T$ és a $V$ ortogonális mátrixokkal szorzunk,  akkor $E_A$-ból forgatással nyerjük az $E_{U^{T} A V}$ ellipszoidot. A mátrix normájától azt várnánk, hogy ne változzon e mûvelet hatására. E tulajdonság azonban nem igaz tetszõleges normára.
 \begin{defin}[Unitér-invariania mátrixnormákra]
@@ -250,12 +264,13 @@ Egy {\normafv} mátrixnormát \emph{{\unitinv}nak} mondunk, ha tetszõleges $U$ és 
 $$ \norma{U^{T} A V} = \norma{A}. $$
 \end{defin}
 \begin{allitas}
-A Frobeinus- és a 2-normák {\unitinv}ak.
+A Frobeinus és a 2-normák {\unitinv}ak.
 \end{allitas}
 \begin{biz}
 A 2-normára már korábban beláttuk, a Frobenius-normára pedig nyilvánvaló, hogy egy mátrix és 
 transzponáltja esetén megegyezik, ezért elég azt megmutatni, hogy egy ortogonális mátrixszal balról szorozva nem változik a norma. Utóbbi a 2-norma esetén abból adódik, hogy a maximalizálandó $\norma[2]{Ax}= \norma[2]{U^{T} Ax} $ bármely $x$ esetén. A Frobenius-norma {\unitinvanci}ája szintén visszavezethetõ vektorok 2-normájáéra, hiszen az $U$ mátrixszal szorozhatunk oszloponként, és a normát is számíthatjuk az oszlopokéból.   
 \end{biz}
+
 A dolgozat hátralevõ részében vektorok 2-normájára egyszerûen a \normafv jelölést, mátrixokéra pedig a \normafv[2] jelölést, Frobenius-normára  a \normafv[F] jelölést használjuk. 
 
 \end{subequations}
@@ -265,8 +280,8 @@ Most már minden eszközünk megvan, hogy a szinguláris felbontást definiáljuk és l
 Egy $A \in \mathbb{R}^{n\times m}$ mátrix szinguláris felbontásán az olyan
 \[A = U \Sigma V^T\]
 szorzattá bontást értjük, ahol $U \in \mathbb{R}^{n\times n}$ és
-$V \in \mathbb{R}^{m\times m}$ ortogonális mátrixok. Továbbá a
-$\Sigma\in\mathbb{R}^{n\times m}$ ,,fõátlójában'' a
+$V \in \mathbb{R}^{m\times m}$ ortogonális mátrixok.  A
+$\Sigma\in\mathbb{R}^{n\times m} mátrix pedig diagonális$, és a ,,fõátlójában'' a
 $\sigma_1\geq\cdots\geq\sigma_r>0$ pozitív számokat csupa $0$ követi.
 \end{defin}
 \begin{defin}[Szinguláris értékek]
@@ -280,7 +295,7 @@ Tetszõleges $A \in \mathbb{R}^{n \times m}$ $r$ rangú mátrixnak létezik szingulá
 \end{tet}
 \begin{biz}
 Teljes indukció $min\left(m,n\right)$-re.
-Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. $a$-hoz található olyan ortogonális $U$ mátrix, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
+Ha $min\left(m,n\right)=1$, akkor az $A$ mátrix egyedül az $a := A$ vektorból áll. Feltehetjük, hogy $a$ oszlopvektor. Az $a$-hoz található olyan ortogonális $U$ mátrix, melyre $U^Ta=||a||e_1$. Így $\Sigma = ||a||e_1$ és $V=(1)$ választással adódik a $min\left(m,n\right)=1$ eset.
 
 Ha $min\left(m,n\right) > 1$, akkor a problémát visszavezetjük egy $(n-1)\times(m-1)$ méretû mátrix felbontására. Feltehetõ, hogy $A \neq 0$, különben triviális a felbontás.
 \begin{align*}
@@ -308,7 +323,7 @@ V_1^{T} A^{T} u_1 &= \left( \begin{array}{c}
   w
  \end{array} \right).
 \end{align*}
-Az (\ref{normaAegyAHegyAllitas}) állítás szerint 
+\Aref{normaAegyAHegyAllitas}.~állítás szerint 
 $\sigma_1=\norma[2]A=\norma[2]{A^{T}}$,  ezért az $\norma{u_1}=\norma{v_1}=1$
  vektorok esetén $\norma{Au_1} \le \sigma_1$ és 
 $\norma{A^{T} v_1} \le \sigma_1$. 
@@ -356,41 +371,41 @@ U^{T} A V=
 =\Sigma \,.
 $$
 \end{biz}
+
 \subsection{HITS-algoritmus}
-Jon Kleinberg\cite{kleinberg99authoritative} 1998-ban született HITS-algoritmusa \emph{(Hyperlink-Induced Topic Search)} az internetes keresések
-találatait rangsorolja. 
-A rangsort az oldalak közt levõ hiperlinkek alapján állítja fel.
 
-Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi \emph{(hub)} és mértékadó \emph{(authority)} oldalakra.
-Az algoritmus iteratív módon minden oldalra frissíti a központiság és mértékadóság mértékét.
-Kleinberg meghatározásában egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
+Jon Kleinberg 1998-ban született HITS (Hyperlink-Induced Topic Search) algoritmusa \cite{kleinberg99authoritative} az internetes oldalak fontosságát  határozza meg a köztük levõ hiperlinkek alapján.
 
-A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok, az éleket pedig a hiperlinkek határozzák meg. Az $auth,hub:V\rightarrow\mathbb{R}$ függvényeket használjuk majd az egyes oldalak mértékadóságának és központiságának jelzésére.
+Az algoritmus ötlete, hogy az oldalak két fontos csoportját keresi, a központi (hub) és a mértékadó (authority) oldalakat.
+Az algoritmus iteratív módon minden oldalnak frissíti a központiság és mértékadóság mértékét,
+azon heurisztika mentén, hogy egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
+
+A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok, az éleket pedig a hiperlinkek határozzák meg.  Az $auth,hub:V\rightarrow\mathbb{R}$ függvényeket használjuk majd az egyes oldalak mértékadóságának és központiságának meghatározására.
 
 \subsubsection{Az algoritmus}
-A heurisztika szerint egy oldal központiságát az határozza meg, hogy mennyire mértékadó oldalakra mutat rá.
-Tehát a központiság a kiélekbõl jön.
+A HITS heurisztikája szerint egy oldal központiságát az határozza meg, hogy mennyire mértékadó oldalakra mutat rá.
+Tehát a központiságot a ki-élek határozzák meg.
 
-Feltevésünk szerint egy oldal akkor lesz mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a beélekbõl fog származni.
+Feltevésünk szerint egy oldal akkor lesz mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a be-élekbõl fog származni.
 
 Az algoritmus a következõképpen mûködik.
 
-\bigskip 
 \textbf{HITS-algoritmus}
 
 \begin{enumerate}
-\item Megválasztjuk az $auth$, és $hub$ kezdõértékeket.
+\item Tetszõleges $auth$, és $hub$ kezdõértéket választunk.
 \item Frissítjük minden csúcs $auth$ értékekét a beélek mentén a szomszédok aktuális $hub$ értéke szerint.\label{iterLepes}
 \[auth^{\left(k+1\right)}\left(v\right)=\sum_{\left(w,v\right)\in E}hub^{\left(k\right)}\left(w\right)\]
 \item Frissítjük minden csúcs $hub$ értékét a kiélek mentén a 
 szomszédok aktuális $auth$ értéke szerint.
 \[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
 \item Normáljuk az $auth$ és $hub$ értékeket.
-\item Ellenõrizzük, hogy egy leállási feltétel teljesül-e, ha igen megállunk.
-\item Visszatérünk a \ref{iterLepes}. pontra.
+\item Ellenõrizzük, hogy az értékek változása a bemenetként megadott küszöb alatt van-e.  Ha igen, megállunk.
+\item Visszatérünk a \ref{iterLepes}. pontra
 \end{enumerate}
 
-A normalizációs lépés csak numerikus okok miatt szerepel, mivel a sorrenden nem változtat.
+A normalizációs lépés segítségével elkerülhetjük a numerikus túlcsordulást. A normálás, mint konstanssal való szorzás, a központiság és mértékadóság sorrendjén nem változtat, tehát a leállási feltétellel összhangban teszõleges módon végrehajtható. Látni fogjuk, hogy az $auth$ és $hub$ értékek normálás nélkül általában végtelenhez tartanak.
+
 \subsubsection{Az algoritmus elemzése}
 %Az algoritmussal kapcsolatban számos kérdés merül fel.
 %\begin{itemize}
@@ -409,7 +424,7 @@ Készítsünk az $auth$ és $hub$ értékekbõl egy $a$ és $h$ sorvektort!
 Az elõbb definiált vektorokkal és az $A$ adjacenciamátrixszal a következõképp írhatjuk fel az iterációs lépést:
 \[a^{\left(k+1\right)}= h^{\left(k\right)}A\]
 \[h^{\left(k+1\right)}= a^{\left(k+1\right)}A^T\]
-Egymásba helyettesítve a két egyenletet a következõket kapjuk:
+A két egyenletet egymásba helyettesítve a következõket kapjuk:
 \[a^{\left(k+1\right)}=a^{\left(k\right)}A^TA=a^{\left(1\right)}\left(A^TA\right )^k\]
 \[h^{\left(k+1\right)}=h^{\left(k\right)}AA^T=h^{\left(1\right)}\left(AA^T\right )^k\]
 Alkalmazzuk $A=U\Sigma V^T$ szinguláris felbontását. Mivel $A$ négyzetes mátrix, ezért $\Sigma$ is az, így $\Sigma=\Sigma^T$.
@@ -422,7 +437,7 @@ h^{\left(1\right)}U\Sigma V^TV\Sigma U^TU\Sigma\dots V\Sigma U^T=
 h^{\left(1\right)}U\Sigma^{2k}U^T \label{hitsEgyenlet}
 \end{equation}
 
-Most már jól látható, hogy a mértékadóság és a központiságot meghatározzák a szinguláris értékek és vektorok
+Most már jól látható, hogy a mértékadóság és a központiságot a szinguláris értékek és vektorok határozzák meg.
 Normalizáljuk a $\Sigma$ mátrixot $\sigma_1$-gyel.
 \[\Sigma_1 = \left( \begin{array}{cccc}
 \frac{\sigma_1}{\sigma_1} & 0 & \dots & 0 \\ 
@@ -665,7 +680,7 @@ Legyen $\textbf{r}$ az $r_i$ értékeket összefogó vektor. Normáljuk $\textbf{r}$-
 (n-|U^*|)|U^*|^2 = |U^*|(n-|U^*|)n
 \]
 \[\tilde{\textbf{r}} = \frac{\textbf{r}}{\sqrt{|U^*|(n-|U^*|)n}}\]
-Az (\ref{maxLemma}) lemma és (\ref{Qk})
+Az \ref{maxLemma} lemma és \ref{Qk} %TODO
 alapján:
 \[\lambda_{1}\leq \tilde{\textbf{r}}^TL\tilde{\textbf{r}} = \sum_{i<j}w_{ij}(\tilde{r}_i-\tilde{r}_j)^2 =
 w(U^*,\overline{U^*})\frac{(n-|U^*|+|U^*|)^2}{|U^*|(n-|U^*|)n}\]
@@ -989,7 +1004,7 @@ Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
 
 \begin{allitas}[Kannan-Vempala-Vetta]
 Ha a $G$ gráfnak létezik $(\alpha , \epsilon )$-partíciója,
-akkor a (\ref{spektralHeurisztika}) spektrálheurisztika talál
+akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
 \[\left (\frac{\alpha^2}{72\log^2\frac{n}{\epsilon}},
 20\sqrt{\epsilon}\log\frac{n}{\epsilon}\right )-\textrm{partíciót}.\]
 \end{allitas}
