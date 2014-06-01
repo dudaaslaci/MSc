@@ -308,7 +308,7 @@ V_1^{T} A^{T} u_1 &= \left( \begin{array}{c}
   w
  \end{array} \right).
 \end{align*}
-\Aref{normaAegyAHegyAllitas}.~állítás szerint 
+Az (\ref{normaAegyAHegyAllitas}) állítás szerint 
 $\sigma_1=\norma[2]A=\norma[2]{A^{T}}$,  ezért az $\norma{u_1}=\norma{v_1}=1$
  vektorok esetén $\norma{Au_1} \le \sigma_1$ és 
 $\norma{A^{T} v_1} \le \sigma_1$. 
@@ -357,22 +357,25 @@ U^{T} A V=
 $$
 \end{biz}
 \subsection{HITS-algoritmus}
-Jon Kleinberg 1998-ban született HITS(Hyperlink-Induced Topic Search)-algoritmusa az internetes oldalak fontosságát próbálja meghatározni a köztük levõ hiperlinkek alapján.
+Jon Kleinberg\cite{kleinberg99authoritative} 1998-ban született HITS-algoritmusa \emph{(Hyperlink-Induced Topic Search)} az internetes keresések
+találatait rangsorolja. 
+A rangsort az oldalak közt levõ hiperlinkek alapján állítja fel.
 
-Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi (hub) és mértékadó (authority) oldalakra.
-Az algoritmus iteratív módon minden oldalnak frissíti a központiság és mértékadóság mértékét,
-azon heurisztika mentén, hogy egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
+Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi \emph{(hub)} és mértékadó \emph{(authority)} oldalakra.
+Az algoritmus iteratív módon minden oldalra frissíti a központiság és mértékadóság mértékét.
+Kleinberg meghatározásában egy oldal annál központibb, minél mértékadóbb oldalakra mutat, és annál mértékadóbb, minél központibb oldalak mutatnak rá.
 
-A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok; az éleket pedig a hiperlinkek határozzák meg, az. $auth,hub:V\rightarrow\mathbb{R}$ függvényeket használjuk majd az egyes oldalak mértékadóságának és központiságának jelzésére.
+A feladat megfogalmazható az irányított gráfok nyelvén is. A weboldalak a csúcsok, az éleket pedig a hiperlinkek határozzák meg. Az $auth,hub:V\rightarrow\mathbb{R}$ függvényeket használjuk majd az egyes oldalak mértékadóságának és központiságának jelzésére.
 
 \subsubsection{Az algoritmus}
-Tehát a heurisztika szerint egy oldal központiságát az határozza meg, hogy mennyire mértékadó oldalakra mutat rá.
+A heurisztika szerint egy oldal központiságát az határozza meg, hogy mennyire mértékadó oldalakra mutat rá.
 Tehát a központiság a kiélekbõl jön.
 
 Feltevésünk szerint egy oldal akkor lesz mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a beélekbõl fog származni.
 
-Az algoritmus tehát a következõképpen mûködik.
+Az algoritmus a következõképpen mûködik.
 
+\bigskip 
 \textbf{HITS-algoritmus}
 
 \begin{enumerate}
@@ -382,12 +385,12 @@ Az algoritmus tehát a következõképpen mûködik.
 \item Frissítjük minden csúcs $hub$ értékét a kiélek mentén a 
 szomszédok aktuális $auth$ értéke szerint.
 \[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
-\item Normáljuk az $auth$ és $hub$ értékeket
-\item Ellenõrizzük, hogy egy leállási feltétel teljesül-e, ha igen megállunk
-\item Visszatérünk a \ref{iterLepes}. pontra
+\item Normáljuk az $auth$ és $hub$ értékeket.
+\item Ellenõrizzük, hogy egy leállási feltétel teljesül-e, ha igen megállunk.
+\item Visszatérünk a \ref{iterLepes}. pontra.
 \end{enumerate}
 
-A normalizációs lépés, csak numerikus okok miatt szerepel, mivel a sorrenden nem változtat.
+A normalizációs lépés csak numerikus okok miatt szerepel, mivel a sorrenden nem változtat.
 \subsubsection{Az algoritmus elemzése}
 %Az algoritmussal kapcsolatban számos kérdés merül fel.
 %\begin{itemize}
@@ -662,7 +665,7 @@ Legyen $\textbf{r}$ az $r_i$ értékeket összefogó vektor. Normáljuk $\textbf{r}$-
 (n-|U^*|)|U^*|^2 = |U^*|(n-|U^*|)n
 \]
 \[\tilde{\textbf{r}} = \frac{\textbf{r}}{\sqrt{|U^*|(n-|U^*|)n}}\]
-Az \ref{maxLemma} lemma és \ref{Qk} %TODO
+Az (\ref{maxLemma}) lemma és (\ref{Qk})
 alapján:
 \[\lambda_{1}\leq \tilde{\textbf{r}}^TL\tilde{\textbf{r}} = \sum_{i<j}w_{ij}(\tilde{r}_i-\tilde{r}_j)^2 =
 w(U^*,\overline{U^*})\frac{(n-|U^*|+|U^*|)^2}{|U^*|(n-|U^*|)n}\]
@@ -986,7 +989,7 @@ Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
 
 \begin{allitas}[Kannan-Vempala-Vetta]
 Ha a $G$ gráfnak létezik $(\alpha , \epsilon )$-partíciója,
-akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
+akkor a (\ref{spektralHeurisztika}) spektrálheurisztika talál
 \[\left (\frac{\alpha^2}{72\log^2\frac{n}{\epsilon}},
 20\sqrt{\epsilon}\log\frac{n}{\epsilon}\right )-\textrm{partíciót}.\]
 \end{allitas}
