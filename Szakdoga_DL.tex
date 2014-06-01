@@ -463,7 +463,7 @@ Látható, hogy a szinguláris értékek az $A^TA$ sajátértékei és a jobb-szinguláris
 \section{A spektrum}
 %TODO valami jobb szöveg ide
 Az elõzõ fejezet végén láttuk, hogy egy gráf adjacencia mátrixának sajátértékei, spektruma, és sajátvektorai különleges jelentéssel bírnak, és információt hordoznak a gráf struktúrájáról.
-A legtöbbször mégis más reprezentánsokat alkalmazzuk, a spektrumuk kedvezõbb tulajdonságai miatt.
+A legtöbbször azonban más reprezentánsokat alkalmazunk, a spektrumuk kedvezõbb tulajdonságai miatt. Közös lesz bennük, hogy mindegyik az adjacencia mátrixból gyökerezik.
 
 \subsection{Laplace-mátrix és a normalizált Laplace-mátrix}
 %TODO lehetne rögtön súlyozottakra mondani?
@@ -559,10 +559,11 @@ Hasonlóképp
 \end{equation}
 
 Az elõzõ $min$ és $max$ egyenlõség hasonlóképp igaz a Laplace-mátrixra és annak sajátértékeire. Érdemes az elõbb vizsgált kifejezést magasabb dimenzióba is kiterjeszteni. 
+
 $X\in \mathbb{R}^{n\times k}$ adott szubortogonális mátrix. $X$ oszlopait az $x_1,\dots,x_k$ vektorokkal, sorai pedig az $r^T_1,\dots,r^T_n$ vektorokkal jelöljük.
 \[
 Q_k = tr(X^TLX)= \sum_{l=1}^k x_l^T (D-W) x_l =
-\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js = \] 
+\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js = \] \label{Qk}
 \\
 \begin{equation}
 \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 
@@ -756,15 +757,15 @@ Vagyis bipartícionálni szeretnénk $G$-t.
 Egy bipartíció rögtön meghatároz egy vágást is.
 \[ \partial S = \big\{ \{ u,v \} \in E(G): u \in S , v \notin S \big\} \]
 Világos, hogy $\partial S = \partial \overline{S}$.
-A vágás éleinek nem $S$-ben levõ végpontjait $\delta S$-el jelöljük majd.
-\[\delta S = \{v \notin S : \{u, v\} \in E(G), u \in S\}\]
+%A vágás éleinek nem $S$-ben levõ végpontjait $\delta S$-el jelöljük majd.
+%\[\delta S = \{v \notin S : \{u, v\} \in E(G), u \in S\}\]
 
 
 \subsubsection{A Cheeger-konstans}
 Tekintsük a következõ két feladatot!
 
 \textbf{1. feladat:} Egy fix $m$-re keressük azt az $S$ csúcshalmazt,
-amire $m\leq volS\leq Vol(\overline{S})$ és $w(\partial S)$ minimális
+amire $m\leq Vol(S)\leq Vol(\overline{S})$ és $w(\partial S)$ minimális
 
 Mindkettõre majd az ún. \textit{Cheeger-konstans} adja meg a választ.
 
@@ -873,6 +874,8 @@ A $n$-hosszú út spektrumának elsõ pozitív eleme $1-\cos\frac{\pi}{n-1}\approx\pi
 a Cheeger-konstansa pedig $1/\lfloor \frac{n-1}{2} \rfloor$.
 Megmutattuk tehát, hogy a Cheeger egyenlõtlenség alsó iránya is a lehetõ legjobb becslés konstans szorzó erejéig.
 
+%TODO Fiedler-vektort ide
+
 \subsection{Klaszterezés}
 A gráfok klaszterei olyan csúcshalmazok, amelyek valamilyen
 jellemzõ tulajdonság alapján mérhetõen elkülönülnek.
@@ -882,23 +885,15 @@ A klaszterektõl elvárjuk, hogy az egy csoportban levõ elemek hasonlítsanak egymá
 Valamint elvárt az is, hogy a klaszterek hasonló méretûek legyenek.
 Klaszterezés során minden csúcsot be kell osztanunk egy klaszterbe.
 Tehát a klaszterezés egy $k$-részre vágás, vagyis a $G=(V,W)$ gráf csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ felosztása, ahol $V_i$-k diszjunktak és \[\bigcup_{i=1}^k V_i =V\].
-Tehát megengedjük üres klaszterek létezését, de legalább két nem üres klaszter kell legyen.
 
-\subsubsection{Klaszterezés QP programként felírva}
 
-Elõször mutatunk egy kvadratikus programozási feladatot,
-aminek látszatra nincs köze a spektrumhoz. De kiderül,
-hogy az optimális megoldás szoros kapcsolatban van vele.
+\subsubsection{Reprezentánsok keresése QP programmal}
 
-Legyen a $G=(V,W)$ egy élsúlyozott, egyszerû gráf $n$ csúcson, ahol
-$V = \{1,\dots,n\}$. $W$ egy $n$ x $n$ mátrix, melynek elemei nemnegatív valósak és a fõátlóban mindenhol $0$ szerepel. Tehát $w_{ij}$ jelöli az $i$ és $j$ csúcs hasonlóságát.
-Jelöljük $W$ sorösszegeit
-\[d_i=\sum_{j=1}^n w_{ij}, \quad i=1,\dots n.\]
-A $d_i$ értékeket \textit{általánosított fokszámnak} fokszámnak hívjuk.
+%TODO szöveg
 
-Nézzük a következõ kvadratikus programozási feladatot:
+Nézzük a következõ kvadratikus programozási feladatot.
 
-Egy adott $1\leq k \leq n$ egészhez olyan $k$-dimenziós $r_1, \dots r_n$ reprezentáns vektorokat keresünk, hogy a 
+Adott $\wg$ gráfhoz és adott $1\leq k \leq n$ egészhez keresünk olyan $k$-dimenziós $r_1, \dots r_n$ reprezentáns vektorokat, hogy a 
 \begin{equation}
 Q_k = \sum_{i < j} w_{ij} \norma{r_i - r_j} \geq 0 \label{celfuggveny}
 \end{equation}
@@ -912,7 +907,11 @@ Látható, hogy a célfüggvény értéke csökken, ha a nagy hasonlóságú csúcsok közele
 Átalakítjuk a célfüggvényt, és a feltéteket egy többet mondó formába.
 Legyen $X$ az a mátrix, aminek a sorai $r_1^T,\dots ,r_n^T$. Legyenek $x_1, \dots, x_k \in \mathbb{R}^n$ $X$ oszlopai.
 A \eqref{feltetelek} feltételek miatt $X$ oszlopai ortonormált rendszert alkotnak, tehát $X$ egy szubortogonális mátrix.
-Így a feltételeket felírhatjuk $X^TX=I_k$ formában is. Ezek után a célfüggvényt tovább alakíthatjuk.
+Így a feltételeket felírhatjuk $X^TX=I_k$ formában is. Ezek után a célfüggvényt tovább alakíthatjuk (\ref{Qk}) egyenlet szerint.
+\begin{eqnarray}
+\min \nyom{X^TLX} \label{minQk} \\
+X^TX=I_k
+\end{eqnarray}
 
 \begin{tetel}[Reprezentációs tétel hasonlóság gráfokra]
 Tekintsük a $G=(V,W)$ összefüggõ gráfot és a hozzá tartozó $L$ Laplace-mátrixot!
@@ -925,14 +924,14 @@ Ekkor a \eqref{celfuggveny} célfüggvény értéke a \eqref{feltetelek} feltételek m
 És az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
 \end{tetel}
 \begin{biz}
-A \eqref{atalakitas} alak szerint:
-\[ Q_k = tr \left[ X^T L X \right]\]
+A \eqref{minQk} alak szerint:
+\[ Q_k = \nyom{X^TLX}\]
 Így a tétel következik az alábbi általánosabb állításból.
 \begin{allitas}
 Legyen $A$ egy valós $n\times n$ méretû szimmetrikus mátrix. $A$ sajátértékei $\lambda_1\geq\dots\geq\lambda_n$.
 $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 \[
-\max_{X\in\mathbb{R}^{n\times k}\atop{ X^TX=I_k}} tr \left[X^TAX\right]=
+\max_{X\in\mathbb{R}^{n\times k}\atop{ X^TX=I_k}} \nyom{X^TAX}=
 \max_{x_i \in \mathbb{R}^n \left( i=1,\dots ,k \right)\atop{ x_i^Tx_j=\delta_{ij}}}
 \sum_{i=1}^k x_i^T A x_i = \sum_{i=1}^k\lambda_i
 \]
@@ -940,19 +939,32 @@ $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 \end{allitas}
 \end{biz}
 
+A klaszterek meghatározásához alkalmazhatunk egy általános geometriai klaszterezõ algoritmust a jóval kisebb dimenziós reprezentáns vektorokon.
+Most bemutatjuk a legismertebb ilyen klaszterezõ algoritmus a k-means.
 
+\textbf{k-means}
+Adott $l$ db $\mathbb{R}^n$-beli vektor, és $i$ iterációszám.
+\begin{enumerate}
+\item Választunk $k$ db tetszõleges klaszterközéppontot, $\emph{számláló} := 0$
+\item Minden csúcsot beosztunk abba a klaszterbe, amelyiknek a középpontja legközelebb esik hozzá.
+\item Minden klaszter középpontja legyen a benne levõ pontok átlaga
+\item Ha $\emph{számláló} = i$, akkor megállunk, egyébként visszalépünk 2. pontra és \emph{számláló}-t növeljük 1-gyel. 
+\end{enumerate}
 
 \subsubsection{Spektrálklaszterezés}
-%TODO spektrálkklaszterezés leírása
 Már láttuk, hogy a Fiedler-vektor segítségével hogyan határozhatunk meg vágásokat.
 Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
-\
+
+\textbf{Hagen algoritmusa}
 \begin{enumerate} 	\label{spektralHeurisztika}
 \item Vegyük a $\lambda_1$-hez tartozó sajátvektort
 \item A Fiedler-vektor szerint sorba rendezzük a csúcsokat
 \item Megkeressük a minimális konduktanciájú vágást a sorrendben
 \item A két részre külön-külön alkalmazzuk az algoritmust
 \end{enumerate}
+
+Kannan, Vempala és Vetta becslést is adtak \cite{kannan2004clusterings} az
+elõzõ algoritmus által talált klaszterek minõségére. A becsléshez az alábbi mérték használták.
 
 \begin{defin}[$(\alpha , \epsilon )$-partíció]
 Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
@@ -962,20 +974,28 @@ Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
 \end{itemize}
 \end{defin}
 
-\begin{allitas}\cite{kannan2004clusterings}
+
+\begin{allitas}[Kannan-Vempala-Vetta]
 Ha a $G$ gráfnak létezik $(\alpha , \epsilon )$-partíciója,
 akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
 \[\left (\frac{\alpha^2}{72\log^2\frac{n}{\epsilon}},
 20\sqrt{\epsilon}\log\frac{n}{\epsilon}\right )-\textrm{partíciót}.\]
 \end{allitas}
 
-%TODO masik fele spektralklaszterezes leirasa
+\subsection{Spektrálklaszterezés több sajátvektorral}
+Az elõzõ részben látott algoritmus hátránya, hogy nem stabil, és nem hatékony.
+Shi és Malik \cite{shi2000normalized} egy másik megközelítést javasol a spektrálklaszterezésre. Nem csak a Fiedler-vektort, hanem több sajátvektort is érdemes figyelembe venni.
+Az õáltaluk használt algoritmus a következõ.
+
+\textbf{Shi és Malik algoritmusa}
+
+
 
 \section{Spektrálklaszeterezés a gyakorlatban}
 A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgálnánk meg.
 A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algoritmusok gyengébb eredményeket érnek el, mint más megközelítést használó módszerek.
 Ennek okait szeretnénk bemutatni, valamint lehetséges megoldásokat bemutatni egy konkrét példa.
-\subsection{A spektrálklaszterzés hátrányai}
+\subsection{A spektrálklaszterzés gyengeségei}
 \subsubsection{A TKC-hatás}
 Lempel és Moran az internetgráf vizsgálatakor találták meg a HITS algoritmus egy hibáját. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
 A hiba okának a kis sûrû részgráfokat azonosították. Ezért a
@@ -1016,8 +1036,7 @@ A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokr
 Ebben a részben néhány heurisztikát szeretnénk ismertetni,
 melyek segítségével javítható a spektrálklaszterezés eredménye.
 \subsubsection{Csomópontok eltávolítása}
-A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}.
-\subsubsection{A SCAN-algoritmus}
+A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}. Ha megtaláltuk a csomópontokat, akkor azokat egy pontra húzhatjuk.
 \subsubsection{Csápok összehúzása}
 Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
 \begin{enumerate}
@@ -1029,6 +1048,7 @@ Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. E
 Az eljárás véges, mert minden lépésben csökken a csúcsszám.
 
 \subsection{Spektrálklaszterezés egy konkrét példán bemutatva}
+%TODO ide szöveg? 
 \subsubsection{Az adat: livejournal.com}
 Példánkban\cite{kurucz} a LiveJournal(www.livejournal.com) oldal felhasználóit szerették volna klaszterezni.
 A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátság) is bejelölni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
@@ -1042,22 +1062,27 @@ A gráfban 2.379.267 csúcs és 14.286.827 él szerepelt. A felhasználók több mint 8
 
 \subsubsection{Eredmények}
 Az eredményeket az alábbi ábrák mutatják be.
-\begin{figure}[hbtp]
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{pictures/klaszter_before.jpg} 
 \caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozás nélkül}
 \end{figure}
-\begin{figure}[hbtp]
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{pictures/klaszter_after.jpg}
 \caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozással}
 \end{figure}
+
 Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
-\begin{figure}[hbtp]
+
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{pictures/sdp_result.jpg}
 \caption{A szemidefinit program kimenete}
 \end{figure}
+
 A szemidefinit program lett a legeredményesebb.
 \bibliographystyle{huplain}
 
