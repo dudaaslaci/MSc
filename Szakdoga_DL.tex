@@ -32,6 +32,8 @@
 \usepackage[magyar]{babel}
 \usepackage{fancyhdr}
 \usepackage{eucal}
+\usepackage{caption}
+\usepackage{subcaption}
 %\usepackage{setspace}
 %\usepackage{ulem}
 \usepackage{amssymb}
@@ -105,7 +107,12 @@ Szeretnénk bemutatni a téma elõzményeit, fõbb fogalmait, mint a Laplace-mátrix, 
 \newpage
 
 \section{Bevezetés}
-%TODO Bevezetõt írni
+A gráfok különbözõ mátrixainak karakterisztikus függvényeivel, sajátvektoraival és sajátértékeivel a spektálgráfelmélet foglalkozik.
+A spektrálgráfelmélet az 1950-es közepétõl vált kutatott területté.
+A spektrálgráfelmélet egyik fõ kérdésköre, hogy mit tudunk mondani egy gráf spektrumáról. A másik témakör pedig, hogy hogyan függ össze a spektrum a gráf egyéb tulajdonságaival.
+
+A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával,a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
+A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók.
 
 
 \section{Szinguláris felbontás}
@@ -364,6 +371,9 @@ Tehát a központiság a kiélekbõl jön.
 Feltevésünk szerint egy oldal akkor lesz mértékadóbb, ha a központibb oldalak mutatnak rá. Így a mértékadóság a beélekbõl fog származni.
 
 Az algoritmus tehát a következõképpen mûködik.
+
+\textbf{HITS-algoritmus}
+
 \begin{enumerate}
 \item Megválasztjuk az $auth$, és $hub$ kezdõértékeket.
 \item Frissítjük minden csúcs $auth$ értékekét a beélek mentén a szomszédok aktuális $hub$ értéke szerint.\label{iterLepes}
@@ -371,7 +381,7 @@ Az algoritmus tehát a következõképpen mûködik.
 \item Frissítjük minden csúcs $hub$ értékét a kiélek mentén a 
 szomszédok aktuális $auth$ értéke szerint.
 \[hub^{\left(k+1\right)}\left(v\right)=\sum_{\left(v,w\right)\in E}auth^{\left(k+1\right)}\left(w\right)\]
-\item Esetlegesen normálhatjuk az $auth$ és $hub$ értékeket
+\item Normáljuk az $auth$ és $hub$ értékeket
 \item Ellenõrizzük, hogy egy leállási feltétel teljesül-e, ha igen megállunk
 \item Visszatérünk a \ref{iterLepes}. pontra
 \end{enumerate}
@@ -462,11 +472,11 @@ Látható, hogy a szinguláris értékek az $A^TA$ sajátértékei és a jobb-szinguláris
 
 \section{A spektrum}
 %TODO valami jobb szöveg ide
-Az elõzõ fejezet végén láttuk, hogy egy gráf adjacencia mátrixának sajátértékei, spektruma, és sajátvektorai különleges jelentéssel bírnak, és információt hordoznak a gráf struktúrájáról.
+Az elõzõ fejezetben láttuk, hogy egy gráf adjacencia mátrixának sajátértékei, spektruma, és sajátvektorai különleges jelentéssel bírnak, és információt hordoznak a gráf struktúrájáról.
+
 A legtöbbször azonban más reprezentánsokat alkalmazunk, a spektrumuk kedvezõbb tulajdonságai miatt. Közös lesz bennük, hogy mindegyik az adjacencia mátrixból gyökerezik.
 
 \subsection{Laplace-mátrix és a normalizált Laplace-mátrix}
-%TODO lehetne rögtön súlyozottakra mondani?
 Elõször egyszerû gráfokra mutatunk ilyen kedvezõbb mátrixot, az ún. Laplace-mátrixot.
 Legyen $G=(V,E)$ egy egyszerû gráf a $|V|=n$ csúcshalmazon, az $|E| \leq \binom{n}{2}$
 élhalmazzal! Jelölje $d_v$ a $v$ csúcs fokszámát. Tekintsük a következõ $L$ mátrixot:
@@ -563,12 +573,11 @@ Az elõzõ $min$ és $max$ egyenlõség hasonlóképp igaz a Laplace-mátrixra és annak 
 $X\in \mathbb{R}^{n\times k}$ adott szubortogonális mátrix. $X$ oszlopait az $x_1,\dots,x_k$ vektorokkal, sorai pedig az $r^T_1,\dots,r^T_n$ vektorokkal jelöljük.
 \[
 Q_k = tr(X^TLX)= \sum_{l=1}^k x_l^T (D-W) x_l =
-\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js = \] \label{Qk}
+\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js = \] 
 \\
 \begin{equation}
-\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 
+\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 \label{Qk}
 \end{equation}
-\label{atalakitas}
 Vegyük észre, hogy a $k=1$ esetben az eredeti kifejezést kapjuk vissza.
 
 Tudjuk, hogy egy mátrix nyoma megegyezik a sajátértékeinek összegével. Emiatt
@@ -580,7 +589,6 @@ amivel becsülni tudjuk a legnagyobb és legkisebb pozitív sajátértéket.
 \lambda_{n-1}
 \]
 
-Tehát $\lambda_1 \leq \frac{n}{n-1}\leq \lambda_{n-1}$.
 Látni fogjuk majd, hogy teljes gráfra egyenlõséggel teljesül mindkét egyenlõtlenég.
 Nem teljes gráfra azonban már igaz, hogy $\lambda_1 \leq 1$.
 
@@ -610,7 +618,7 @@ Gráfok vizsgálatának egyik fontos kérdése, hogy hogyan tudjuk egy gráf csúcsait 
 A csoportosítás által egyszerûsödik a gráf szerkezete, jobban átlátható lesz. Csoportosítással rejtett kapcsolatok elõkerülhetnek, amik segíthetik az adott gráf jobb megértését.
 
 \subsection{Vágások}
-Gondolhatjuk, hogy két csúcscsoport különbözik, hogyha könnyen el tudjuk választani õket. Tehát érdemes vizsgálni, hogy hány élet kell elhagyni, hogy  kettéválasszuk õket. Az ilyen élhalmazokat vágásoknak hívjuk.
+Gondolhatjuk, hogy két csúcscsoport különbözik, hogyha könnyen el tudjuk választani õket egymástól. Tehát érdemes vizsgálni, hogy hány élet kell elhagyni, hogy  kettéválasszuk õket. Az ilyen élhalmazokat vágásoknak hívjuk.
 
 \begin{defin}[Vágás]
 Egy gráf vágása az élek egy olyan részhalmaza, amelyek elhagyás után a gráf már nem lesz összefüggõ.
@@ -623,6 +631,16 @@ Egy $G=(V,W)$ gráf $C\subset E(G)$ vágásának értéke:
 ahol $(u,v)$ rendezetlen párokat jelöl.
 \end{defin}
 
+Tetszõleges két csúcshalmazhoz is meghatározhatjuk az általuk feszített részgráfban az elválasztásukhoz szükséges vágás értékét.
+\begin{defin}[Vágás értéke]\cite{bolla}
+A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya
+\[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}\]
+\end{defin}
+A definíciót kiterjeszthetjük tetszõleges számú halmazra.
+\begin{defin}[k-vágás értéke]
+\[cut(P_k,G) = sum_{a=1}^{k-1}\sum_{b=a+1}^{k}w(V_a,V_b)\]
+\end{defin}
+
 Láttuk, hogy a spektrum erõs összefüggésben van a gráfok szerkezetével, így nem meglepõ, hogy a minimális vágás sem független a spektrumtól. Felhívnánk a figyelmet, hogy a következõ állításban a sima Laplace és nem a normált spektrumot használjuk fel. 
 \begin{allitas} Az $n$ csúcsú $\wg$ összefüggõ gráf $L$ Laplace-mátrixának sajátértékeit jelölje 
 Legyenek a $0=\lambda_0<\lambda_1\leq \dots \leq \lambda_{n-1}$.
@@ -630,9 +648,7 @@ Legyenek a $0=\lambda_0<\lambda_1\leq \dots \leq \lambda_{n-1}$.
 \end{allitas}
 
 \begin{biz}
-\begin{lemma}\label{minLambdaLemma}
-\[\lambda_{1}=\min_{\norma{x} = 1}x^TLx.\]
-\end{lemma}
+
 Legyen $U^*$ egy min-vágás. Az $U$ segítségével definiáljuk a következõ egydimenziós reprezentánsokat.
 \[r_i= \left\{ \begin{array}{cc}
 n-|U^*| & \textrm{ha } i \in U^* \\
@@ -645,7 +661,7 @@ Legyen $\textbf{r}$ az $r_i$ értékeket összefogó vektor. Normáljuk $\textbf{r}$-
 (n-|U^*|)|U^*|^2 = |U^*|(n-|U^*|)n
 \]
 \[\tilde{\textbf{r}} = \frac{\textbf{r}}{\sqrt{|U^*|(n-|U^*|)n}}\]
-Az \ref{maxLambdaLemma} lemma és \label{reprezentaciosAlak} %TODO
+Az \ref{maxLemma} lemma és \ref{Qk} %TODO
 alapján:
 \[\lambda_{1}\leq \tilde{\textbf{r}}^TL\tilde{\textbf{r}} = \sum_{i<j}w_{ij}(\tilde{r}_i-\tilde{r}_j)^2 =
 w(U^*,\overline{U^*})\frac{(n-|U^*|+|U^*|)^2}{|U^*|(n-|U^*|)n}\]
@@ -659,14 +675,11 @@ Legyenek a $0=\lambda_0\leq\lambda_1\dots\leq\lambda_{n-1}$ a $G=(V,W)$ gráfhoz 
 \[ \max_{U\in V}w(U,\bar{U}) \leq \frac{n}{4}\lambda_{n-1}.\]
 \end{allitas}
 \begin{biz}
-Az elõzõ állítás bizonyítását, csak annyiban módosítjuk, hogy az alábbi lemmát használjuk, valamint, hogy nem minimális, hanem maximális vágást határozzon meg $U^*$.
-\begin{lemma}\label{maxLambdaLemma}
-\[\lambda_{n-1}=\max_{\norma{x} = 1}x^TLx.\]
-\end{lemma}
+Az elõzõ állítás bizonyítását, csak annyiban módosítjuk, hogy a (\ref{maxLemma}) lemmát használjuk, valamint, hogy nem minimális, hanem maximális vágást határozzon meg $U^*$.
 Így kapjuk végül a kívánt egyenlõtlenséget.
 \[\max_{C\in\mathcal{C}(G)}w(C) \leq \frac{|U^*|(n-|U^*|)}{n}\lambda_{n-1}\leq\frac{n}{4}\lambda_{n-1}\]
 \end{biz}
-
+%TODO szöveg
 \begin{defin}[Fiedler-vektor]
 A $\wg$ gráf normalizált Laplace-mátrixának legkisebb pozitív sajátértékhez tartozó
 sajátvektort Fiedler-vektornak hívjuk.
@@ -675,20 +688,10 @@ sajátvektort Fiedler-vektornak hívjuk.
 Fiedler a $\lambda_1$ sajátértékét algebrai összefüggõségnek nevezte.
 
 \subsection{Izoperimetrikus feladatok}
-
-Tetszõleges két csúcshalmazhoz meghatározhatjuk az általuk feszített részgráfban az elválasztásukhoz szükséges vágás értékét.
-\begin{defin}[Vágás értéke]\cite{bolla}
-A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya
-\[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}\]
-\end{defin}
-\begin{defin}[k-vágás értéke]
-\[cut(P_k,G) = sum_{a=1}^{k-1}\sum_{b=a+1}^{k}w(V_a,V_b)\]
-\end{defin}
-
 Kézenfekvõ, hogy minimális vágással osszuk részekre a csúcshalmazt.
-Azonban könnyen elõfordulhat, hogy egy minimális vágás csak egy csúcsot vág le a gráfról. Ekkor nem tudunk meg globális információt a gráfról, a vágásunk nem lesz hasznos.
+Azonban könnyen elõfordulhat, hogy egy minimális vágás csak egy csúcsot vág le a gráfról, valójában pedig nem ez a ,,legjobb'' vágás.
 
-\begin{figure}[hbtp]
+\begin{figure}[h]
 \centering
 \includegraphics[scale=1]{pictures/mincut.jpg} 
 \caption{Példa arra, amikor a minimális vágás nem optimális}
@@ -696,35 +699,10 @@ Azonban könnyen elõfordulhat, hogy egy minimális vágás csak egy csúcsot vág le a
 
 Tehát keresnünk kell valamilyen más mértéket, ami mentén optimalizálunk.
 Azokat a problémákat, ahol optimális vágásokat keresünk a halmazok méretének figyelembe vételével,
-izoperimetrikus problémáknak is nevezik.\cite{chung1997spectral}
+izoperimetrikus problémáknak is nevezik.
 
-Továbbra is szeretnénk megtartani a minimum vágás azon tulajdonságát, hogy a komponensek közötti élek összsúlya kicsi.
-Így mértékek meghatározásához érdemes tehát a minimum vágásból kiindulni, és normálni a csúcshalmazok valamilyen mértékével.
+Mivel célunk, hogy az egy partícióba tartozó csúcsok hasonlóak legyenek, célul tûzhetjük ki, hogy az egy partícióba levõ csúcsok ne legyenek túl messze egymástól. Vagyis, hogy az egyes részek átmérõje ne legyen túl nagy.
 
-Legegyszerûbb a csúcshalmazok méretével normálni, ekkor kapjuk a kiegyensúlyozottság mértékét.
-\begin{defin}[Kiegyensúlyozottság]
-\[f(P_k, G) = \sum_{a=1}^{k-1} \sum_{b=a+1}^{k} \left (\frac{1}{|V_a|} + 
-\frac{1}{|V_b|}\right )w(V_a,V_b)=\]
-\[=\sum_{a=1}^k\frac{w(V_a, \overline{V_a})}{|V_a|} =
- k-\sum_{a=1}^k\frac{w(V_a,V_a)}{|V_a|}\]
-\end{defin}
-
-Normálhatunk az illeszkedõ élek súlyával is.
-A precíz megfogalmazáshoz és késõbb is hasznos lesz a következõ fogalom.
-
-\begin{defin}[Csúcshalmaz térfogata]
-A $\graf$ gráf $S\subset V$ csúcshalmazának térfogata:
-\[Vol S = \sum_{v\in S}d_v.\]
-\end{defin}
-
-\begin{defin}[Normalizált k-vágás érték]\cite{bolla}
-\[f(P_k, G)=\sum_{a=1}^{k-1}\sum_{b=a+1}^{k}
-\left (\frac{1}{Vol(V_a)}+\frac{1}{Vol(V_b)}\right )w(V_a,V_b)=\]
-\[=\sum_{a=1}^k\frac{w(V_a, \overline{V_a})}{Vol(V_a)} =
- k-\sum_{a=1}^k\frac{w(V_a,\overline{V_a})}{Vol(V_a)}\]
-\end{defin}
-
-Mivel célunk, hogy az egyes klaszterbe összetartozó csúcsok hasonlóak legyenek, célul tûzhetjük ki, hogy az egy klaszterben levõ csúcsok ne legyenek túl messze egymástól.
 \begin{defin}[Átmérõ]
 Egy gráf átmérõjén, a csúcsai között fellépõ távolságok maximumát értjük.   
 \[D(G) = \max_{u,v\in V(G)} dist(u,v)\]
@@ -733,12 +711,41 @@ Tehát van értelme nézni a következõ feladatot:
 \[\min_{P_k\in \mathcal{P}_k}\max_{V_i \in P_k} D(V_i).\]
 Könnyen tudunk azonban olyan példát mutatni, amire nem a kívánt partíciókat kapjuk.
 
- 
-\begin{figure}[hbtp]
+\begin{figure}[h!]
 \centering
 \includegraphics[scale=0.1]{pictures/diameter-fail.jpg}
 \caption{Példa arra, amikor a max. átmérõ nem ad optimális vágást}
 \end{figure}
+
+\newpage
+
+Szeretnénk megtartani a minimum vágás azon tulajdonságát, hogy a komponensek közötti élek összsúlya kicsi.
+Így mértékek meghatározásához érdemes tehát a minimum vágásból kiindulni, és normálni a csúcshalmazok valamilyen mértékével.
+
+Legegyszerûbb a csúcshalmazok méretével normálni, így kaphatjuk a kiegyensúlyozottság mértékét.
+\begin{defin}[Kiegyensúlyozottság]
+\[b(P_k, G) = \sum_{a=1}^{k-1} \sum_{b=a+1}^{k} \left (\frac{1}{|V_a|} + 
+\frac{1}{|V_b|}\right )w(V_a,V_b)=\]
+\[=\sum_{a=1}^k\frac{w(V_a, \overline{V_a})}{|V_a|} =
+ k-\sum_{a=1}^k\frac{w(V_a,V_a)}{|V_a|}\]
+\end{defin}
+
+Normálhatunk az illeszkedõ élek súlyával is.
+A késõbb is hasznos lesz a következõ fogalom.
+
+\begin{defin}[Csúcshalmaz térfogata]
+A $\graf$ gráf $S\subset V$ csúcshalmazának térfogata:
+\[Vol S = \sum_{v\in S}d_v.\]
+\end{defin}
+
+Shi és Malik \cite{shi2000normalized} a következõket mértéket javasolja. 
+
+\begin{defin}[Normalizált k-vágás érték]
+\[Ncut(P_k, G)=\sum_{a=1}^{k-1}\sum_{b=a+1}^{k}
+\left (\frac{1}{Vol(V_a)}+\frac{1}{Vol(V_b)}\right )w(V_a,V_b)=\]
+\[=\sum_{a=1}^k\frac{w(V_a, \overline{V_a})}{Vol(V_a)} =
+ k-\sum_{a=1}^k\frac{w(V_a,\overline{V_a})}{Vol(V_a)}\]
+\end{defin}
 
 A kiterjesztés már közelebb áll az általunk elvárt mértékhez.
 \begin{defin}[Kiterjesztés]
@@ -868,7 +875,7 @@ A másodfokú egyenlet megoldóképletét alkalmazva kapjuk a kívánt egyenlõtlenséget
 \end{biz}
 A lemma bizonyításával kész vagyunk a Cheeger-egyenlõtlenség bizonyításával.
 \end{biz}
-%TODO idehozni a hivatkozásokat
+
 A $k$-dimenziós kocka Cheeger-konstansa $2/n$, ugyanannyi, mint a spektrumának $\lambda_1$ eleme. Tehát a Cheeger-egyenlõtlenség felsõ becslése konstans szorzó erejéig pontos. \\
 A $n$-hosszú út spektrumának elsõ pozitív eleme $1-\cos\frac{\pi}{n-1}\approx\pi^2/2(n-1)^2$,
 a Cheeger-konstansa pedig $1/\lfloor \frac{n-1}{2} \rfloor$.
@@ -879,7 +886,7 @@ Megmutattuk tehát, hogy a Cheeger egyenlõtlenség alsó iránya is a lehetõ legjobb
 \subsection{Klaszterezés}
 A gráfok klaszterei olyan csúcshalmazok, amelyek valamilyen
 jellemzõ tulajdonság alapján mérhetõen elkülönülnek.
-Ilyenek lehetnek a szociális hálókban az egy nyelvet beszélõk, fehérjehálózatokban egyes csoportok. %TODO ide valmi jobb példa
+Ilyenek lehetnek a szociális hálókban az egy nyelvet beszélõk, fehérjehálózatokban egyes csoportok. %TODO ide valami jobb példa
 
 A klaszterektõl elvárjuk, hogy az egy csoportban levõ elemek hasonlítsanak egymásra, míg a különbözõ klaszterekben levõk különbözzenek.
 Valamint elvárt az is, hogy a klaszterek hasonló méretûek legyenek.
@@ -942,7 +949,8 @@ $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 A klaszterek meghatározásához alkalmazhatunk egy általános geometriai klaszterezõ algoritmust a jóval kisebb dimenziós reprezentáns vektorokon.
 Most bemutatjuk a legismertebb ilyen klaszterezõ algoritmus a k-means.
 
-\textbf{k-means}
+\textbf{k-means algoritmus}
+
 Adott $l$ db $\mathbb{R}^n$-beli vektor, és $i$ iterációszám.
 \begin{enumerate}
 \item Választunk $k$ db tetszõleges klaszterközéppontot, $\emph{számláló} := 0$
@@ -988,8 +996,14 @@ Shi és Malik \cite{shi2000normalized} egy másik megközelítést javasol a spektrál
 Az õáltaluk használt algoritmus a következõ.
 
 \textbf{Shi és Malik algoritmusa}
+\begin{enumerate}
+\item Keressük meg a normalizált Laplace-mátrix elsõ $k$ pozitív sajátértékéhez tartozó sajátvektort
+\item A vektorokból képzett mátrix sorait klaszterezzük pl. $k-means$ algoritmussal
+\item A $v$ csúcs a $v$-nek megfelelõ sor klaszterébe kerül.
+\end{enumerate}
 
-
+Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban közelítjük az optimális normalizált k-vágást. Brand és Huang megmutatta \cite{brand2003unifying}, hogy több sajátvektort véve a klaszterek eloszlása egyenletesebb lesz, és a
+hasonló pontok távolsága csökken, a különbözõké pedig növekszik.
 
 \section{Spektrálklaszeterezés a gyakorlatban}
 A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgálnánk meg.
@@ -1036,7 +1050,7 @@ A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokr
 Ebben a részben néhány heurisztikát szeretnénk ismertetni,
 melyek segítségével javítható a spektrálklaszterezés eredménye.
 \subsubsection{Csomópontok eltávolítása}
-A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}. Ha megtaláltuk a csomópontokat, akkor azokat egy pontra húzhatjuk.
+A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}. Ha megtaláltuk a gráf méretéhez képest elhanyagolható csomópontokat, azokat elhagyhatjuk.
 \subsubsection{Csápok összehúzása}
 Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
 \begin{enumerate}
@@ -1048,7 +1062,7 @@ Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. E
 Az eljárás véges, mert minden lépésben csökken a csúcsszám.
 
 \subsection{Spektrálklaszterezés egy konkrét példán bemutatva}
-%TODO ide szöveg? 
+Most pedig egy valós példán demonstráljuk, hogy hogyan alkalmazható a spektrálklaszterezés a gyakorlatban.
 \subsubsection{Az adat: livejournal.com}
 Példánkban\cite{kurucz} a LiveJournal(www.livejournal.com) oldal felhasználóit szerették volna klaszterezni.
 A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátság) is bejelölni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
@@ -1058,32 +1072,36 @@ Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük sz
 A gráfban 2.379.267 csúcs és 14.286.827 él szerepelt. A felhasználók több mint 80\% amerikai és körülbelül 5\% orosz.
 
 \subsubsection{A kísérlet menete}
-
-
+A gráfból elõször eltávolították a csomópontokat, majd alkalmazták a csápok összehúzását. Innen kétféleképp haladtak tovább. Egyrészt Shi és Malik algoritmusát követve, másrészt Lang megmutatta, hogy az optimális klaszterezésnek létezik szemidefinit relaxáltja \cite{lang2005fixing}.
+Végül visszarakták a kivett csomókat, és a csápokat visszanövesztve kapták a végsõ klasztereket. A spektrálklaszterezést lefuttatták elõfeldolgozás nélkül is, az összehasonlításhoz. 
 \subsubsection{Eredmények}
 Az eredményeket az alábbi ábrák mutatják be.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
-\includegraphics[scale=0.5]{pictures/klaszter_before.jpg} 
-\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozás nélkül}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.5]{pictures/klaszter_after.jpg}
-\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén elõfeldolgozással}
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{pictures/klaszter_before.jpg} 
+	\caption{Elõfeldolgozás nélkül}
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{pictures/klaszter_after.jpg}
+	\caption{Elõfeldolgozással}
+\end{subfigure}
+\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén}
 \end{figure}
 
 Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{pictures/sdp_result.jpg}
+\includegraphics[width=0.5\textwidth]{pictures/sdp_result.jpg}
 \caption{A szemidefinit program kimenete}
 \end{figure}
 
-A szemidefinit program lett a legeredményesebb.
+A szemidefinit programmal összehasonlítható lett az eredmény, míg a spektrálklaszterezés sokkal gyorsabban futott.
+
+\section{Összefoglalás}
+
 \bibliographystyle{huplain}
 
 \bibliography{hivatkozasok}
