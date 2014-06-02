@@ -117,13 +117,13 @@ A szakirodalomban bemutatott módszerekhez képest újdonság, hogy a HITS algoritmu
 
 \section{Bevezetés}
 A gráfok különbözõ mátrixainak karakterisztikus függvényeivel, sajátvektoraival és sajátértékeivel a spektálgráfelmélet foglalkozik.
-Ez a téma az 1950-es közepétõl vált kutatott területté.
+Ez a téma az 1950-es közepétõl vált kutatott területté \cite{fiedler1973algebraic}.
 A spektrálgráfelmélet egyik fõ kérdésköre, hogy mit tudunk mondani egy gráf spektrumáról. A másik témakör pedig, hogy hogyan függ össze a spektrum a gráf egyéb tulajdonságaival.
 
 A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával, a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
-A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók struktúrájának felderítése, vagy képszegmentáció.
+A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták \cite{chan93spectral,alpert-moreeigen,alpert-survey}, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók struktúrájának felderítése, vagy képszegmentáció.
 
-A dolgozat elején egy általánosabb eszközt, a mátrixok szinguláris felbontását mutatjuk be. Bizonyítjuk ennek létezését, valamint megmutatjuk Kleinberg HITS-algoritmusával való kapcsolatát. Ezt követõen definiáljuk a legfontosabb fogalmakat, mint egy gráf Laplace-mátrixa, annak súlyozott változata és utóbbi sajátértékei, a spektrum. Bemutatjuk a spektrummal kapcsolatos alapösszefüggéseket. A következõ fejezetben a spektrumot különbözõ bi- és multipartíciók értékeinek becslésére, és maguknak az optimálist közelítõ partícióknak a meghatározására használjuk. A dolgozat végén egy valós példán mutatjuk be az elmélet egy lehetséges gyakorlati alkalmazását.
+A dolgozat elején egy általánosabb eszközt, a mátrixok szinguláris felbontását mutatjuk be. Bizonyítjuk ennek létezését, valamint megmutatjuk Kleinberg HITS-algoritmusával \cite{kleinberg99authoritative} való kapcsolatát. Ezt követõen definiáljuk a legfontosabb fogalmakat, mint egy gráf Laplace-mátrixa, annak súlyozott változata és utóbbi sajátértékei, a spektrum. Bemutatjuk a spektrummal kapcsolatos alapösszefüggéseket. A következõ fejezetben a spektrumot különbözõ bi- és multipartíciók értékeinek becslésére, és maguknak az optimálist közelítõ partícióknak a meghatározására használjuk. A dolgozat végén egy valós példán mutatjuk be az elmélet egy lehetséges gyakorlati alkalmazását.
 
 \section{Szinguláris felbontás}
 Legelõször egy általános keretek közt alkalmazható módszert, a szinguláris felbontást szeretnénk bemutatni.
@@ -379,9 +379,9 @@ $$
 \end{biz}
 
 \subsection{HITS-algoritmus}
-Jon Kleinberg\cite{kleinberg99authoritative} 1998-ban született HITS-algoritmusa \emph{(Hyperlink-Induced Topic Search)} az internetes keresések
+Jon Kleinberg \cite{kleinberg99authoritative} 1998-ban született HITS-algoritmusa \emph{(Hyperlink-Induced Topic Search)} az internetes keresések
 találatait rangsorolja. 
-A rangsort az oldalak közt lev? hiperlinkek alapján állítja fel.
+A rangsort az oldalak közt levõ hiperlinkek alapján állítja fel.
 
 Az algoritmus ötlete, hogy két fontos csoportba osztja az oldalakat, központi \emph{(hub)} és mértékadó \emph{(authority)} oldalakra.
 Az algoritmus iteratív módon minden oldalra frissíti a központiság és mértékadóság mértékét.
@@ -636,43 +636,46 @@ Nem teljes gráfra azonban már az is igaz, hogy $\lambda_1 \leq 1$, lásd \cite{ch
 
 \subsection{Néhány speciális gráf spektruma}
 $\mathbf{K_n}.$
-Az $n$ csúcsú teljes gráf spektruma szimmetria okokból és mert $tr \mathcal{L} = n$:
-\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} = \frac{n}{n-1} . \quad \cite{bolla}\] 
+Az $n$ csúcsú teljes gráf spektruma 
+\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} = \frac{n}{n-1},\] 
+mivel a gráf teljesen szimmetrikus és mert $tr \mathcal{L} = n$ \cite{bolla}.
 Ebbõl látható, hogy a \eqref{eq:lambdaAtlag} becslés éles.
 
 $\mathbf{K_{m,n}}.$
-Az $m$ és $n$ elemû osztályokból álló teljes páros gráf spektruma:
-\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n+m-2} =1, \lambda_{n+m-1} = 2.\quad\cite{bolla}\]
+Az $m$ és $n$ elemû osztályokból álló teljes páros gráf spektruma \cite{bolla} szerint
+\[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n+m-2} =1, \lambda_{n+m-1} = 2.\]
 
 $\mathbf{S_n}.$
 Az $n$ ágú, azaz $n+1$ csúcsú csillag spektruma, mivel $S_n = K_{n,1}$:
 \[\lambda_0 = 0, \lambda_1 = \dots = \lambda_{n-1} =1, \lambda_{n} = 2 .\]
 
 $\mathbf{P_n}.$
-Az $n$ hosszú út spektruma:
-\[\lambda_k= 1-\cos\frac{\pi k}{n-1} \quad k=0,\dots,n-1.\quad\cite{cvetkovic1980spectra}\]
+Az $n$ hosszú út spektruma \cite{cvetkovic1980spectra} szerint
+\[\lambda_k= 1-\cos\frac{\pi k}{n-1} \quad k=0,\dots,n-1.\]
 
 $\mathbf{C_n}.$
-Az $n$ hosszú kör spektruma:
-\[\lambda_k=1-\cos\frac{2\pi k}{n} \quad k=0,\dots,n-1.\quad\cite{chung1997spectral}\] 
+Az $n$ hosszú kör spektruma \cite{chung1997spectral} szerint:
+\[\lambda_k=1-\cos\frac{2\pi k}{n} \quad k=0,\dots,n-1.\] 
 
 $\mathbf{Q_n}.$
-A $2^n$ csúcsú $n$ dimenziós hiperkocka sajátértékei:
-\[\frac{2k}{n}\quad\binom{n}{k} \textrm{ multiplicitással, } k=0,\dots,n.\quad\cite{lovasz2007combinatorial}\]
+A $2^n$ csúcsú $n$ dimenziós hiperkocka sajátértékei \cite{lovasz2007combinatorial} szerint
+\[\frac{2k}{n}\quad\binom{n}{k} \textrm{ multiplicitással, } k=0,\dots,n.\]
 
 \section{Vágások és partíciók}
-Gráfok vizsgálatának egyik fontos kérdése, hogy hogyan tudjuk egy gráf csúcsait jól csoportosítani, particionálni.
+Gráfok vizsgálatának egyik fontos kérdése, hogy hogyan tudjuk egy gráf csúcsait jól csoportosítani, partícionálni.
 A csoportosítás által egyszerûsödik, jobban átlátható lesz a gráf szerkezete.
-Elõkerülhetnek rejtett kapcsolatok, ami a gráf struktúrájának jobb megértéséhez vezet.
+Elõkerülhetnek rejtett kapcsolatok, ami a gráf struktúrájának jobb megértéséhez vezet. Newman \cite{newman04detecting} szerint a hálózatok kutatásának kiemelten fontos témája a közösségek, azaz sûrû részgráfok vizsgálata. 
 
 A gráfok klaszterei olyan csúcshalmazok, amelyek valamilyen
 jellemzõ tulajdonság alapján mérhetõen elkülönülnek.
 Ilyenre példa a szociális hálókban az azonos érdeklõdésû emberek csoportja, a fehérjehálózatokban az egymással reagáló vegyületek vagy képek esetében az alakzathoz tartozó pixelek.
 
-Particionálás során minden csúcsot be kell sorolnunk egy klaszterbe.
-Tehát a klaszterezés egy $k$-részre vágás, vagyis a $G=(V,W)$ gráf csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ felosztása, ahol $V_i$-k diszjunktak és \[\bigcup_{i=1}^k V_i =V\]. $k=2$ esetén biparticionálásról beszélünk. 
+Partícionálás során minden csúcsot be kell sorolnunk egy klaszterbe.
+Tehát a klaszterezés egy $k$-részre vágás, vagyis a $G=(V,W)$ gráf csúcsainak egy olyan $P_k=(V_1,\dots,V_k)$ felosztása, ahol $V_i$-k diszjunktak és 
+\[\bigcup_{i=1}^k V_i =V.\] 
+$k=2$ esetén bipartícionálásról beszélünk. 
 
-A megfelelõ particionálás matematikailag nehezen megfogható fogalom. Az általunk használt mértékekhez sok esetben könnyen találunk olyan példát, amikor az optimális particionálás messze van az elvárttól. Egy jó particionálástól elvárjuk, hogy az egy csoportban levõ elemek hasonlítsanak egymásra, míg a különbözõ csoportokban levõk különbözzenek. Valamint elvárt az is, hogy a klaszterek hasonló méretûek legyenek.
+A megfelelõ partícionálás matematikailag nehezen megfogható fogalom. Az általunk használt mértékekhez sok esetben könnyen találunk olyan példát, amikor az optimális partícionálás messze van az elvárttól. Egy jó partícionálástól elvárjuk, hogy az egy csoportban levõ elemek hasonlítsanak egymásra, míg a különbözõ csoportokban levõk különbözzenek. Valamint elvárt az is, hogy a klaszterek hasonló méretûek legyenek.
 
 Az alábbiakban bevezetjük a vágás fogalmát, és bemutatunk különbözõ mértékeket vágásokra és partíciókra. Ezt követõen megvizsgáljuk a bipartíciók és multipartíciók kapcsolatát a spektrummal.
 
@@ -697,13 +700,13 @@ Világos, hogy $\partial S = \partial \overline{S}$.
 %\[\delta S = \{v \notin S : \{u, v\} \in E(G), u \in S\}\]
 
 Tetszõleges két csúcshalmazhoz is meghatározhatjuk az általuk feszített részgráfban az elválasztásukhoz szükséges vágás értékét.
-\begin{defin}[Vágás értéke]\cite{bolla}
-A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya
-\[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}\].
+\begin{defin}[Vágás értéke] 
+A $G=(V,W)$ élsúlyozott gráfhoz tartozó $S,T \in V$ nem üres csúcshalmazok által meghatározott vágás súlya \cite{ford1962flows} alapján
+\[w(S,T)=\sum_{s\in S}\sum_{t\in T}w_{st}.\]
 \end{defin}
-Ezzel a definíciót kiterjeszthetjük tetszõleges számú halmazra.
+A fenti definíciót kiterjeszthetjük tetszõleges számú halmazra.
 \begin{defin}[k-vágás értéke]
-\[cut(P_k,G) = sum_{a=1}^{k-1}\sum_{b=a+1}^{k}w(V_a,V_b)\]
+\[cut(P_k,G) = \sum_{a=1}^{k-1}\sum_{b=a+1}^{k}w(V_a,V_b)\]
 \end{defin}
 
 Láttuk, hogy a spektrum erõs összefüggésben van a gráfok szerkezetével, így nem meglepõ, hogy a minimális vágás költsége sem független a spektrumtól. Felhívnánk a figyelmet, hogy a következõ állításban a sima Laplace-mátrix spektrumát használjuk fel. 
@@ -714,7 +717,7 @@ $0=\lambda_0<\lambda_1\leq \dots \leq \lambda_{n-1}$. Ekkor
 
 \begin{biz}
 
-Legyen $U^*$ egy min-vágás. Az $U$ segítségével definiáljuk az alábbi egydimenziós reprezentánsokat.
+Legyen $U^*$ egy minimum vágás. Az $U$ segítségével definiáljuk az alábbi egydimenziós reprezentánsokat.
 \[r_i= \left\{ \begin{array}{cc}
 n-|U^*| & \textrm{ha } i \in U^* \\
 -|U^*| & \textrm{ha } i \in \overline{U^*}
@@ -731,7 +734,7 @@ alapján:
 \[\lambda_{1}\leq \tilde{\textbf{r}}^TL\tilde{\textbf{r}} = \sum_{i<j}w_{ij}(\tilde{r}_i-\tilde{r}_j)^2 =
 w(U^*,\overline{U^*})\frac{(n-|U^*|+|U^*|)^2}{|U^*|(n-|U^*|)n}.\]
 Ebbõl következik, hogy
-\[\min_{C\in\mathcal{C}(G)}w(C) \geq \frac{|U^*|(n-|U^*|)}{n}\lambda_{1}\geq\frac{n-1}{n}\lambda_{1}.\quad\cite{bolla}\]
+\[\min_{C\in\mathcal{C}(G)}w(C) \geq \frac{|U^*|(n-|U^*|)}{n}\lambda_{1}\geq\frac{n-1}{n}\lambda_{1}.\]
 \end{biz}
 
 Az elõzõ bizonyítás menetét követve könnyen adódik az alábbi állítás.
@@ -742,10 +745,10 @@ Legyenek a $0=\lambda_0\leq\lambda_1\dots\leq\lambda_{n-1}$ a $G=(V,W)$ gráfhoz 
 \begin{biz}
 Az elõzõ állítás bizonyítását csak annyiban módosítjuk, hogy a \eqref{maxLemma}-t használjuk, valamint, hogy nem minimális, hanem maximális vágást határozzon meg $U^*$.
 Így kapjuk végül a kívánt egyenlõtlenséget.
-\[\max_{C\in\mathcal{C}(G)}w(C) \leq \frac{|U^*|(n-|U^*|)}{n}\lambda_{n-1}\leq\frac{n}{4}\lambda_{n-1}\quad\cite{bolla}\]
+\[\max_{C\in\mathcal{C}(G)}w(C) \leq \frac{|U^*|(n-|U^*|)}{n}\lambda_{n-1}\leq\frac{n}{4}\lambda_{n-1}\]
 \end{biz}
 
-Fiedler\cite{fiedler1973algebraic} egy egyszerû gráfra a min. vágás értékét élösszefüggõségnek hívta, mivel ennyi élt kell eltávolítani ahhoz, hogy a gráf ne legyen összefüggõ. Az élösszefüggõségre az $e(G)$ jelölést vezette be. Mivel a $\lambda_1$ sajátérték és az élösszefüggés között szoros kétoldali kapcsolat van, a $\lambda_1$ sajátértéket elnevezte algebrai összefüggõségnek. Megmutatta, hogy nem teljes gráfra 
+Fiedler \cite{fiedler1973algebraic} egy egyszerû gráfra a minimum vágás értékét élösszefüggõségnek hívta, mivel ennyi élt kell eltávolítani ahhoz, hogy a gráf ne legyen összefüggõ. Az élösszefüggõségre az $e(G)$ jelölést vezette be. Mivel a $\lambda_1$ sajátérték és az élösszefüggés között szoros kétoldali kapcsolat van, a $\lambda_1$ sajátértéket elnevezte algebrai összefüggõségnek. Megmutatta, hogy nem teljes gráfra 
 \[\lambda_1\leq e(G).\]
 
 A fenti bizonyítások alapján megsejthetjük, hogy hogyan keressünk optimális bipartíciót. A csúcsokat a $\lambda_1$ sajátvektorhoz tartozó sajátvektor szerint sorba rendezve megkeressük a sorrendben az optimális vágást. Ez közelíteni fogja a tényleges optimumot. Ezt a sajátvektort Fiedler-vektornak hívjuk. \label{Fiedler}
@@ -757,12 +760,13 @@ sajátvektort Fiedler-vektornak hívjuk.
 
 \subsection{Izoperimetrikus feladatok}
 Kézenfekvõ, hogy minimális vágással osszuk részekre a csúcshalmazt.
-Azonban könnyen elõfordulhat, hogy egy minimális vágás csak egy csúcsot vág le a gráfról, valójában pedig nem ez a ,,legjobb'' vágás.
+Amint azonban az \ref{fig:mincut}.~ábrán is látható, könnyen elõfordulhat, hogy egy minimális vágás csak egy csúcsot vág le a gráfról, és valójában nem ez a ,,legjobb'' vágás.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1]{pictures/mincut.jpg} 
 \caption{Példa arra, amikor a minimális vágás nem optimális eredményhez vezet}
+\label{fig:mincut}
 \end{figure}
 
 Keresnünk kell valamilyen más mértéket, ami mentén optimalizálunk.
@@ -777,12 +781,13 @@ Egy gráf átmérõjén a csúcsai között fellépõ távolságok maximumát értjük.
 \end{defin}
 Tehát van értelme vizsgálni a következõ feladatot:
 \[\min_{P_k\in \mathcal{P}_k}\max_{V_i \in P_k} D(V_i).\]
-Ez a példa jól demonstrálja azt az esetet, amikor az átmérõvel nem a  kívánt partíciókat kapjuk.
+A \ref{fig:diameter}.~ábra jól demonstrálja azt az esetet, amikor az átmérõvel nem a  kívánt partíciókat kapjuk.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.1]{pictures/diameter-fail.jpg}
-\caption{Példa arra, amikor a max. átmérõ nem ad optimális vágást. Forrás:\cite{kannan2004clusterings}}
+\caption{Példa arra, amikor a max. átmérõ nem ad optimális vágást. Forrás: \cite{kannan2004clusterings}}
+\label{fig:diameter}
 \end{figure}
 
 Szeretnénk megtartani a minimum vágás azon tulajdonságát, hogy a komponensek közötti élek összsúlya kicsi.
@@ -825,7 +830,7 @@ A kiterjesztés hiányossága, hogy minden csúcsot egyformán súlyoz. Ezt kijavíthat
 \end{defin}
 
 \subsection{Bipartíciók}
-Elõször azzal a kérdéssel foglalkozunk, amikor biparticionálni szeretnénk $G$-t.
+Elõször azzal a kérdéssel foglalkozunk, amikor bipartícionálni szeretnénk $G$-t.
 
 
 \subsubsection{A Cheeger-konstans}
