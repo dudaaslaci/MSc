@@ -1043,16 +1043,16 @@ Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban köze
 hasonló pontok távolsága csökken, a különbözõké pedig növekszik.
 
 \section{Spektrálklaszeterezés a gyakorlatban}
-A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgálnánk meg.
+A következõ fejezetben a spektrálklaszterezés gyakorlatban való alkalmazhatóságát vizsgáljuk meg.
 A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algoritmusok gyengébb eredményeket érnek el, mint más megközelítést használó módszerek.
-Ennek okait szeretnénk bemutatni, valamint lehetséges megoldásokat bemutatni egy konkrét példa.
-\subsection{A spektrálklaszterzés gyengeségei}
+Az alábbiakban ennek okait, valamint néhány lehetséges megoldást mutatunk be egy konkrét példán keresztül.
+\subsection{A spektrálklaszterzés egy gyengesége}
 \subsubsection{A TKC-hatás}
-Lempel és Moran az internetgráf vizsgálatakor találták meg a HITS algoritmus egy hibáját. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
-A hiba okának a kis sûrû részgráfokat azonosították. Ezért a
-jelenséget TKC-hatásnak{tightly kit communities effect} nevezték el.
+Lempel és Moran\cite{lempelTKC} az internetgráf vizsgálatakor derítettek fényt  a HITS-algoritmus egy sebezhetõségére. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
+A hiba okaként a kis sûrû részgráfokat, csomópontokat azonosították. Ezért a
+jelenséget TKC-hatásnak \emph{(tightly kit communities effect)} nevezték el.
 
-
+%TODO Ennek okáról szöveget beírni!
 \begin{lemma}
 \label{lemma:eigenvector}
 Legyen $S = U \Lambda U^T$ szimmetrikus pozitív szemidefinit mátrix, ahol
@@ -1083,7 +1083,7 @@ Legyen $S$ egy súlyozott gráf  élmátrixa. Ekkor $S^k x$ az $x$-el súlyozott kezd
 
 A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokra, a Laplace, illetve a súlyozott Laplace mátrixokra is. A \ref{lemma:path-count}.~Lemma szerint azokra a $j$ csúcsokra lesz magas az $[S^k x]_j$  értéke, amelyekbõl nagyon sok súlyozott út indul. A \ref{lemma:eigenvector}.~Lemma szerint ezeknek a $j$ csúcsoknak lesz kiemelkedõ  értéke az elsõ olyan sajátvektorban, amely $x$-re nem merõleges.
 
-\subsection{Lehetséges módszerek a TKC-hatás megoldására}
+\subsection{Lehetséges módszerek a TKC-hatás semlegesítésére}
 Ebben a részben néhány heurisztikát szeretnénk ismertetni,
 melyek segítségével javítható a spektrálklaszterezés eredménye.
 \subsubsection{Csomópontok eltávolítása}
@@ -1094,15 +1094,15 @@ Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. E
 \item{Keresünk egy $v$ csúcsot, amire $d_v < d_t$, ha nincs ilyen, akkor megállunk.}
 \item{$v$-t összehúzzuk a legnagyobb fokszámú szomszédjával.}
 \item{Felírjuk, hogy melyik két csúcsot húztuk össze.}
-\item{Újra kezdjük az 1. lépéstõl}
+\item{Újra kezdjük az 1. lépéstõl.}
 \end{enumerate}
 Az eljárás véges, mert minden lépésben csökken a csúcsszám.
 
 \subsection{Spektrálklaszterezés egy konkrét példán bemutatva}
-Most pedig egy valós példán demonstráljuk, hogy hogyan alkalmazható a spektrálklaszterezés a gyakorlatban.
+Most pedig egy valós példán demonstráljuk, hogy hogyan alkalmazható a spektrálklaszterezés a fenti heurisztikák használatával.
 \subsubsection{Az adat: livejournal.com}
 Példánkban\cite{kurucz} a LiveJournal(www.livejournal.com) oldal felhasználóit szerették volna klaszterezni.
-A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátság) is bejelölni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
+A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátságukat) is kifejezni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
 
 Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük szerint szeparálják. Az orosz nyelvû felhasználók jelentõs része valójában valamelyik környezõ ország lakosa(Ukrajna, Fehéroroszország, Észtország,\dots).
 
