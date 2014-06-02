@@ -464,18 +464,6 @@ Normalizáljuk a $\Sigma$ mátrixot $\sigma_1$-gyel.
 \]
 Tehát az elsõ elemet kivéve a mátrix összes többi eleme az iterációszámban exponenciális sebességgel tart $0$-hoz.
 
-Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor ezzel eliminálhatjuk az elsõ szinguláris vektor hatását. Ilyenkor a második lesz a hangsúlyos szinguláris vektor.
-
-Tehát a HITS-algoritmus alkalmas a szinguláris felbontás meghatározására.
-Ha már ismert az elsõ $k$ szinguláris vektor, akkor választhatunk rájuk merõleges kiinduló vektort. Ekkor a HITS a $k+1$ szinguláris vektorhoz fog konvergálni.
-
-Szemléletes jelentését is társíthatunk az $A^k$, valamint az $(A^TA)^k$ mátrixokhoz.
-$a_{ij}$-re felfoghatjuk úgy is, mint az $i$ és $j$ csúcsok közötti $1$ hosszú séták számát. Most nézzük $A^2$-t!
-\[A^2_{ij} = \sum_{k=1}^n a_{ik}a_{kj}\]
-Látható, hogy $A^2_{ij}$ az $i$ és $j$ közötti $2$, hosszú séták számával lesz egyenlõ.
-Indukcióval bizonyítható, hogy ez magasabb hatványokra is igaz.
-
-$(AA^T)^k$ esetében hasonló eredményre jutunk, de most minden második lépésünk a megfordított gráfon történik. Látható tehát, hogy az $auth$ és $hub$ értékek is az adott csúcsból induló és érkezõ oda-vissza utak számával arányosak.
 
 Vizsgáljuk meg $A^TA$ hatását a $v{(i)}$ szinguláris vektorokra!
 $A^TAv_{(i)}$-t 
@@ -499,6 +487,20 @@ V\left(\begin{array}{c}
 Látható, hogy a szinguláris értékek az $A^TA$ sajátértékei.
 A jobb-szinguláris vektorok a sajátvektorok.
 
+Ha $h^{(1)}$-t úgy választjuk, hogy merõleges legyen $U$ elsõ oszlopára, akkor a numerikus hibáktól eltekintve az iterációk során végig a merõleges altérben maradunk, azaz elimináljuk az elsõ szinguláris vektor hatását. Ilyenkor a második lesz a hangsúlyos szinguláris vektor, és a megfelelõ normalizációs konstans $\sigma_2$ lesz.
+
+A fenti gondolatmenet alapján a HITS-algoritmus alkalmas a szinguláris felbontás meghatározására.
+Ha már ismert az elsõ $k$ szinguláris vektor, akkor választhatunk rájuk merõleges kiinduló vektort. Ekkor a HITS normalizálás után a $(k+1)$-edik szinguláris vektorpárhoz fog konvergálni.
+
+Szemléletes jelentését is társíthatunk az $A^k$, valamint az $(A^TA)^k$ mátrixokhoz.
+$a_{ij}$-re felfoghatjuk úgy is, mint az $i$ és $j$ csúcsok közötti $1$ hosszú séták számát. Most nézzük $A^2$-t!
+\[A^2_{ij} = \sum_{k=1}^n a_{ik}a_{kj}\]
+Látható, hogy $A^2_{ij}$ az $i$ és $j$ közötti $2$, hosszú séták számával lesz egyenlõ.
+Indukcióval bizonyítható, hogy ez magasabb hatványokra is igaz.
+
+$(AA^T)^k$ esetében hasonló eredményre jutunk, de most minden második lépésünk a megfordított gráfon történik. Látható tehát, hogy az $auth$ és $hub$ értékek is az adott csúcsból induló és érkezõ oda-vissza utak számával arányosak.
+
+
 \section{A spektrum}
 %TODO Kell ide több szöveg?
 Az elõzõ fejezetben láttuk, hogy egy gráf adjacenciamátrixának sajátértékei és sajátvektorai különleges jelentéssel bírnak, és információt hordoznak a gráf struktúrájáról.
@@ -520,21 +522,21 @@ Majd a fejezet végén megadjuk néhány konkrét gráfcsalád spektrumát.
 %0 & \textrm {egyebkent}
 %\end{array} \right.\]
 %\end{defin}
-A dolgozat hátralevõ részében legtöbbször hasonlósággráfokról mondunk ki állításokat. Ezek olyan egyszerû gráfok, melyekhez adva van egy $w:V\times V \rightarrow \mathbb{R}$ súlyfüggvény, amelyre igazak az alábbiak.
+A dolgozat hátralevõ részében olyan egyszerû súlyozott gráfokkal foglalkozunk, melyekhez adva van egy $w:V\times V \rightarrow \mathbb{R}$ súlyfüggvény, amelyre igazak az alábbiak:
 \[w(u,v)=w(v,u)\]
 \[w(u,v) \geq 0\]
 \[uv \textrm{ nem él} \Leftrightarrow w(u,v)=0\]
 A $w(u,v)$ értékeket mátrixba rendezve kapjuk a $W$ mátrixot.
-Vegyük észre, hogy a $W$ önmagában meghatározza a gráfot, így a hasonlósággráfokat a $V$ csúcshalmazzal és a $W\geq 0$ súlymátrixszal fogjuk megadni.
+Vegyük észre, hogy a $W$ önmagában meghatározza a gráfot, így a súlyozott gráfokat a $V$ csúcshalmazzal és a $W\geq 0$ súlymátrixszal fogjuk megadni.
 
-A hasonlósággráfok esetében definiálhatunk egy általánosabb fokszámfogalmat.
+A súlyozott gráfok esetében definiálhatunk egy általánosabb fokszámfogalmat.
 \begin{defin}[Általánosított fokszám]
-$G=(V,W)$ hasonlósággráf egy $v$ csúcsának általánosított fokszáma
+$G=(V,W)$ súlyozott gráf egy $v$ csúcsának általánosított fokszáma
 \[d_v=\sum_{w(u,v) > 0} w(u,v).\]
 \end{defin}
-Most már definiálhatjuk egy hasonlósággráf Laplace-mátrixát.
+Most már definiálhatjuk egy súlyozott gráf Laplace-mátrixát.
 \begin{defin}[Laplace-mátrix]
-Egy $G=(V,W)$ hasonlósággráf Laplace-mátrixa
+Egy $G=(V,W)$ gráf Laplace-mátrixa
 \[L(u,v)=\left\{
 \begin{array}{cc}
 d_v-w(u,v) & \textrm{ha $u = v$ }\\ 
@@ -560,9 +562,10 @@ A definícióból látható, hogy a spektrum nem függ a csúcsok sorrendjétõl, tehát k
 Fordítva azonban ez nem igaz, két azonos spektrumú gráf nem feltétlenül lesz izomorf.
 
 \subsection{A spektrum néhány egyszerû tulajdonsága}
-Mivel $\mathcal{L}$ szimmetrikus, pozitív-szemidefinit, ezért az összes sajátértéke valós nemnegatív.
 
-Vegyünk egy tetszõleges $g:V\rightarrow\mathbb{R}$ függvényt. És nézzük $g$-t, mint oszlopvektort. Ekkor tekinthetjük az ún. \textit{Rayleigh-hányadost}
+A következõkben megmutatjuk a Laplace mátrix legfontosabb tulajdonságait. Legelõször bebiyonyítjuk, hogy  $\mathcal{L}$ szimmetrikus pozitív-szemidefinit, azaz az összes sajátértéke valós nemnegatív.  A szimmetria abból következik, hogy a gráf irányítatlan.
+
+A pozitív szemidefinitség bizonyításához vegyünk egy tetszõleges $g:V\rightarrow\mathbb{R}$ függvényt és tekintsük, mint oszlopvektort.  Definiáljuk az ún. \textit{Rayleigh-hányadost}:
 \begin{eqnarray}
 %\frac{g^T\mathcal{L}g}{\langle g,g\rangle} =
 \frac{\langle g, \mathcal{L}g\rangle}
@@ -585,7 +588,7 @@ csúcspárokat, amikre $u$ és $v$ szomszédosak, valamint $\langle ,\rangle$ jelöli
 $\mathbb{R}^n$
 -beli belsõszorzatot.
 
-\eqref{Rayleigh}-ból is látszik, hogy az összes sajátérték nemnegatív és a $0$ is sajátérték. A $0$-hoz tartozó sajátvektor a
+A \eqref{Rayleigh} egyenlõségbõl következik, hogy az összes sajátérték nemnegatív és a $0$ is sajátérték. A $0$-hoz tartozó sajátvektor a
 $\sqrt{\underline{d}}=\left(\sqrt{d_1},\dots,\sqrt{d_n}\right)^T$ vektor.
 A $0$ akkor és csak akkor egyszeres sajátérték, ha a gráf összefüggõ.
 Ha a gráf nem összefüggõ, akkor a spektrum az egyes összefüggõ részek spektrumának uniója.
@@ -629,7 +632,7 @@ amivel becsülni tudjuk a legnagyobb és legkisebb pozitív sajátértéket.
 \end{equation}
 
 Látni fogjuk majd, hogy teljes gráfra egyenlõséggel teljesül mindkét egyenlõtlenség.
-Nem teljes gráfra azonban már az is igaz, hogy $\lambda_1 \leq 1$.\quad \cite{chung1997spectral}
+Nem teljes gráfra azonban már az is igaz, hogy $\lambda_1 \leq 1$, lásd \cite{chung1997spectral}.
 
 \subsection{Néhány speciális gráf spektruma}
 $\mathbf{K_n}.$
@@ -965,7 +968,7 @@ A \eqref{feltetelek} feltételek miatt $X$ oszlopai ortonormált rendszert alkotna
 X^TX=I_k
 \end{eqnarray}
 
-\begin{tetel}[Reprezentációs tétel hasonlósággráfokra]
+\begin{tetel}[Reprezentációs tétel súlyozott gráfokra]
 Tekintsük a $G=(V,W)$ összefüggõ gráfot és a hozzá tartozó $L$ Laplace-mátrixot!
 Jelölje $0=\lambda_0\leq\lambda_1\leq\cdots\leq\lambda_{n-1}$ az $L$ sajátértékeit,
 valamint $u_0,u_1,\dots,u_{n-1}$ a hozzájuk tartozó
