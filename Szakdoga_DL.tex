@@ -738,7 +738,7 @@ Az elõzõ állítás bizonyítását csak annyiban módosítjuk, hogy a \eqref{maxLemma}-
 Fiedler\cite{fiedler1973algebraic} egy egyszerû gráfra a min. vágás értékét élösszefüggõségnek hívta, mivel ennyi élt kell eltávolítani ahhoz, hogy a gráf ne legyen összefüggõ. Az élösszefüggõségre az $e(G)$ jelölést vezette be. Mivel a $\lambda_1$ sajátérték és az élösszefüggés között szoros kétoldali kapcsolat van, a $\lambda_1$ sajátértéket elnevezte algebrai összefüggõségnek. Megmutatta, hogy nem teljes gráfra 
 \[\lambda_1\leq e(G).\]
 
-A fenti bizonyítások alapján megsejthetjük, hogy hogyan keressünk optimális bipartíciót. A csúcsokat a $\lambda_1$ sajátvektorhoz tartozó sajátvektor szerint sorba rendezve megkeressük a sorrendben az optimális vágást. Ez közelíteni fogja a tényleges optimumot. Ezt a sajátvektort Fiedler-vektornak hívjuk.  
+A fenti bizonyítások alapján megsejthetjük, hogy hogyan keressünk optimális bipartíciót. A csúcsokat a $\lambda_1$ sajátvektorhoz tartozó sajátvektor szerint sorba rendezve megkeressük a sorrendben az optimális vágást. Ez közelíteni fogja a tényleges optimumot. Ezt a sajátvektort Fiedler-vektornak hívjuk. \label{Fiedler}
 
 \begin{defin}[Fiedler-vektor]
 A $\wg$ gráf normalizált Laplace-mátrixának legkisebb pozitív sajátértékhez tartozó
@@ -935,9 +935,8 @@ A következõkben áttérünk a multipartíciók vizsgálatára.
 
 \subsubsection{Reprezentánsok keresése QP programmal}
 
-%TODO szöveg
-
-Nézzük a következõ kvadratikus programozási feladatot.
+A klaszterezést megnehezíti adataink sokdimenziós volta. Ezért érdemes az egyes csúcsokat kisdimenziós vektorokkal reprezentálni.
+Ehhez tekintsük a következõ kvadratikus programozási feladatot!
 
 Adott $\wg$ gráfhoz és adott $1\leq k \leq n$ egészhez keresünk olyan $k$-dimenziós $r_1, \dots r_n$ reprezentáns vektorokat, hogy a 
 \begin{equation}
@@ -950,7 +949,7 @@ célfüggvény érték minimális legyen a
 feltétel mellett ($I_k$ jelöli a $k$ dimenziós egységmátrixot).
 Látható, hogy a célfüggvény értéke csökken, ha a nagy hasonlóságú csúcsok közelebb kerülnek egymáshoz.
 
-Átalakítjuk a célfüggvényt, és a feltéteket egy többet mondó formába.
+Átalakítjuk a célfüggvényt és a feltéteket egy többet mondó formába.
 Legyen $X$ az a mátrix, aminek a sorai $r_1^T,\dots ,r_n^T$. Legyenek $x_1, \dots, x_k \in \mathbb{R}^n$ $X$ oszlopai.
 A \eqref{feltetelek} feltételek miatt $X$ oszlopai ortonormált rendszert alkotnak, tehát $X$ egy szubortogonális mátrix.
 Így a feltételeket felírhatjuk $X^TX=I_k$ formában is. Ezek után a célfüggvényt tovább alakíthatjuk (\ref{Qk}) egyenlet szerint.
@@ -967,11 +966,11 @@ egységhosszú sajátvektorokat! Legyen $k<n$ olyan,
 hogy $\lambda_{k-1}<\lambda_k$!
 Ekkor a \eqref{celfuggveny} célfüggvény értéke a \eqref{feltetelek} feltételek mellett:
 \[\sum_{i=0}^{k-1}\lambda_i=\sum_{i=1}^{k-1}\lambda_i.\]
-És az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
+Az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
 \end{tetel}
 \begin{biz}
 A \eqref{minQk} alak szerint:
-\[ Q_k = \nyom{X^TLX}\]
+\[ Q_k = \nyom{X^TLX}.\]
 Így a tétel következik az alábbi általánosabb állításból.
 \begin{allitas}
 Legyen $A$ egy valós $n\times n$ méretû szimmetrikus mátrix. $A$ sajátértékei $\lambda_1\geq\dots\geq\lambda_n$.
@@ -980,29 +979,28 @@ $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 \max_{X\in\mathbb{R}^{n\times k}\atop{ X^TX=I_k}} \nyom{X^TAX}=
 \max_{x_i \in \mathbb{R}^n \left( i=1,\dots ,k \right)\atop{ x_i^Tx_j=\delta_{ij}}}
 \sum_{i=1}^k x_i^T A x_i = \sum_{i=1}^k\lambda_i
-\]
-És az optimum az $X=\left(u_1,\dots,u_k\right)$ szubortogonális mátrix, ahol $u_i$ az $\lambda_i$-hez tartozó egységhosszú sajátvektor. 
-\end{allitas}
-\end{biz}
+.\]
+Az optimum az $X=\left(u_1,\dots,u_k\right)$ szubortogonális mátrix, ahol $u_i$ az $\lambda_i$-hez tartozó egységhosszú sajátvektor. \end{allitas}
+\end{biz}\cite{bolla}
 
-A klaszterek meghatározásához alkalmazhatunk egy általános geometriai klaszterezõ algoritmust a jóval kisebb dimenziós reprezentáns vektorokon.
-Most bemutatjuk a legismertebb ilyen klaszterezõ algoritmus a k-means.
+A klaszterek meghatározásához alkalmazhatunk általános geometriai klaszterezõ algoritmust a jóval kisebb dimenziós reprezentáns vektorokon.
+Most bemutatjuk a legismertebb ilyen klaszterezõ eljárást, a k-means algoritmust.
 
 \textbf{k-means algoritmus}
 
 Adott $l$ db $\mathbb{R}^n$-beli vektor, és $i$ iterációszám.
 \begin{enumerate}
-\item Választunk $k$ db tetszõleges klaszterközéppontot, $\emph{számláló} := 0$
+\item Választunk $k$ db tetszõleges klaszterközéppontot, $\emph{számláló} := 0$.
 \item Minden csúcsot beosztunk abba a klaszterbe, amelyiknek a középpontja legközelebb esik hozzá.
-\item Minden klaszter középpontja legyen a benne levõ pontok átlaga
+\item Minden klaszter új középpontja legyen a benne levõ pontok átlaga!
 \item Ha $\emph{számláló} = i$, akkor megállunk, egyébként visszalépünk 2. pontra és \emph{számláló}-t növeljük 1-gyel. 
 \end{enumerate}
 
 \subsubsection{Spektrálklaszterezés}
-Már láttuk, hogy a Fiedler-vektor segítségével hogyan határozhatunk meg vágásokat.
+Már láttuk a \ref{Fiedler} fejezetben, hogy a Fiedler-vektor segítségével hogyan határozhatunk meg vágásokat.
 Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 
-\textbf{Hagen algoritmusa}
+\textbf{Hagen algoritmusa}\cite{hagen1991fast}
 \begin{enumerate} 	\label{spektralHeurisztika}
 \item Vegyük a $\lambda_1$-hez tartozó sajátvektort
 \item A Fiedler-vektor szerint sorba rendezzük a csúcsokat
@@ -1010,7 +1008,7 @@ Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 \item A két részre külön-külön alkalmazzuk az algoritmust
 \end{enumerate}
 
-Kannan, Vempala és Vetta becslést is adtak \cite{kannan2004clusterings} az
+Kannan, Vempala és Vetta\cite{kannan2004clusterings} becslést is adtak az
 elõzõ algoritmus által talált klaszterek minõségére. A becsléshez az alábbi mérték használták.
 
 \begin{defin}[$(\alpha , \epsilon )$-partíció]
@@ -1021,27 +1019,26 @@ Egy $\{V_1, \dots, V_k\}$ partíció $(\alpha , \epsilon )$-partíció, ha
 \end{itemize}
 \end{defin}
 
-
 \begin{allitas}[Kannan-Vempala-Vetta]
 Ha a $G$ gráfnak létezik $(\alpha , \epsilon )$-partíciója,
-akkor a \ref{spektralHeurisztika} spektrálheurisztika talál
+akkor Hagen algoritmusa talál
 \[\left (\frac{\alpha^2}{72\log^2\frac{n}{\epsilon}},
 20\sqrt{\epsilon}\log\frac{n}{\epsilon}\right )-\textrm{partíciót}.\]
 \end{allitas}
 
 \subsection{Spektrálklaszterezés több sajátvektorral}
-Az elõzõ részben látott algoritmus hátránya, hogy nem stabil, és nem hatékony.
-Shi és Malik \cite{shi2000normalized} egy másik megközelítést javasol a spektrálklaszterezésre. Nem csak a Fiedler-vektort, hanem több sajátvektort is érdemes figyelembe venni.
-Az õáltaluk használt algoritmus a következõ.
+Az elõzõ részben látott algoritmus hátránya, hogy nem stabil és nem hatékony.
+Shi és Malik \cite{shi2000normalized} egy másik megközelítést javasol a spektrálklaszterezésre. Nem csak a Fiedler-vektort, hanem több sajátvektort is érdemes figyelembe vesznek.
+Az általuk használt algoritmus a következõ:
 
 \textbf{Shi és Malik algoritmusa}
 \begin{enumerate}
-\item Keressük meg a normalizált Laplace-mátrix elsõ $k$ pozitív sajátértékéhez tartozó sajátvektort
-\item A vektorokból képzett mátrix sorait klaszterezzük pl. $k-means$ algoritmussal
+\item Keressük meg a normalizált Laplace-mátrix elsõ $k$ pozitív sajátértékéhez tartozó sajátvektort.
+\item A vektorokból képzett mátrix sorait klaszterezzük pl. $k-means$ algoritmussal.
 \item A $v$ csúcs a $v$-nek megfelelõ sor klaszterébe kerül.
 \end{enumerate}
 
-Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban közelítjük az optimális normalizált k-vágást. Brand és Huang megmutatta \cite{brand2003unifying}, hogy több sajátvektort véve a klaszterek eloszlása egyenletesebb lesz, és a
+Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban közelítjük az optimális normalizált k-vágást. Brand és Huang\cite{brand2003unifying} megmutatta, hogy több sajátvektort véve a klaszterek eloszlása egyenletesebb lesz, a
 hasonló pontok távolsága csökken, a különbözõké pedig növekszik.
 
 \section{Spektrálklaszeterezés a gyakorlatban}
