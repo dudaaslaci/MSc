@@ -117,7 +117,7 @@ A szakirodalomban bemutatott módszerekhez képest újdonság, hogy a HITS algoritmu
 
 \section{Bevezetés}
 A gráfok különbözõ mátrixainak karakterisztikus függvényeivel, sajátvektoraival és sajátértékeivel a spektálgráfelmélet foglalkozik.
-Ez a téma az 1950-es közepétõl vált kutatott területté \cite{fiedler1973algebraic}.
+Ez a téma az 1950-es közepétõl vált kutatott területté \cite{fiedler1973algebraic,donath-hoffman73}.
 A spektrálgráfelmélet egyik fõ kérdésköre, hogy mit tudunk mondani egy gráf spektrumáról. A másik témakör pedig, hogy hogyan függ össze a spektrum a gráf egyéb tulajdonságaival.
 
 A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával, a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
@@ -786,7 +786,7 @@ A \ref{fig:diameter}.~ábra jól demonstrálja azt az esetet, amikor az átmérõvel n
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.1]{pictures/diameter-fail.jpg}
-\caption{Példa arra, amikor a max. átmérõ nem ad optimális vágást. Forrás: \cite{kannan2004clusterings}}
+\caption{Példa arra, amikor a maximális átmérõ nem ad optimális vágást \cite{kannan2004clusterings}.}
 \label{fig:diameter}
 \end{figure}
 
@@ -798,7 +798,7 @@ Legegyszerûbb a csúcshalmazok elemszámával normálni, így kapjuk a kiegyensúlyozo
 \[b(P_k, G) = \sum_{a=1}^{k-1} \sum_{b=a+1}^{k} \left (\frac{1}{|V_a|} + 
 \frac{1}{|V_b|}\right )w(V_a,V_b)=\]
 \[=\sum_{a=1}^k\frac{w(V_a, \overline{V_a})}{|V_a|} =
- k-\sum_{a=1}^k\frac{w(V_a,V_a)}{|V_a|}\]
+ k-\sum_{a=1}^k\frac{w(V_a,V_a)}{|V_a|}.\]
 \end{defin}
 
 Normálhatunk az illeszkedõ élek súlyával is.
@@ -806,7 +806,7 @@ Késõbb is hasznos lesz a következõ fogalom.
 
 \begin{defin}[Csúcshalmaz térfogata]
 A $\graf$ gráf $S\subset V$ csúcshalmazának térfogata:
-\[Vol S = \sum_{v\in S}d_v.\]
+\[Vol(S) = \sum_{v\in S}d_v.\]
 \end{defin}
 
 Shi és Malik \cite{shi2000normalized} az alábbi mértéket javasolja. 
@@ -820,13 +820,13 @@ Shi és Malik \cite{shi2000normalized} az alábbi mértéket javasolja.
 
 A kiterjesztés fogalma is gyakran használatos az optimális vágás meghatározásához. Azt fejezi ki, hogy mennyivel növekszik egy gráf, ha hozzávesszük az adott csúcshalmazt.
 \begin{defin}[Kiterjesztés]
-\[\Psi(S)=\frac{w(S,\overline{S})}{\min(|S|, |\overline{S}|)}\]
+\[\Psi(S)=\frac{w(S,\overline{S})}{\min(|S|, |\overline{S}|)}.\]
 \end{defin}
 
 A kiterjesztés hiányossága, hogy minden csúcsot egyformán súlyoz. Ezt kijavíthatjuk, ha nem elemszámot, hanem térfogatot veszünk alapul. Így a konduktancia fogalmához jutunk.
 
 \begin{defin}[Konduktancia]
-\[\Phi(S)=\frac{w(S,\overline{S})}{\min(Vol(S), Vol(\overline{S}))}\]
+\[\Phi(S)=\frac{w(S,\overline{S})}{\min(Vol(S), Vol(\overline{S}))}.\]
 \end{defin}
 
 \subsection{Bipartíciók}
@@ -847,8 +847,8 @@ Egy $\graf$-hoz tartozó Cheeger-konstans
 \end{defin}
 $h_G > 0$ csak akkor igaz, ha $G$ összefüggõ, ezért feltesszük, hogy $G$ összefüggõ.
 
-Az 1. feladat megoldása egyenértékû a Cheeger-konstans meghatározásával, mivel
-\[w(\partial S)\geq h_G Vol(S).\quad\cite{chung1997spectral}\]
+Az 1. feladat megoldása egyenértékû a Cheeger-konstans meghatározásával, mivel \cite{chung1997spectral} szerint
+\[w(\partial S)\geq h_G Vol(S).\]
 
 
 \subsubsection{A Cheeger-egyenlõtlenség}
@@ -883,7 +883,8 @@ mint $V\rightarrow \mathbb{R}$ függvényeket. Mivel $f$ merõleges a $\sqrt{\under
 \sum_v g(v)d_v=0.
 \end{equation}
 %\[\sum_v g(v)^2 d_v=1.\]
-Feltehetõ, hogy a csúcsok $f$ szerint csökkenõ sorrendbe vannak rendezve vagyis $f(v_i) \geq f(v_j)\textrm{, ha } i<j$. Legyen $S_i=\{v_1,\dots, v_i\}$, valamint \[\alpha_G=\min_i h_{S_i}.\].
+Feltehetõ, hogy a csúcsok $f$ szerint csökkenõ sorrendbe vannak rendezve vagyis $f(v_i) \geq f(v_j)\textrm{, ha } i<j$. Legyen $S_i=\{v_1,\dots, v_i\}$, valamint
+\[\alpha_G=\min_i h_{S_i}.\]
 Legyen $r$ a legnagyobb egész, amire $Vol(S_r)<Vol(G)/2$. \eqref{eq:gd0} miatt
 \[\sum_v g(v)^2d_v=\min_c\sum_v(g(v)-c)^2 d_v\leq \sum_v(g(v)-g(v_r))^2d_v.\]
 Jelölje $g_+$ és $g_-$ $g$ pozitív ill. negatív részét.
@@ -910,11 +911,10 @@ jelölést kapjuk továbbá, hogy
 \[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_i g_+(v_i)^2\big(|\tilde{Vol}(S_i)-\tilde{Vol}(S_{i+1})|\big)\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}\]
 \[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_ig_+(v_i)^2d_{v_i}\big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2} = \frac{\alpha_G^2}{2}.\]
 
-Beláttuk tehát, hogy $\lambda_1 \geq h_G^2/2$. Ahhoz, hogy belássuk, hogy egyenlõség nem állhat fent szükségünk lesz arra, hogy $1-\sqrt{1-x^2}>x^2/2$, ha $x > 0$, valamint az alábbi lemmára.
+Beláttuk tehát, hogy $\lambda_1 \geq h_G^2/2$. Ahhoz, hogy belássuk, hogy egyenlõség nem állhat fent, szükségünk lesz arra, hogy $1-\sqrt{1-x^2}>x^2/2$, ha $x > 0$, valamint az alábbi lemmára.
 \begin{lemma}
 Ha $G$ összefüggõ gráf és $\lambda_1$ a spektrumának legkisebb eleme, akkor
-\[\lambda_1\geq 1-\sqrt{1-h_G^2} \Rightarrow 
-\]
+\[\lambda_1\geq 1-\sqrt{1-h_G^2}\]
 \end{lemma}
 \begin{biz}
 Láttuk, hogy 
@@ -937,7 +937,7 @@ Ebbõl következik, hogy
 A másodfokú egyenlet megoldóképletét alkalmazva kapjuk a kívánt egyenlõtlenséget.
 \[\lambda_1 \geq W \geq 1-\sqrt{1-\alpha_G^2} \geq 1 - \sqrt{1-h_G^2}\]
 \end{biz}
-A lemma bizonyításával beláttuk a Cheeger-egyenlõtlenség másik irányát is. \cite{chung1997spectral}
+A lemma bizonyításával beláttuk a Cheeger-egyenlõtlenség másik irányát is. 
 \end{biz}
 
 A $k$-dimenziós kocka Cheeger-konstansa $2/n$, ugyanannyi, mint a spektrumának $\lambda_1$ eleme. Tehát a Cheeger-egyenlõtlenség felsõ becslése konstans szorzó erejéig pontos. \\
@@ -946,7 +946,9 @@ a Cheeger-konstansa pedig $1/\lfloor \frac{n-1}{2} \rfloor$.
 Megmutattuk tehát, hogy a Cheeger-egyenlõtlenség alsó iránya is a lehetõ legjobb becslés konstans szorzó erejéig.
 
 \subsection{Klaszterezés}
-A következõkben áttérünk a multipartíciók vizsgálatára.
+
+A következõkben áttérünk a multipartíciók vizsgálatára. Gráfok több részre való partícionálásának az egyik kedvelt heurisztikus megoldása a spektrál módszer \cite{ding01minmax,meila01random,zha01spectral}.
+A másik kedvelt módszer az agglomeratív klaszterezés \cite{alpert-survey}, amelyrõl azonban ismert, hogy instabil megoldást ad \cite{hopcroft03communities}, ezért ezzel az iránnyal nem foglalkozunk. 
 
 \subsubsection{Reprezentánsok keresése QP programmal}
 
