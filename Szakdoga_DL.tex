@@ -379,6 +379,7 @@ $$
 \end{biz}
 
 \subsection{HITS-algoritmus}
+\label{sect:hits}
 Jon Kleinberg \cite{kleinberg99authoritative} 1998-ban született HITS-algoritmusa \emph{(Hyperlink-Induced Topic Search)} az internetes keresések
 találatait rangsorolja. 
 A rangsort az oldalak közt levõ hiperlinkek alapján állítja fel.
@@ -984,6 +985,7 @@ hogy $\lambda_{k-1}<\lambda_k$!
 Ekkor a \eqref{celfuggveny} célfüggvény értéke a \eqref{feltetelek} feltételek mellett:
 \[\sum_{i=0}^{k-1}\lambda_i=\sum_{i=1}^{k-1}\lambda_i.\]
 Az optimális reprezentánsok $r_1^*,\dots,r_n^*$ az $X^*=\left(u_0, u_1, \dots ,u_{k-1}\right)$ mátrix sorainak transzponáltjai.
+\label{thm:rep}
 \end{tetel}
 \begin{biz}
 A \eqref{minQk} alak szerint:
@@ -997,8 +999,8 @@ $k > 0$ olyan, hogy $\lambda_k > \lambda{k+1}$ Ekkor
 \max_{x_i \in \mathbb{R}^n \left( i=1,\dots ,k \right)\atop{ x_i^Tx_j=\delta_{ij}}}
 \sum_{i=1}^k x_i^T A x_i = \sum_{i=1}^k\lambda_i
 .\]
-Az optimum az $X=\left(u_1,\dots,u_k\right)$ szubortogonális mátrix, ahol $u_i$ az $\lambda_i$-hez tartozó egységhosszú sajátvektor. \end{allitas}
-\end{biz}\cite{bolla}
+Az optimum az $X=\left(u_1,\dots,u_k\right)$ szubortogonális mátrix, ahol $u_i$ az $\lambda_i$-hez tartozó egységhosszú sajátvektor \cite{bolla}. \end{allitas}
+\end{biz}
 
 A klaszterek meghatározásához alkalmazhatunk általános geometriai klaszterezõ algoritmust a jóval kisebb dimenziós reprezentáns vektorokon.
 Most bemutatjuk a legismertebb ilyen klaszterezõ eljárást, a k-means algoritmust.
@@ -1017,7 +1019,7 @@ Adott $l$ db $\mathbb{R}^n$-beli vektor, és $i$ iterációszám.
 Már láttuk a \ref{Fiedler} fejezetben, hogy a Fiedler-vektor segítségével hogyan határozhatunk meg vágásokat.
 Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 
-\textbf{Hagen algoritmusa}\cite{hagen1991fast}
+\textbf{Hagen algoritmusa} \cite{hagen1991fast}
 \begin{enumerate} 	\label{spektralHeurisztika}
 \item Vegyük a $\lambda_1$-hez tartozó sajátvektort
 \item A Fiedler-vektor szerint sorba rendezzük a csúcsokat
@@ -1025,7 +1027,7 @@ Klaszterezés esetén alkalmazhatjuk szubrutinként a vágási eljárást.
 \item A két részre külön-külön alkalmazzuk az algoritmust
 \end{enumerate}
 
-Kannan, Vempala és Vetta\cite{kannan2004clusterings} becslést is adtak az
+Kannan, Vempala és Vetta \cite{kannan2004clusterings} becslést is adtak az
 elõzõ algoritmus által talált klaszterek minõségére. A becsléshez az alábbi mérték használták.
 
 \begin{defin}[$(\alpha , \epsilon )$-partíció]
@@ -1055,7 +1057,7 @@ Az általuk használt algoritmus a következõ:
 \item A $v$ csúcs a $v$-nek megfelelõ sor klaszterébe kerül.
 \end{enumerate}
 
-Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban közelítjük az optimális normalizált k-vágást. Brand és Huang\cite{brand2003unifying} megmutatta, hogy több sajátvektort véve a klaszterek eloszlása egyenletesebb lesz, a
+Shi és Malik megmutatta, hogy minél több sajátértéket veszünk, annál jobban közelítjük az optimális normalizált k-vágást. Brand és Huang \cite{brand2003unifying} megmutatta, hogy több sajátvektort véve a klaszterek eloszlása egyenletesebb lesz, a
 hasonló pontok távolsága csökken, a különbözõké pedig növekszik.
 
 \section{Spektrálklaszeterezés a gyakorlatban}
@@ -1064,11 +1066,13 @@ A gyakorlatban azt tapasztaljuk, hogy a nagy gráfokon a spektrumon alapuló algor
 Az alábbiakban ennek okait, valamint néhány lehetséges megoldást mutatunk be egy konkrét példán keresztül.
 \subsection{A spektrálklaszterzés egy gyengesége}
 \subsubsection{A TKC-hatás}
-Lempel és Moran\cite{lempelTKC} az internetgráf vizsgálatakor derítettek fényt  a HITS-algoritmus egy sebezhetõségére. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
+Lempel és Moran \cite{lempelTKC} az internetgráf vizsgálatakor derítettek fényt  a HITS-algoritmus egy sebezhetõségére. Azt vették észre, hogy a HITS-algoritmus gyakran felértékel a valóságban nem mértékadó oldalakat. 
 A hiba okaként a kis sûrû részgráfokat, csomópontokat azonosították. Ezért a
 jelenséget TKC-hatásnak \emph{(tightly kit communities effect)} nevezték el.
 
-%TODO Ennek okáról szöveget beírni!
+A TKC jelenség elméleti alapját az adja, hogy a mátrix spektruma a \ref{sect:hits}.~fejezet végén látott út-leszámlálás mennyiséggel függ össze. A következõ állítások szerint a sûrû részgráfokban exponenciálisan gyorsan nõ az utak száma, így a sajátvektorokat ``magukhoz vonzzák''. 
+
+
 \begin{lemma}
 \label{lemma:eigenvector}
 Legyen $S = U \Lambda U^T$ szimmetrikus pozitív szemidefinit mátrix, ahol
@@ -1103,7 +1107,7 @@ A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokr
 Ebben a részben két heurisztikát szeretnénk ismertetni,
 melyek segítségével javítható a spektrálklaszterezés eredménye.
 \subsubsection{Csomópontok eltávolítása}
-A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}. Ha megtaláltuk a gráf méretéhez képest elhanyagolható csomópontokat, azokat elhagyhatjuk.
+A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN algoritmust \cite{xu2007scan}. Ha megtaláltuk a gráf méretéhez képest elhanyagolható csomópontokat, azokat elhagyhatjuk.
 \subsubsection{Csápok összehúzása}
 Csápoknak nevezzük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokból álló részgráfot. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
 \begin{enumerate}
@@ -1117,10 +1121,10 @@ Az eljárás véges, mert minden lépésben csökken a csúcsszám.
 \subsection{Spektrálklaszterezés egy konkrét példán bemutatva}
 Most pedig egy valós példán demonstráljuk, hogy hogyan alkalmazható a spektrálklaszterezés a fenti heurisztikák használatával.
 \subsubsection{Az adat: livejournal.com}
-Példánkban\cite{kurucz} a LiveJournal(www.livejournal.com) oldal felhasználóit szerették volna klaszterezni.
+Példánkban \cite{kurucz} cél a LiveJournal (www.livejournal.com) oldal felhasználóinak klaszterezése.
 A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmakat közölhetnek, hanem lehetõségük van egymással való kapcsolatukat (barátságukat) is kifejezni. A kapcsolat szimmetrikus, így a szociális háló élei irányítatlanok.
 
-Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük szerint szeparálják. Az orosz nyelvû felhasználók jelentõs része valójában valamelyik környezõ ország lakosa(Ukrajna, Fehéroroszország, Észtország,\dots).
+Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük szerint szeparálják. Az orosz nyelvû felhasználók jelentõs része valójában valamelyik környezõ ország lakosa (Ukrajna, Fehéroroszország, Észtország, \dots).
 
 Az alábbi ábrán a gráf egy részlete látható, amely jól szemlélteti, hogy a gráf struktúrájában hogy helyezkednek el a csápok(zöld részek) és csomók(piros részek).
 
@@ -1134,10 +1138,10 @@ Az alábbi ábrán a gráf egy részlete látható, amely jól szemlélteti, hogy a gráf 
 A gráfban 2.379.267 csúcs és 14.286.827 él szerepelt. A felhasználók több mint 80\% amerikai és körülbelül 5\% orosz.
 
 \subsubsection{A kísérlet menete}
-A gráfból elõször eltávolították a csomópontokat, majd alkalmazták a csápok összehúzását. Innen kétféleképp haladtak tovább. Egyrészt Shi és Malik algoritmusát követve. Másrészt Lang\cite{lang2005fixing} által leírt szemidefinit relaxált programot is megoldották.
+A gráfból elõször eltávolították a csomópontokat, majd alkalmazták a csápok összehúzását. Innen kétféleképp haladtak tovább. Egyrészt Shi és Malik algoritmusát alkalmazták . Másrészt Lang \cite{lang2005fixing} algoritmusát is megvalósították, aki a \ref{thm:rep}.~Tételben ismertetett reprezentáció meghatározására egy szemidefinit relaxált programot old meg.
 Végül a kivett csomókat viszarakva, és a csápokat visszanövesztve kapták a végsõ klasztereket. A spektrálklaszterezést lefuttatták elõfeldolgozás nélkül is, az összehasonlításhoz. 
 \subsubsection{Eredmények}
-Az eredményeket az alábbi ábrák mutatják be.
+Az eredményeket a \ref{fig:livejournal}--\ref{fig:semidef}.~ábrák mutatják be.
 
 \begin{figure}[ht]
 \centering
@@ -1149,30 +1153,33 @@ Az eredményeket az alábbi ábrák mutatják be.
 	\includegraphics[width=\textwidth]{pictures/klaszter_after.jpg}
 	\caption{Elõfeldolgozással}
 \end{subfigure}
-\caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén}
+\caption{A csúcsok eloszlása 4.\ és 5\. sajátirányok mentén}
+\label{fig:livejournal}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{pictures/sdp_result.jpg}
 \caption{A szemidefinit program kimenete}
+\label{fig:semidef}
 \end{figure}
-Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
+
+Látható, hogy  az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek azonban eltávolodnak egymástól.
 
 Az egyes klaszterek minõségét az entrópiával és tisztasággal mérték.
 \begin{defin}[Entrópia]
 Egy $X$ halmaz $X_1, \dots , X_j$ felbontásának entrópiája 
-\[h(X) = -\sum_i p_i \log p_i\]
-,ahol $p_i = |X_i|/|X|.$
+\[h(X) = -\sum_i p_i \log p_i,\]
+ahol $p_i = |X_i|/|X|.$
 \end{defin}
 
 \begin{defin}[Tisztaság]
 Egy $X$ halmaz $X_1, \dots , X_j$ felbontásának tisztasága 
-\[t(X) = \max_i p_i \]
-,ahol $p_i = \frac{|X_i|}{|X|}.$
+\[t(X) = \max_i p_i, \]
+ahol $p_i = \frac{|X_i|}{|X|}.$
 \end{defin}
 
-
+\begin{table}
 \begin{tabular}{|c|c|c|c|}
 \hline 
  & Futási idõ(perc) & Entrópia & Tisztaság \\ 
@@ -1187,12 +1194,16 @@ SDP elõfeldolgozással & 675 & 0,072 & 0,854 \\
 \hline 
 \end{tabular} 
 
-A szemidefinit programmal összehasonlítható lett az eredmény, míg a spektrálklaszterezés sokkal gyorsabban futott.
+\caption{A spektrál heurisztikák minõsége és futási ideje a LiveJournal orosz részgráfján.}
+\label{tab:spectral}
+\end{table}
+
+Amint az \ref{tab:spectral}.~táblázatban látható, szemidefinit programmal összehasonlítható lett az eredmény, míg a spektrálklaszterezés sokkal gyorsabban futott.
 
 \section{Összefoglalás}
 
 Jelen dolgozatban betekintést nyújtottunk a spektrálgráfelmélet alapvetõ eredményeibe, bár korántsem érintettünk minden kapcsolódó témakört. A vágásokon felül nem beszéltünk a további sajátértékeket érintõ becslésekrõl, más gráfparaméterekkel való összefüggésekrõl. 
-A jelenleg ismertebb véletlengráfmodellek, mint a Barabási-Albert-modell, rosszul modellezik a valóságban létezõ nagy gráfokat a spektrálklaszterezés nehézségeinek tekintetében.
+A jelenleg ismertebb véletlen gráf modellek, mint a Barabási-Albert-modell, rosszul modellezik a valóságban létezõ nagy gráfokat a spektrálklaszterezés nehézségeinek tekintetében.
 
 
 A fentiek tükrében további kutatási területként merül fel olyan egyszerû véletlengráfmodell felállítása, amely jól modellezi a fenti problémát.
