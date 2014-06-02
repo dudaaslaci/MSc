@@ -658,7 +658,7 @@ Az $n$ hosszú kör spektruma:
 
 $\mathbf{Q_n}.$
 A $2^n$ csúcsú $n$ dimenziós hiperkocka sajátértékei:
-\[\frac{2k}{n}\quad\binom{n}{k} \textrm{ multiplicitással, } k=0,\dots,n.\quad\cite{lovasz2007combinatorical}\]
+\[\frac{2k}{n}\quad\binom{n}{k} \textrm{ multiplicitással, } k=0,\dots,n.\quad\cite{lovasz2007combinatorial}\]
 
 \section{Vágások és partíciók}
 Gráfok vizsgálatának egyik fontos kérdése, hogy hogyan tudjuk egy gráf csúcsait jól csoportosítani, particionálni.
@@ -1093,12 +1093,12 @@ Legyen $S$ egy súlyozott gráf  élmátrixa. Ekkor $S^k x$ az $x$-el súlyozott kezd
 A fenti két lemmát alkalmazhatjuk a HITS algoritmusnál látott $S=AA^T$ mátrixokra, a Laplace, illetve a súlyozott Laplace mátrixokra is. A \ref{lemma:path-count}.~Lemma szerint azokra a $j$ csúcsokra lesz magas az $[S^k x]_j$  értéke, amelyekbõl nagyon sok súlyozott út indul. A \ref{lemma:eigenvector}.~Lemma szerint ezeknek a $j$ csúcsoknak lesz kiemelkedõ  értéke az elsõ olyan sajátvektorban, amely $x$-re nem merõleges.
 
 \subsection{Lehetséges módszerek a TKC-hatás semlegesítésére}
-Ebben a részben néhány heurisztikát szeretnénk ismertetni,
+Ebben a részben két heurisztikát szeretnénk ismertetni,
 melyek segítségével javítható a spektrálklaszterezés eredménye.
 \subsubsection{Csomópontok eltávolítása}
 A TKC-hatást okozó csomópontok megtalálására alkalmazhatjuk a SCAN-algoritmust\cite{xu2007scan}. Ha megtaláltuk a gráf méretéhez képest elhanyagolható csomópontokat, azokat elhagyhatjuk.
 \subsubsection{Csápok összehúzása}
-Csápoknak neveztük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokat. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
+Csápoknak nevezzük egy elõre rögzített $d_t$ fokszámnál kisebb fokú csúcsokból álló részgráfot. Ezek eltávolítására a következõ eljárást alkalmazhatjuk.
 \begin{enumerate}
 \item{Keresünk egy $v$ csúcsot, amire $d_v < d_t$, ha nincs ilyen, akkor megállunk.}
 \item{$v$-t összehúzzuk a legnagyobb fokszámú szomszédjával.}
@@ -1115,11 +1115,20 @@ A LiveJournal egy közösségi blog oldal, vagyis a felhasználók nem csak tartalmak
 
 Célkitûzés volt, hogy az orosz nyelvû felhasználókat geológia elhelyezkedésük szerint szeparálják. Az orosz nyelvû felhasználók jelentõs része valójában valamelyik környezõ ország lakosa(Ukrajna, Fehéroroszország, Észtország,\dots).
 
+Az alábbi ábrán a gráf egy részlete látható, amely jól szemlélteti, hogy a gráf struktúrájában hogy helyezkednek el a csápok(zöld részek) és csomók(piros részek).
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{pictures/livejournal.jpg}
+\caption{A livejournal.com barátsággráfjának egy részlete}
+\end{figure}
+
+
 A gráfban 2.379.267 csúcs és 14.286.827 él szerepelt. A felhasználók több mint 80\% amerikai és körülbelül 5\% orosz.
 
 \subsubsection{A kísérlet menete}
-A gráfból elõször eltávolították a csomópontokat, majd alkalmazták a csápok összehúzását. Innen kétféleképp haladtak tovább. Egyrészt Shi és Malik algoritmusát követve, másrészt Lang megmutatta, hogy az optimális klaszterezésnek létezik szemidefinit relaxáltja \cite{lang2005fixing}.
-Végül visszarakták a kivett csomókat, és a csápokat visszanövesztve kapták a végsõ klasztereket. A spektrálklaszterezést lefuttatták elõfeldolgozás nélkül is, az összehasonlításhoz. 
+A gráfból elõször eltávolították a csomópontokat, majd alkalmazták a csápok összehúzását. Innen kétféleképp haladtak tovább. Egyrészt Shi és Malik algoritmusát követve. Másrészt Lang\cite{lang2005fixing} által leírt szemidefinit relaxált programot is megoldották.
+Végül a kivett csomókat viszarakva, és a csápokat visszanövesztve kapták a végsõ klasztereket. A spektrálklaszterezést lefuttatták elõfeldolgozás nélkül is, az összehasonlításhoz. 
 \subsubsection{Eredmények}
 Az eredményeket az alábbi ábrák mutatják be.
 
@@ -1136,13 +1145,40 @@ Az eredményeket az alábbi ábrák mutatják be.
 \caption{A csúcsok eloszlása 4. és 5. sajátirányok mentén}
 \end{figure}
 
-Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{pictures/sdp_result.jpg}
 \caption{A szemidefinit program kimenete}
 \end{figure}
+Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönböztetni. A heurisztikák alkalmazása után a klaszterek eltávolodnak egymástól.
+
+Az egyes klaszterek minõségét az entrópiával és tisztasággal mérték.
+\begin{defin}[Entrópia]
+Egy $X$ halmaz $X_1, \dots , X_j$ felbontásának entrópiája 
+\[h(X) = -\sum_i p_i \log p_i\]
+,ahol $p_i = |X_i|/|X|.$
+\end{defin}
+
+\begin{defin}[Tisztaság]
+Egy $X$ halmaz $X_1, \dots , X_j$ felbontásának tisztasága 
+\[t(X) = \max_i p_i \]
+,ahol $p_i = \frac{|X_i|}{|X|}.$
+\end{defin}
+
+
+\begin{tabular}{|c|c|c|c|}
+\hline 
+ & Futási idõ(perc) & Entrópia & Tisztaság \\ 
+\hline 
+SVD elõfeldolgozás nélkül & 1980 & 0,105 & 0,812 \\ 
+\hline 
+SVD elõfeldolgozással & 150 & 0,073 & 0,853 \\ 
+\hline 
+SDP elõfeldolgzás nélkül & 1755 & 0,111 & 0,857 \\ 
+\hline 
+SDP elõfeldolgozással & 675 & 0,072 & 0,854 \\ 
+\hline 
+\end{tabular} 
 
 A szemidefinit programmal összehasonlítható lett az eredmény, míg a spektrálklaszterezés sokkal gyorsabban futott.
 
