@@ -586,8 +586,7 @@ D^{\frac{1}{2}}f,D^{\frac{1}{2}}f
 \end{eqnarray}
 ahol $g=D^\frac{1}{2}f$ és $u\sim v$ jelöli azokat a rendezetlen
 csúcspárokat, amikre $u$ és $v$ szomszédosak, valamint $\langle ,\rangle$ jelöli az
-$\mathbb{R}^n$
--beli belsõszorzatot.
+$\mathbb{R}^n$-beli skalárszorzatot.
 
 A \eqref{Rayleigh} egyenlõségbõl következik, hogy az összes sajátérték nemnegatív és a $0$ is sajátérték. A $0$-hoz tartozó sajátvektor a
 $\sqrt{\underline{d}}=\left(\sqrt{d_1},\dots,\sqrt{d_n}\right)^T$ vektor.
@@ -604,7 +603,6 @@ Továbbá,
 {\sum_v f\left(v\right)^2 d_v} = \min_{\norma{g}=1\atop{g^T\sqrt{\underline{d}} = 0}}
 g^T\mathcal{L}g\label{minLemma}
 \end{equation}
-
 és
 \begin{equation}
 \lambda_{n-1}=\max_{\norma{g}=1}g^T\mathcal{L}g. \label{maxLemma}
@@ -612,14 +610,13 @@ g^T\mathcal{L}g\label{minLemma}
 
 Az elõzõ $min$ és $max$ egyenlõség hasonlóképp igaz a Laplace-mátrixra és annak sajátértékeire. Érdemes az imént vizsgált kifejezést magasabb dimenzióra is kiterjeszteni. 
 
-$X\in \mathbb{R}^{n\times k}$ adott szubortogonális mátrix. $X$ oszlopait az $x_1,\dots,x_k$ vektorokkal, sorai pedig az $r^T_1,\dots,r^T_n$ vektorokkal jelöljük.
-\[
-Q_k = tr(X^TLX)= \sum_{l=1}^k x_l^T (D-W) x_l =
-\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js = \] 
-\\
-\begin{equation}
-\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 \label{Qk}
-\end{equation}
+$X\in \mathbb{R}^{n\times k}$ adott szubortogonális mátrix. $X$ oszlopait az $x_1,\dots,x_k$ vektorokkal, sorait pedig az $r^T_1,\dots,r^T_n$ vektorokkal jelöljük.
+\begin{eqnarray}
+\nonumber
+Q_k = tr(X^TLX) &=& \sum_{l=1}^k x_l^T (D-W) x_l =
+\sum_{i=1}^n d_i \norma{r_i}^2 - \sum_{i=1}^n \sum_{j=1}^n w_{ij}r_i^Tr_js \\
+&=&\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n w_{ij} \norma{r_i-r_j}^2 \label{Qk}.
+\end{eqnarray}
 Vegyük észre, hogy a $k=1$ esetben a Rayleigh-hányadost kapjuk vissza.
 
 Tudjuk, hogy egy mátrix nyoma megegyezik a sajátértékeinek összegével. Emiatt
@@ -889,50 +886,68 @@ Feltehetõ, hogy a csúcsok $f$ szerint csökkenõ sorrendbe vannak rendezve vagyis 
 Legyen $r$ a legnagyobb egész, amire $Vol(S_r)<Vol(G)/2$. \eqref{eq:gd0} miatt
 \[\sum_v g(v)^2d_v=\min_c\sum_v(g(v)-c)^2 d_v\leq \sum_v(g(v)-g(v_r))^2d_v.\]
 Jelölje $g_+$ és $g_-$ $g$ pozitív ill. negatív részét.
-\[\lambda_1 = \frac{\sum_{u\sim v}(g(u)-g(v)^2)}{\sum_v g(v)^2d_v}
-\geq \frac{\sum_{u\sim v}(g(u)-g(v)^2)}{\sum_v (g(v)-g(v_r))^2d_v}\]
-\[\geq\frac{\sum_{u\sim v}\Big(\big(g_+(u)-g_+(v))^2 + (g_-(u)-g_-(v)\big)^2\Big)}
-{\sum_v(g_+(v)^2+g_-(v)^2)d_v}\]
+\begin{eqnarray*}
+\lambda_1 &=& \frac{\sum_{u\sim v}(g(u)-g(v)^2)}{\sum_v g(v)^2d_v}
+\geq \frac{\sum_{u\sim v}(g(u)-g(v)^2)}{\sum_v (g(v)-g(v_r))^2d_v} 
+\\
+&\geq&\frac{\sum_{u\sim v}\Big(\big(g_+(u)-g_+(v))^2 + (g_-(u)-g_-(v)\big)^2\Big)}
+{\sum_v(g_+(v)^2+g_-(v)^2)d_v}.
+\end{eqnarray*}
+%
 Mivel
 $
 \frac{a+b}{c+d} \geq min(\frac{a}{c},\frac{b}{d})
 $, feltehetõ, hogy
-\[\lambda_1 \geq \frac{\sum_{u\sim v}(g_+(u)-g_+(v)^2)}{\sum_v g_+(v)^2d_v}\]
-
-\[=\frac{\Big(\sum_{u\sim v}\big(g_+(u)-g_+(v)\big)^2\Big)
+\begin{eqnarray*}
+\lambda_1 &\geq& \frac{\sum_{u\sim v}(g_+(u)-g_+(v)^2)}{\sum_v g_+(v)^2d_v}
+\\
+&=&\frac{\Big(\sum_{u\sim v}\big(g_+(u)-g_+(v)\big)^2\Big)
 \Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}
-{\Big(\sum_v g_+(v)^2d_v\Big)\Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}\]
-
-\[\geq \frac{\Big(\sum_{u\sim v}\big(g_+(u)^2-g_+(v)^2\big)\Big)^2}{2\left (\sum_v g_+^2(v)d_v\right )^2}\textrm{, a Cauchy-Schwarz-Bunyakovszkij egyenlõtlenség miatt,}\]
-\[=\frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\,|\partial(S_i)|\Big)^2}{2\Big(\sum_v g_+(v)^2d_v\Big)^2}\]
+{\Big(\sum_v g_+(v)^2d_v\Big)\Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}.
+\end{eqnarray*}
+A Cauchy-Schwarz-Bunyakovszkij egyenlõtlenség miatt tovább
+\begin{eqnarray*}
+\lambda_1 &\geq& \frac{\Big(\sum_{u\sim v}\big(g_+(u)^2-g_+(v)^2\big)\Big)^2}{2\left (\sum_v g_+^2(v)d_v\right )^2}
+\\
+&=&\frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\,|\partial(S_i)|\Big)^2}{2\Big(\sum_v g_+(v)^2d_v\Big)^2}.
+\end{eqnarray*}
 Bevezetve a
 \[\tilde{Vol}(S)=\min(Vol(S), Vol(G)-Vol(S))\] 
-jelölést kapjuk továbbá, hogy
-\[\lambda_1 \geq \frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\alpha_G|\tilde{Vol}(S_i)|\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}\textrm{, }\alpha_g\textrm{ definíciója miatt}\]
-\[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_i g_+(v_i)^2\big(|\tilde{Vol}(S_i)-\tilde{Vol}(S_{i+1})|\big)\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}\]
-\[=\frac{\alpha_g^2}{2}\frac{\Big(\sum_ig_+(v_i)^2d_{v_i}\big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2} = \frac{\alpha_G^2}{2}.\]
-
+jelölést és használva az $\alpha_g$ definícióját, azt kapjuk, hogy
+\begin{eqnarray*}
+\lambda_1 &\geq& \frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\alpha_G|\tilde{Vol}(S_i)|\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}
+\\
+&=&\frac{\alpha_g^2}{2}\frac{\Big(\sum_i g_+(v_i)^2\big(|\tilde{Vol}(S_i)-\tilde{Vol}(S_{i+1})|\big)\Big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2}
+\\
+&=&\frac{\alpha_g^2}{2}\frac{\Big(\sum_ig_+(v_i)^2d_{v_i}\big)^2}{\Big(\sum_v g_+(v)^2d_v\Big)^2} = \frac{\alpha_G^2}{2}.
+\end{eqnarray*}
 Beláttuk tehát, hogy $\lambda_1 \geq h_G^2/2$. Ahhoz, hogy belássuk, hogy egyenlõség nem állhat fent, szükségünk lesz arra, hogy $1-\sqrt{1-x^2}>x^2/2$, ha $x > 0$, valamint az alábbi lemmára.
+
 \begin{lemma}
 Ha $G$ összefüggõ gráf és $\lambda_1$ a spektrumának legkisebb eleme, akkor
-\[\lambda_1\geq 1-\sqrt{1-h_G^2}\]
+\[\lambda_1\geq 1-\sqrt{1-h_G^2}.\]
 \end{lemma}
+
 \begin{biz}
 Láttuk, hogy 
 \[\lambda_1 \geq \frac{\sum_{u\sim v}(g_+(u)-g_+(v)^2)}{\sum_v g_+(v)^2d_v} = W.\]
 Valamint azt is tudjuk már, hogy
-\[W =\frac{\Big(\sum_{u\sim v}\big(g_+(u)-g_+(v)\big)^2\Big)
+\begin{eqnarray*}
+W &=& \frac{\Big(\sum_{u\sim v}\big(g_+(u)-g_+(v)\big)^2\Big)
 \Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}
-{\Big(\sum_v g_+(v)^2d_v\Big)\Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}\]
-\[\geq \frac{\Big(\sum_{u\sim v}|g_+(u)^2-g_+(v)^2|\Big)^2}
-{\Big(\sum_vg_+(v)d_v\Big)\Big(2\sum_vg_+(v)^2d_v-W\sum_vg_+(v)^2d_v\Big)}\]
-\[\geq\frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\,|\partial S_i|\Big)^2}
-{(2-W)\Big(\sum_v g_+(v)^2\Big)^2d_v}\]
-\[\geq\frac{\Big(\sum_i\big(g_+(v_i)^2-g_+(v_{i+1})^2\big)\alpha_G\sum_{j\leq i}d_j\Big)^2}
-{(2-W)\Big(\sum_v g_+(v)^2\Big)^2d_v}\]
-\[
-\geq \frac{\alpha_G^2}{2-W}
-\]
+{\Big(\sum_v g_+(v)^2d_v\Big)\Big(\sum_{u\sim v}\big(g_+(u)+g_+(v)\big)^2\Big)}
+\\
+&\geq& \frac{\Big(\sum_{u\sim v}|g_+(u)^2-g_+(v)^2|\Big)^2}
+{\Big(\sum_vg_+(v)d_v\Big)\Big(2\sum_vg_+(v)^2d_v-W\sum_vg_+(v)^2d_v\Big)}
+\\
+&\geq&\frac{\Big(\sum_i |g_+(v_i)^2-g_+(v_{i+1})^2|\,|\partial S_i|\Big)^2}
+{(2-W)\Big(\sum_v g_+(v)^2\Big)^2d_v}
+\\
+&\geq&\frac{\Big(\sum_i\big(g_+(v_i)^2-g_+(v_{i+1})^2\big)\alpha_G\sum_{j\leq i}d_j\Big)^2}
+{(2-W)\Big(\sum_v g_+(v)^2\Big)^2d_v}
+\\
+&\geq& \frac{\alpha_G^2}{2-W}.
+\end{eqnarray*}
 Ebbõl következik, hogy
 \[0\geq W^2-2W+\alpha_G^2.\]
 A másodfokú egyenlet megoldóképletét alkalmazva kapjuk a kívánt egyenlõtlenséget.
