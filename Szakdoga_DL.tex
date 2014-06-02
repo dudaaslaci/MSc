@@ -115,8 +115,9 @@ Ez a téma az 1950-es közepétõl vált kutatott területté.
 A spektrálgráfelmélet egyik fõ kérdésköre, hogy mit tudunk mondani egy gráf spektrumáról. A másik témakör pedig, hogy hogyan függ össze a spektrum a gráf egyéb tulajdonságaival.
 
 A spektrálgráfelmélet a matematikán belül számos más területhez kapcsolódik. Szoros kapcsolatban van a differenciálgeometriával, a véletlen bolyongásokkal, valamint a Markov-láncokkal is.
-A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók struktúrájának felderítése.
+A gyakorlatban is sok haszna van a spektrumnak. Elõször a VLSI-áramkörök tervezésénél használták, de azóta számos más területen is sikeresen alkalmazták, mint a fehérjehálózatok, szociális hálók struktúrájának felderítése, vagy képszegmentáció.
 
+A dolgozat elején egy általánosabb eszközt, a mátrixok szinguláris felbontását mutatjuk be. Bizonyítjuk ennek létezését, valamint megmutatjuk Kleinberg HITS-algoritmusával való kapcsolatát. Ezt követõen definiáljuk a legfontosabb fogalmakat, mint egy gráf Laplace-mátrixa, annak súlyozott változata és utóbbi sajátértékei, a spektrum. Bemutatjuk a spektrummal kapcsolatos alapösszefüggéseket. A következõ fejezetben a spektrumot különbözõ bi- és multipartíciók értékeinek becslésére, és maguknak az optimálist közelítõ partícióknak a meghatározására használjuk. A dolgozat végén egy valós példán mutatjuk be az elmélet egy lehetséges gyakorlati alkalmazását.
 
 \section{Szinguláris felbontás}
 Legelõször egy általános keretek közt alkalmazható módszert, a szinguláris felbontást szeretnénk bemutatni.
@@ -1137,6 +1138,14 @@ Látható, hogy , míg az elõfeldolgozás nélkül a két csoportot nem lehet megkülönb
 A szemidefinit programmal összehasonlítható lett az eredmény, míg a spektrálklaszterezés sokkal gyorsabban futott.
 
 \section{Összefoglalás}
+
+Jelen dolgozatban betekintést nyújtottunk a spektrálgráfelmélet alapvetõ eredményeibe, bár korántsem érintettünk minden kapcsolódó témakört. A vágásokon felül nem beszéltünk a további sajátértékeket érintõ becslésekrõl, más gráfparaméterekkel való összefüggésekrõl. 
+A jelenleg ismertebb véletlengráfmodellek, mint a Barabási-Albert-modell, rosszul modellezik a valóságban létezõ nagy gráfokat a spektrálklaszterezés nehézségeinek tekintetében.
+
+
+A fentiek tükrében további kutatási területként merül fel olyan egyszerû véletlengráfmodell felállítása, amely jól modellezi a fenti problémát.
+Késõbbi kutatásaink során szeretnénk olyan elõfeldolgozási lépéseket találni, amelyekre bizonyítható, hogy a kívánt módon módosítják a spektrumot.
+
 
 \bibliographystyle{huplain}
 
